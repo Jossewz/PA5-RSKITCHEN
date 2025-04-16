@@ -5,15 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/View.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Factura.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/ItemPedido.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Mesas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Mesas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Pedidos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Pedidos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Platillos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Platillos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Productos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Productos.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Usuarios.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/PasswordGen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/PasswordGen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -23,18 +36,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Jossewz"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Jossewz&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Jossewz/PA5-RSKITCHEN.git",
-    "accountId": "3dbf38e1-3368-4ab1-9574-23375533c7ed"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Jossewz/PA5-RSKITCHEN.git&quot;,
+    &quot;accountId&quot;: &quot;3dbf38e1-3368-4ab1-9574-23375533c7ed&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -43,15 +56,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;JA&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "JA",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

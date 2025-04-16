@@ -11,15 +11,17 @@ public class Productos {
 
     private String name;
     private String cant;
-    private String price;
+    private double price;
+    private int stock;
 
     public Productos() {
     }
 
-    public Productos(String name, Long id, String cant, String price) {
-        this.name = name;
-        this.id = id;
+    public Productos(String cant, Long id, String name, int stock, double price) {
         this.cant = cant;
+        this.id = id;
+        this.name = name;
+        this.stock = stock;
         this.price = price;
     }
 
@@ -47,11 +49,19 @@ public class Productos {
         this.name = name;
     }
 
-    public String getPrice() {
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }
