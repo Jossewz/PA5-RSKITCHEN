@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión</title>
+    <style>
+        body {
+          background-color: white;
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          height: 100vh;
+          position: relative;
+        }
+
+        .register-button {
+          position: absolute;
+          top: 20px;
+          left: 20px;
+          background-color: #87CEEB;
+          color: black;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 12px;
+          text-decoration: none;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+        }
+
+        .register-button:hover {
+          background-color: #68b3d8;
+        }
+
+        .login-container {
+          background-color: #1a1a1a;
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 0 20px rgba(135, 206, 235, 0.4);
+          width: 300px;
+          text-align: center;
+          color: white;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        .login-container h2 {
+          margin-bottom: 30px;
+          color: #87CEEB;
+        }
+
+        .input {
+          width: 100%;
+          border: none;
+          outline: none;
+          border-radius: 15px;
+          padding: 1em;
+          margin-bottom: 20px;
+          background-color: #ccc;
+          box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+          transition: 300ms ease-in-out;
+        }
+
+        .input:focus {
+          background-color: white;
+          transform: scale(1.05);
+          box-shadow: 13px 13px 100px #969696,
+                      -13px -13px 100px #ffffff;
+        }
+
+        .login-button {
+          background-color: #87CEEB;
+          color: black;
+          padding: 0.8em 2em;
+          border: none;
+          border-radius: 15px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          width: 100%;
+        }
+
+        .login-button:hover {
+          background-color: #68b3d8;
+        }
+    </style>
+</head>
+<body>
+
+<a href="/registrar" class="register-button">Registrar</a>
+
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form action="/login" method="POST">
+        <input type="text" name="username" class="input" placeholder="Usuario" required>
+        <input type="password" name="password" class="input" placeholder="Contraseña" required>
+        <button type="submit" class="login-button">Entrar</button>
+    </form>
+</div>
+
+</body>
+</html>
