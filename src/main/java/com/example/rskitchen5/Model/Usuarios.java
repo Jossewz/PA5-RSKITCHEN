@@ -12,15 +12,17 @@ public class Usuarios {
     private String name;
     private String password;
     private String mail;
+    private String rol;
 
     public Usuarios() {
     }
 
-    public Usuarios(Long id, String mail, String name, String password) {
+    public Usuarios(Long id, String mail, String name, String password, String rol) {
         this.id = id;
         this.mail = mail;
         this.name = name;
         this.password = password;
+        this.rol = rol;
     }
 
     public Long getId() {
@@ -53,5 +55,13 @@ public class Usuarios {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }
