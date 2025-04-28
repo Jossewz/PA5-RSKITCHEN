@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document(collection = "mesa")
-public class Mesas {
+public class Mesa {
 
     @Id
     private String id;
@@ -16,10 +16,10 @@ public class Mesas {
     private String meseroId;
     private List<String> pedidosId;
 
-    public Mesas() {
+    public Mesa() {
     }
 
-    public Mesas(String id, String meseroId, List<String> pedidosId, boolean ocupado, int num) {
+    public Mesa(String id, String meseroId, List<String> pedidosId, boolean ocupado, int num) {
         this.id = id;
         this.meseroId = meseroId;
         this.pedidosId = pedidosId;
