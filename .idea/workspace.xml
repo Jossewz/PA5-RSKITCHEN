@@ -5,11 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/LogisController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/RegistroController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/css/logis.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/logis.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/registro.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PedidoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PlatilloController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/ProductoController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/MesaRep.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/PedidoRep.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/PlatilloRep.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/ProductoRep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/LogisController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/LogisController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/RegistroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/RegistroController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/MesaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Mesas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Mesa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Pedidos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Pedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Platillos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Platillo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Productos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Producto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +32,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -47,15 +61,19 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2vmGJGT1lYDl6hdZJPh5wUKBGkx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Rskitchen5Application.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "CR",
+    "git-widget-placeholder": "JA",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5",
     "project.structure.last.edited": "Modules",
@@ -73,5 +91,16 @@
       <updated>1744742765901</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
