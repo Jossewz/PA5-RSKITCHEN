@@ -4,25 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PedidoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PlatilloController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/ProductoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/MesaRep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/PedidoRep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/PlatilloRep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/ProductoRep.java" afterDir="false" />
+    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Add logica del backend">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Service/UserDetailsServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/LogisController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/LogisController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/RegistroController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/RegistroController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/MesaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Mesas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Mesa.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Pedidos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Pedido.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Platillos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Platillo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Productos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Producto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Usuarios.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +20,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -55,8 +42,25 @@
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Jossewz/PA5-RSKITCHEN.git&quot;,
     &quot;accountId&quot;: &quot;3dbf38e1-3368-4ab1-9574-23375533c7ed&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Jossewz&quot;,
+    &quot;repository&quot;: &quot;PA5-RSKITCHEN&quot;
   }
 }</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -70,6 +74,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.PasswordGen.executor": "Run",
     "Application.Rskitchen5Application.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -81,6 +86,54 @@
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="PasswordGen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.rskitchen5.Security.PasswordGen" />
+      <module name="rskitchen5" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.rskitchen5.Security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="PA5-RSKITCHEN" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="PA5-RSKITCHEN" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.PasswordGen" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -90,17 +143,20 @@
       <option name="presentableId" value="Default" />
       <updated>1744742765901</updated>
     </task>
+    <task id="LOCAL-00001" summary="Add logica del backend">
+      <option name="closed" value="true" />
+      <created>1745866721019</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1745866721019</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge pull request #5&#10;&#10;CR" />
+    <MESSAGE value="Add logica del backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add logica del backend" />
   </component>
 </project>
