@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Add logica del backend">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Service/UserDetailsServiceImpl.java" afterDir="false" />
+    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Intento de trabajo con el service xd">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/Security.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Service/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Service/UserDetailsServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,27 +69,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.PasswordGen.executor": "Run",
-    "Application.Rskitchen5Application.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "JA",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.PasswordGen.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Rskitchen5Application.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;JA&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RunManager" selected="Application.Rskitchen5Application">
     <configuration name="PasswordGen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.rskitchen5.Security.PasswordGen" />
       <module name="rskitchen5" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.example.rskitchen5.Security.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Rskitchen5Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.rskitchen5.Rskitchen5Application" />
+      <module name="rskitchen5" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.rskitchen5.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -130,6 +140,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Rskitchen5Application" />
         <item itemvalue="Application.PasswordGen" />
       </list>
     </recent_temporary>
@@ -151,12 +162,32 @@
       <option name="project" value="LOCAL" />
       <updated>1745866721019</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Intento de trabajo con el service xd">
+      <option name="closed" value="true" />
+      <created>1745888146706</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745888146706</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Merge pull request #5&#10;&#10;CR" />
     <MESSAGE value="Add logica del backend" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add logica del backend" />
+    <MESSAGE value="Intento de trabajo con el service xd" />
+    <option name="LAST_COMMIT_MESSAGE" value="Intento de trabajo con el service xd" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Rskitchen5Application.java</url>
+          <line>6</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
