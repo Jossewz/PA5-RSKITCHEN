@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Intento de trabajo con el service xd">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/UserRep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Service/UserDetailsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Service/UserDetailsServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Intento de trabajo con el service xd" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,7 +79,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.Rskitchen5Application">
+  <component name="RunManager">
     <configuration name="PasswordGen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.rskitchen5.Security.PasswordGen" />
       <module name="rskitchen5" />
@@ -142,6 +138,8 @@
       <list>
         <item itemvalue="Application.Rskitchen5Application" />
         <item itemvalue="Application.PasswordGen" />
+        <item itemvalue="Application.Rskitchen5Application" />
+        <item itemvalue="Application.PasswordGen" />
       </list>
     </recent_temporary>
   </component>
@@ -178,16 +176,5 @@
     <MESSAGE value="Add logica del backend" />
     <MESSAGE value="Intento de trabajo con el service xd" />
     <option name="LAST_COMMIT_MESSAGE" value="Intento de trabajo con el service xd" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Rskitchen5Application.java</url>
-          <line>6</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
