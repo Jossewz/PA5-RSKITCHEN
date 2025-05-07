@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Mesas</title>
+  <style>
+    body {
+      background-color: #87CEEB;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px;
+      color: #1a1a1a;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: white;
+      text-shadow: 1px 1px 2px #444;
+    }
+
+    .btn {
+      background-color: white;
+      color: #1a1a1a;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 10px 10px 0 0;
+    }
+
+    .btn:hover {
+      background-color: #f0f0f0;
+    }
+
+    .form-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 500px;
+      margin: 20px auto;
+      display: none;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .output {
+      max-width: 700px;
+      margin: 40px auto 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .output h3 {
+      margin-top: 0;
+      color: #1a1a1a;
+      text-align: center;
+    }
+
+    .mesa-item {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+
+    .mesa-item:last-child {
+      border-bottom: none;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .edit-btn {
+      background-color: #ffffff;
+      border: 1px solid #87CEEB;
+      border-radius: 8px;
+      padding: 6px 12px;
+      margin-top: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Botón Volver -->
+<div class="top-bar">
+  <a href="/ruta-a-tu-dashboard" class="btn">Volver</a>
+</div>
+
+<h1>Gestión de Mesa</h1>
+
+<div style="text-align: center;">
+  <button class="btn" onclick="mostrarFormulario()">Llenar Mesa</button>
+</div>
+
+<!-- Formulario -->
+<div class="form-container" id="formulario">
+  <div class="form-group">
+    <label for="numeroMesa">Número de Mesa:</label>
+    <input type="number" id="numeroMesa" required>
+  </div>
+  <div class="form-group">
+    <label for="atendiendo">Atiende:</label>
+    <input type="text" id="atendiendo" required>
+  </div>
+  <div class="form-group">
+    <label for="orden">Orden:</label>
+    <textarea id="orden" rows="3" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="disponible">¿Disponible?</label>
+    <select id="disponible">
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select>
+  </div>
+
+  <div class="button-group">
+    <button class="btn" onclick="guardarMesa()">Guardar</button>
+    <button class="btn" onclick="cerrarFormulario()">Cerrar</button>
+  </div>
+</div>
+
+<!-- Lista de Mesas -->
+<div class="output" id="listaMesas" style="display: none;">
+  <h3>Mesas Registradas</h3>
+  <div id="contenedorMesas"></div>
+</div>
+
+<script>
+  let mesas = [];
+  let editIndex = null;
+
+  function mostrarFormulario() {
+    document.getElementById('formulario').style.display = 'block';
+  }
+
+  function cerrarFormulario() {
+    document.getElementById('formulario').style.display = 'none';
+    limpiarFormulario();
+    editIndex = null;
+  }
+
+  function limpiarFormulario() {
+    document.getElementById('numeroMesa').value = '';
+    document.getElementById('atendiendo').value = '';
+    document.getElementById('orden').value = '';
+    document.getElementById('disponible').value = 'Sí';
+  }
+
+  function guardarMesa() {
+    const numero = document.getElementById('numeroMesa').value;
+    const atendiendo = document.getElementById('atendiendo').value;
+    const orden = document.getElementById('orden').value;
+    const disponible = document.getElementById('disponible').value;
+
+    if (!numero || !atendiendo || !orden) {
+      alert("Por favor, completa todos los campos.");
+      return;
+    }
+
+    const nuevaMesa = {
+      numero,
+      atendiendo,
+      orden,
+      disponible
+    };
+
+    if (editIndex !== null) {
+      mesas[editIndex] = nuevaMesa;
+      editIndex = null;
+    } else {
+      mesas.push(nuevaMesa);
+    }
+
+    renderizarMesas();
+    cerrarFormulario();
+  }
+
+  function renderizarMesas() {
+    const contenedor = document.getElementById('contenedorMesas');
+    contenedor.innerHTML = '';
+
+    mesas.forEach((mesa, index) => {
+      const div = document.createElement('div');
+      div.classList.add('mesa-item');
+      div.innerHTML = `
+        <p><strong>Número de Mesa:</strong> ${mesa.numero}</p>
+        <p><strong>Atiende:</strong> ${mesa.atendiendo}</p>
+        <p><strong>Orden:</strong> ${mesa.orden}</p>
+        <p><strong>Disponible:</strong> ${mesa.disponible}</p>
+        <button class="edit-btn" onclick="editarMesa(${index})">Editar</button>
+      `;
+      contenedor.appendChild(div);
+    });
+
+    document.getElementById('listaMesas').style.display = mesas.length > 0 ? 'block' : 'none';
+  }
+
+  function editarMesa(index) {
+    const mesa = mesas[index];
+    document.getElementById('numeroMesa').value = mesa.numero;
+    document.getElementById('atendiendo').value = mesa.atendiendo;
+    document.getElementById('orden').value = mesa.orden;
+    document.getElementById('disponible').value = mesa.disponible;
+
+    editIndex = index;
+    mostrarFormulario();
+  }
+</script>
+
+</body>
+</html>
