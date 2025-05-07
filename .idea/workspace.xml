@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Intento de trabajo con el service xd">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/start.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Intento de trabajo con el service xd" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -176,7 +173,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745888146706</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Intento de trabajo con el service xd">
+      <option name="closed" value="true" />
+      <created>1746654884039</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746654884039</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Intento de trabajo con el service xd">
+      <option name="closed" value="true" />
+      <created>1746654908471</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746654908471</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
