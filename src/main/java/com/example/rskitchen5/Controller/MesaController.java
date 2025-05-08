@@ -4,14 +4,20 @@ import com.example.rskitchen5.Model.Mesa;
 import com.example.rskitchen5.Repository.MesaRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController
-@RequestMapping("/mesas")
+@Controller
+@RequestMapping("/mesa")
 public class MesaController {
 
     private final MesaRep mesaRepository;
+
+    @GetMapping("/mesas")
+    public String mostrarMesa() {
+        return "mesa";
+    }
 
     @Autowired
     public MesaController(MesaRep mesaRepository) {
