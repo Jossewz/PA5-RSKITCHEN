@@ -5,18 +5,31 @@
   <title>Menú Principal</title>
   <style>
     body {
-      background-color: #87CEEB;
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #87CEEB, #ffffff);
+      overflow-x: hidden;
+      transition: background 0.5s ease;
+    }
+
+    .dark-mode {
+      background: linear-gradient(120deg, #1a1a1a, #444);
+      color: white;
     }
 
     .menu-bar {
       background-color: white;
       padding: 20px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
       text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background-color 0.3s ease;
+    }
+
+    .dark-mode .menu-bar {
+      background-color: #222;
     }
 
     .menu-bar ul {
@@ -39,38 +52,98 @@
       background-color: #1a1a1a;
       color: white;
       display: inline-block;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .menu-bar ul li a:hover {
-      background-color: #333;
+      background-color: #87CEEB;
+      color: black;
     }
 
     .content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(255, 255, 255, 0.8); /* Blanco semitransparente */
-      padding: 40px 60px;
-      border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
       text-align: center;
-      max-width: 600px;
+      padding: 100px 20px;
+      color: #1a1a1a;
+    }
+
+    .dark-mode .content {
+      color: white;
     }
 
     .content h1 {
-      font-size: 42px;
-      color: #1a1a1a;
+      font-size: 48px;
       margin-bottom: 20px;
+      animation: fadeIn 2s ease-in-out;
     }
 
     .content p {
-      font-size: 20px;
-      color: #333;
+      font-size: 22px;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toggle-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 12px;
+      cursor: pointer;
+      z-index: 200;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background: #333;
+    }
+
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      background-color: rgba(255,255,255,0.6);
+      pointer-events: none;
+      animation: float 6s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .menu-bar ul li {
+        display: block;
+        margin: 10px 0;
+      }
+
+      .content h1 {
+        font-size: 32px;
+      }
+
+      .content p {
+        font-size: 18px;
+      }
     }
   </style>
 </head>
 <body>
+
+<button class="toggle-btn" onclick="toggleMode()">Modo Oscuro / Claro</button>
 
 <nav class="menu-bar">
   <ul>
@@ -79,14 +152,31 @@
     <li><a href="/foro">Foro</a></li>
     <li><a href="/producto">Producto</a></li>
     <li><a href="/facturas">Facturas</a></li>
-    <li><a href="/platillos">Platillos</a></li>
+    <li><a href="/platillo">Platillo</a></li>
   </ul>
 </nav>
 
 <div class="content">
   <h1>Bienvenido al Sistema del Restaurante</h1>
-  <p>Selecciona una opción del menú para continuar</p>
+  <p>Selecciona una opción del menú para comenzar</p>
 </div>
+
+<script>
+  function toggleMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+
+  // Crear partículas decorativas
+  for (let i = 0; i < 40; i++) {
+    let particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.width = `${Math.random() * 5 + 2}px`;
+    particle.style.height = particle.style.width;
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.animationDuration = `${Math.random() * 6 + 4}s`;
+    document.body.appendChild(particle);
+  }
+</script>
 
 </body>
 </html>

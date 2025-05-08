@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="ventana start que es el menu">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/mesaa.html" afterDir="false" />
+    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Intento de trabajo con el service xd">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/Facturas.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/Foross.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/platillos.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/logis.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/logis.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mesaa.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mesaa.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/start.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/start.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +43,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Jossewz/PA5-RSKITCHEN.git&quot;,
-    &quot;accountId&quot;: &quot;820362f9-6fbc-4464-b5ee-98a952973cb9&quot;
+    &quot;accountId&quot;: &quot;3dbf38e1-3368-4ab1-9574-23375533c7ed&quot;
   },
   &quot;recentNewPullRequestHead&quot;: {
     &quot;server&quot;: {
@@ -76,7 +81,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "CR",
+    "git-widget-placeholder": "#11 on CR",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5",
     "project.structure.last.edited": "Modules",
@@ -84,11 +89,6 @@
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\POWER\Documents\GitHub\PA5-RSKITCHEN\src\main\resources\templates" />
-    </key>
-  </component>
   <component name="RunManager" selected="Application.Rskitchen5Application">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="PA5-RSKITCHEN" />
@@ -150,6 +150,7 @@
         <item itemvalue="Application.PasswordGen" />
         <item itemvalue="Application.Rskitchen5Application" />
         <item itemvalue="Application.PasswordGen" />
+        <item itemvalue="Application.Rskitchen5Application" />
       </list>
     </recent_temporary>
   </component>
@@ -178,23 +179,7 @@
       <option name="project" value="LOCAL" />
       <updated>1745888146706</updated>
     </task>
-    <task id="LOCAL-00003" summary="Intento de trabajo con el service xd">
-      <option name="closed" value="true" />
-      <created>1746654884039</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1746654884039</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Intento de trabajo con el service xd">
-      <option name="closed" value="true" />
-      <created>1746654908471</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1746654908471</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
