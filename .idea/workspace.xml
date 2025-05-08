@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/FacturaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/ForoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Foro.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/FacturaRep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/ForoRep.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Service/ForoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/LogisController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/LogisController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/MesaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/MesaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PedidoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PedidoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PlatilloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/PlatilloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/RegistroController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/Factura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Model/factura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/PedidoRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/PedidoRep.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Security/Security.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Facturas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/factura.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Foross.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/foro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/logis.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/logis.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mesa.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mesa.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mesaa.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/platillos.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/platillos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/start.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/start.html" afterDir="false" />
-    </list>
+    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Redireccionamiento vistas + back" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,7 +74,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "JA",
+    "git-widget-placeholder": "#13 on JA",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5",
     "project.structure.last.edited": "Modules",
@@ -212,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746687606922</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Redireccionamiento vistas + back">
+      <option name="closed" value="true" />
+      <created>1746698102940</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1746698102941</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -220,6 +204,7 @@
     <MESSAGE value="Add logica del backend" />
     <MESSAGE value="Intento de trabajo con el service xd" />
     <MESSAGE value="html en la main" />
-    <option name="LAST_COMMIT_MESSAGE" value="html en la main" />
+    <MESSAGE value="Redireccionamiento vistas + back" />
+    <option name="LAST_COMMIT_MESSAGE" value="Redireccionamiento vistas + back" />
   </component>
 </project>
