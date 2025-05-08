@@ -22,8 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRep.findByMail(mail)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con mail: " + mail));
 
-        System.out.println("Autenticado: " + user.getMail() + " - Rol: " + user.getRol());
-
         return new org.springframework.security.core.userdetails.User(
                 user.getMail(),
                 user.getPassword(),
