@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elite Facturas | Gestión Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+        --primary-color: #87CEEB;
+        --secondary-color: #1a1a1a;
+        --accent-color: #4682B4;
+        --light-color: #ffffff;
+        --dark-color: #333333;
+        --success-color: #4CAF50;
+        --warning-color: #FF9800;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #E0F7FA 0%, #87CEEB 100%);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        color: var(--secondary-color);
+        overflow-x: hidden;
+    }
+
+    .volver-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background-color: var(--light-color);
+        color: var(--primary-color);
+        border: none;
+        padding: 12px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        z-index: 1000;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .volver-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 20px rgba(0,0,0,0.1);
+        background-color: var(--primary-color);
+        color: var(--light-color);
+    }
+
+    .main-container {
+        padding: 100px 20px 40px;
+        text-align: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .main-container h1 {
+        color: var(--light-color);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+        margin-bottom: 30px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .main-container h1::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 4px;
+        background: var(--light-color);
+        margin: 15px auto;
+        border-radius: 2px;
+    }
+
+    .abrir-btn {
+        background-color: var(--light-color);
+        color: var(--primary-color);
+        border: none;
+        padding: 18px 36px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .abrir-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+        background-color: var(--accent-color);
+        color: var(--light-color);
+    }
+
+    .ventana {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.98);
+        padding: 0;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        z-index: 2000;
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.3);
+        animation: modalFadeIn 0.6s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: translate(-50%, -60%); }
+        to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    .ventana-header {
+        padding: 15px 20px;
+        cursor: move;
+        background: rgba(135, 206, 235, 0.2);
+        border-radius: 20px 20px 0 0;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .ventana-header h2 {
+        color: var(--primary-color);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--secondary-color);
+        transition: var(--transition);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .close-btn:hover {
+        color: var(--accent-color);
+        transform: rotate(90deg);
+        background: rgba(0,0,0,0.05);
+    }
+
+    .ventana-content {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--secondary-color);
+        text-align: left;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid rgba(0,0,0,0.1);
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: var(--transition);
+        background: rgba(255,255,255,0.8);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(135, 206, 235, 0.3);
+        background: var(--light-color);
+    }
+
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    #idFacturaDisplay {
+        background-color: #f5f5f5;
+        font-weight: bold;
+        color: var(--secondary-color);
+    }
+
+    .botones {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        gap: 15px;
+    }
+
+    .botones button {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .guardar-btn {
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: var(--light-color);
+        box-shadow: 0 5px 15px rgba(70, 130, 180, 0.4);
+    }
+
+    .guardar-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(70, 130, 180, 0.6);
+        background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    }
+
+    .cerrar-btn {
+        background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+        color: var(--secondary-color);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .cerrar-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+    }
+
+    .datos-guardados {
+        margin-top: 50px;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 20px;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .datos-guardados h2 {
+        color: var(--primary-color);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        text-align: center;
+        position: relative;
+    }
+
+    .datos-guardados h2::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: var(--primary-color);
+        margin: 15px auto;
+        border-radius: 2px;
+    }
+
+    .factura {
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        padding: 25px;
+        text-align: left;
+        position: relative;
+        transition: var(--transition);
+        border-radius: 12px;
+        margin-bottom: 15px;
+        background: var(--light-color);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .factura:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        border-bottom-color: transparent;
+    }
+
+    .factura strong {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .factura p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    .editar-btn {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        background: linear-gradient(135deg, var(--warning-color), #FFC107);
+        color: var(--light-color);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .editar-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+        background: linear-gradient(135deg, #FFC107, var(--warning-color));
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #95a5a6;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: var(--primary-color);
+    }
+
+    .floating-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: 0 5px 20px rgba(70, 130, 180, 0.6);
+        cursor: pointer;
+        z-index: 100;
+        transition: var(--transition);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    .floating-btn:hover {
+        transform: scale(1.1) rotate(90deg);
+        box-shadow: 0 10px 30px rgba(70, 130, 180, 0.8);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 80px 20px 30px;
+        }
+
+        .main-container h1 {
+            font-size: 2.2rem;
+        }
+
+        .ventana {
+            width: 95%;
+        }
+
+        .ventana-header {
+            padding: 12px 15px;
+        }
+
+        .ventana-content {
+            padding: 15px;
+        }
+
+        .botones {
+            flex-direction: column;
+        }
+
+        .factura {
+            padding: 20px 15px;
+        }
+
+        .editar-btn {
+            position: static;
+            margin-top: 15px;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .main-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .abrir-btn {
+            padding: 15px 25px;
+            font-size: 1rem;
+        }
+
+        .volver-btn {
+            padding: 10px 15px;
+            font-size: 0.9rem;
+        }
+
+        .datos-guardados {
+            padding: 20px;
+        }
+    }
+  </style>
+</head>
+<body>
+
+<button class="volver-btn" onclick="location.href='/'">
+  <i class="fas fa-arrow-left"></i> Volver
+</button>
+
+<div class="main-container">
+  <h1>Gestión de Facturas Premium</h1>
+  <button class="abrir-btn" onclick="mostrarVentana()">
+    <i class="fas fa-plus-circle"></i> Crear Nueva Factura
+  </button>
+</div>
+
+<div class="ventana" id="ventana">
+  <div class="ventana-header" id="ventanaHeader">
+    <h2 id="tituloFormulario">Nueva Factura</h2>
+    <button class="close-btn" onclick="cerrarVentana()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="ventana-content">
+    <div class="form-group">
+      <label>ID de factura</label>
+      <input type="text" id="idFacturaDisplay" disabled>
+    </div>
+
+    <div class="form-group">
+      <label for="nombreCliente">Nombre del cliente</label>
+      <input type="text" id="nombreCliente" required>
+    </div>
+
+    <div class="form-group">
+      <label for="cedula">Cédula</label>
+      <input type="text" id="cedula" required>
+    </div>
+
+    <div class="form-group">
+      <label for="consumio">¿Qué consumió?</label>
+      <textarea id="consumio" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="pago">Total a pagar</label>
+      <div style="position: relative;">
+        <span style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-weight: bold; color: var(--primary-color);">$</span>
+        <input type="number" id="pago" required style="padding-left: 35px;">
+      </div>
+    </div>
+
+    <div class="botones">
+      <button class="guardar-btn" onclick="guardarFactura()">
+        <i class="fas fa-save"></i> Guardar
+      </button>
+      <button class="cerrar-btn" onclick="cerrarVentana()">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="datos-guardados" id="listaFacturas">
+  <h2><i class="fas fa-file-invoice"></i> Facturas Registradas</h2>
+
+  <div id="facturasContainer">
+    <!-- Las facturas se agregarán aquí dinámicamente -->
+  </div>
+
+  <div id="emptyState" class="empty-state" style="display: none;">
+    <i class="fas fa-file-excel"></i>
+    <h3>No hay facturas registradas</h3>
+    <p>Comienza creando tu primera factura</p>
+  </div>
+</div>
+
+<a href="#listaFacturas" class="floating-btn">
+  <i class="fas fa-file-alt"></i>
+</a>
+
+<script>
+  let contador = 1;
+  let modoEdicion = false;
+  let facturaActual = null;
+  let facturas = [];
+  let isDragging = false;
+  let offsetX, offsetY;
+
+  function hacerArrastrable() {
+      const ventana = document.getElementById("ventana");
+      const header = document.getElementById("ventanaHeader");
+
+      header.addEventListener('mousedown', (e) => {
+          if (e.target.tagName === 'BUTTON' || e.target.tagName === 'I') return;
+
+          isDragging = true;
+          const rect = ventana.getBoundingClientRect();
+          offsetX = e.clientX - rect.left;
+          offsetY = e.clientY - rect.top;
+          ventana.style.cursor = 'grabbing';
+          ventana.style.userSelect = 'none';
+      });
+
+      document.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+
+          e.preventDefault();
+
+          // Calcular nueva posición
+          let newX = e.clientX - offsetX;
+          let newY = e.clientY - offsetY;
+
+          // Limitar al área visible
+          const ventanaWidth = ventana.offsetWidth;
+          const ventanaHeight = ventana.offsetHeight;
+
+          newX = Math.max(0, Math.min(newX, window.innerWidth - ventanaWidth));
+          newY = Math.max(0, Math.min(newY, window.innerHeight - ventanaHeight));
+
+          ventana.style.left = `${newX}px`;
+          ventana.style.top = `${newY}px`;
+          ventana.style.transform = 'none';
+      });
+
+      document.addEventListener('mouseup', () => {
+          isDragging = false;
+          ventana.style.cursor = '';
+          ventana.style.userSelect = '';
+      });
+  }
+
+  function mostrarVentana() {
+      const ventana = document.getElementById("ventana");
+      ventana.style.display = "block";
+      ventana.style.left = "50%";
+      ventana.style.top = "50%";
+      ventana.style.transform = "translate(-50%, -50%)";
+
+      document.getElementById("tituloFormulario").textContent = modoEdicion ? "Editar Factura" : "Nueva Factura";
+
+      if (!modoEdicion) {
+          const nuevaId = "FACT-" + String(contador).padStart(4, '0');
+          document.getElementById("idFacturaDisplay").value = nuevaId;
+          limpiarFormulario();
+      }
+  }
+
+  function cerrarVentana() {
+      const ventana = document.getElementById("ventana");
+      ventana.style.animation = "modalFadeIn 0.4s reverse forwards";
+      setTimeout(() => {
+          ventana.style.display = "none";
+          ventana.style.animation = "modalFadeIn 0.6s ease-out";
+          ventana.style.left = "50%";
+          ventana.style.top = "50%";
+          ventana.style.transform = "translate(-50%, -50%)";
+      }, 400);
+      modoEdicion = false;
+      facturaActual = null;
+  }
+
+  function limpiarFormulario() {
+      document.getElementById("nombreCliente").value = "";
+      document.getElementById("cedula").value = "";
+      document.getElementById("consumio").value = "";
+      document.getElementById("pago").value = "";
+  }
+
+  function guardarFactura() {
+      const id = document.getElementById("idFacturaDisplay").value;
+      const nombre = document.getElementById("nombreCliente").value;
+      const cedula = document.getElementById("cedula").value;
+      const consumio = document.getElementById("consumio").value;
+      const pago = document.getElementById("pago").value;
+
+      if (!nombre || !cedula || !consumio || !pago) {
+          alert("Por favor complete todos los campos requeridos.");
+          return;
+      }
+
+      const btnGuardar = document.querySelector('.guardar-btn');
+      btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+      btnGuardar.disabled = true;
+
+      setTimeout(() => {
+          const facturaData = {
+              id,
+              nombre,
+              cedula,
+              consumio,
+              pago,
+              fecha: new Date().toLocaleString()
+          };
+
+          if (modoEdicion && facturaActual) {
+              // Actualizar factura existente
+              const index = facturas.findIndex(f => f.id === facturaData.id);
+              if (index !== -1) {
+                  facturas[index] = facturaData;
+                  actualizarFacturaEnUI(facturaData);
+              }
+          } else {
+              // Agregar nueva factura
+              facturas.push(facturaData);
+              agregarFacturaAUi(facturaData);
+              contador++;
+          }
+
+          btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar';
+          btnGuardar.disabled = false;
+          cerrarVentana();
+          actualizarEstadoVacio();
+      }, 800);
+  }
+
+  function agregarFacturaAUi(factura) {
+      const facturasContainer = document.getElementById("facturasContainer");
+      const facturaDiv = document.createElement("div");
+      facturaDiv.className = "factura";
+      facturaDiv.dataset.id = factura.id;
+      facturaDiv.innerHTML = crearHTMLFactura(factura);
+      facturasContainer.prepend(facturaDiv);
+
+      // Animación de entrada
+      setTimeout(() => {
+          facturaDiv.style.animation = "fadeInUp 0.5s ease-out both";
+      }, 100);
+  }
+
+  function actualizarFacturaEnUI(factura) {
+      const facturaDiv = document.querySelector(`.factura[data-id="${factura.id}"]`);
+      if (facturaDiv) {
+          facturaDiv.innerHTML = crearHTMLFactura(factura);
+      }
+  }
+
+  function crearHTMLFactura(factura) {
+      return `
+          <p><strong>ID:</strong> ${factura.id}</p>
+          <p><strong>Cliente:</strong> ${factura.nombre}</p>
+          <p><strong>Cédula:</strong> ${factura.cedula}</p>
+          <p><strong>Consumo:</strong> ${factura.consumio}</p>
+          <p><strong>Total a pagar:</strong> $${parseFloat(factura.pago).toFixed(2)}</p>
+          <p><small><strong>Fecha:</strong> ${factura.fecha}</small></p>
+          <button class="editar-btn" onclick="editarFactura('${factura.id}')">
+              <i class="fas fa-edit"></i> Editar
+          </button>
+      `;
+  }
+
+  function editarFactura(id) {
+      const factura = facturas.find(f => f.id === id);
+      if (!factura) return;
+
+      facturaActual = id;
+      modoEdicion = true;
+
+      document.getElementById("idFacturaDisplay").value = factura.id;
+      document.getElementById("nombreCliente").value = factura.nombre;
+      document.getElementById("cedula").value = factura.cedula;
+      document.getElementById("consumio").value = factura.consumio;
+      document.getElementById("pago").value = factura.pago;
+
+      mostrarVentana();
+  }
+
+  function actualizarEstadoVacio() {
+      const emptyState = document.getElementById("emptyState");
+      emptyState.style.display = facturas.length === 0 ? "block" : "none";
+  }
+
+  // Inicializar
+  document.addEventListener('DOMContentLoaded', () => {
+      hacerArrastrable();
+      actualizarEstadoVacio();
+
+      // Animación de entrada para las facturas existentes
+      setTimeout(() => {
+          document.querySelectorAll('.factura').forEach((factura, index) => {
+              factura.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s both`;
+          });
+      }, 300);
+  });
+</script>
+
+</body>
+</html>
