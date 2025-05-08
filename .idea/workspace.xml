@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="Redireccionamiento vistas + back" />
+    <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="html en la main">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/Facturas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/Facturas.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,9 +15,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -33,24 +34,6 @@
     &quot;assignee&quot;: &quot;Jossewz&quot;
   }
 }</component>
-  <component name="GitHubPullRequestState"><![CDATA[{
-  "prStates": [
-    {
-      "id": {
-        "id": "PR_kwDOOaIdFM6VWPot",
-        "number": 11
-      },
-      "lastSeen": 1746687741076
-    },
-    {
-      "id": {
-        "id": "PR_kwDOOaIdFM6VaA5l",
-        "number": 13
-      },
-      "lastSeen": 1746698334893
-    }
-  ]
-}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Jossewz/PA5-RSKITCHEN.git&quot;,
@@ -85,21 +68,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.PasswordGen.executor": "Run",
-    "Application.Rskitchen5Application.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "JA",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.PasswordGen.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Rskitchen5Application.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/POWER/Desktop/Uni/Proyecto Aula 5/rskitchen5&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.Rskitchen5Application">
     <configuration name="PasswordGen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.rskitchen5.Security.PasswordGen" />
@@ -206,15 +189,7 @@
       <option name="project" value="LOCAL" />
       <updated>1746687606922</updated>
     </task>
-    <task id="LOCAL-00005" summary="Redireccionamiento vistas + back">
-      <option name="closed" value="true" />
-      <created>1746698102940</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1746698102941</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -222,7 +197,6 @@
     <MESSAGE value="Add logica del backend" />
     <MESSAGE value="Intento de trabajo con el service xd" />
     <MESSAGE value="html en la main" />
-    <MESSAGE value="Redireccionamiento vistas + back" />
-    <option name="LAST_COMMIT_MESSAGE" value="Redireccionamiento vistas + back" />
+    <option name="LAST_COMMIT_MESSAGE" value="html en la main" />
   </component>
 </project>
