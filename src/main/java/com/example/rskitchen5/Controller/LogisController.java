@@ -8,6 +8,6 @@ public class LogisController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "logis";
+        return "logis"; // Esto busca logis.html en /resources/templates si usas Thymeleaf
     }
 }
