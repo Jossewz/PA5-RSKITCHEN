@@ -3,11 +3,14 @@ package com.example.rskitchen5.Controller;
 import com.example.rskitchen5.Model.Pedido;
 import com.example.rskitchen5.Repository.PedidoRep;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/pedidos")
 public class PedidoController {
 
@@ -15,29 +18,39 @@ public class PedidoController {
     private PedidoRep pedidoRep;
 
     @GetMapping
-    public List<Pedido>getAllPedidos(){
-        return pedidoRep.findAll();
+    public String listarPedidos(Model model) {
+        List<Pedido> pedidos = pedidoRep.findAll();
+        model.addAttribute("pedidos", pedidos);
+        return "pedido/lista";
     }
 
-    @PostMapping
-    public Pedido crearPedido(@RequestBody Pedido pedido) {
-        return pedidoRep.save(pedido);
+    @GetMapping("/ver/{id}")
+    public String verPedido(@PathVariable String id, Model model) {
+        Long idLong = Long.parseLong(id);
+        Pedido pedido = pedidoRep.findById(idLong).orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+        model.addAttribute("pedido", pedido);
+        return "pedido/ver";
     }
 
-    @PutMapping("/{id}")
-    public Pedido updatePedido(@PathVariable String id, @RequestBody Pedido pedido) {
-        Pedido existingPedido = pedidoRep.findById(id).orElseThrow();
-        existingPedido.setMesaId(pedido.getMesaId());
-        existingPedido.setFecha(pedido.getFecha());
-        existingPedido.setMeseroId(pedido.getMeseroId());
-        existingPedido.setItems(pedido.getItems());
-        existingPedido.setTotal(pedido.getTotal());
-        existingPedido.setPagado(pedido.isPagado());
-        return pedidoRep.save(existingPedido);
+    @GetMapping("/nuevo")
+    public String mostrarFormularioNuevo(Model model) {
+        model.addAttribute("pedido", new Pedido());
+        return "pedido/formulario";
     }
 
-    @DeleteMapping("/{id}")
-    public void deletePedido(@PathVariable String id) {
-        pedidoRep.deleteById(id);
+    @PostMapping("/guardar")
+    public String guardarPedido(@ModelAttribute Pedido pedido) {
+        pedido.setFecha(LocalDateTime.now());
+        pedido.setPagado(false);
+        pedidoRep.save(pedido);
+        return "redirect:/pedidos";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminarPedido(@PathVariable String id) {
+        Long idLong = Long.parseLong(id);
+        pedidoRep.deleteById(idLong);
+        return "redirect:/pedidos";
     }
 }
+
