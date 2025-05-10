@@ -3,7 +3,10 @@ import com.example.rskitchen5.Model.Mesa;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public interface MesaRep extends MongoRepository<Mesa, String> {
+    Optional<Mesa> findByNum (String num);
 }
