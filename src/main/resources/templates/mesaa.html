@@ -34,37 +34,56 @@
       color: var(--dark-color);
     }
 
-    .top-bar {
+    /* Barra de navegación */
+    .navbar {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--light-color);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
       z-index: 1000;
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
     }
 
-    .volver-btn {
+    .nav-container {
+      display: flex;
+      gap: 10px;
+      max-width: 1200px;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .nav-btn {
       background-color: var(--light-color);
       color: var(--primary-color);
-      border: none;
-      padding: 12px 24px;
+      border: 2px solid var(--primary-color);
+      padding: 10px 20px;
       border-radius: 50px;
-      font-weight: 600;
+      font-weight: bold;
       cursor: pointer;
-      box-shadow: var(--shadow);
       transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-size: 0.9rem;
+      text-align: center;
+      flex: 1;
     }
 
-    .volver-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 20px rgba(0,0,0,0.1);
-      background-color: var(--accent-color);
+    .nav-btn:hover {
+      background-color: var(--primary-color);
       color: var(--light-color);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.active {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      box-shadow: 0 4px 10px rgba(107, 185, 240, 0.3);
     }
 
     .main-container {
-      padding: 100px 20px 40px;
+      padding: 180px 20px 40px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -395,7 +414,7 @@
     /* Responsive design */
     @media (max-width: 768px) {
       .main-container {
-        padding: 80px 20px 30px;
+        padding: 150px 20px 30px;
       }
 
       h1 {
@@ -427,6 +446,15 @@
         margin-top: 15px;
         width: 100%;
       }
+
+      .nav-container {
+        flex-wrap: wrap;
+      }
+
+      .nav-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
     }
 
     @media (max-width: 576px) {
@@ -439,11 +467,6 @@
         font-size: 1rem;
       }
 
-      .volver-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-      }
-
       .output {
         padding: 20px;
       }
@@ -452,12 +475,17 @@
 </head>
 <body>
 
-<div class="top-bar">
-  <a href="/menu" class="volver-btn">
-    <i class="fas fa-arrow-left"></i> Volver
-  </a>
-</div>
-
+<!-- Barra de navegación -->
+<nav class="navbar">
+  <div class="nav-container">
+    <button class="nav-btn active" onclick="location.href='/mesas'">Mesas</button>
+    <button class="nav-btn" onclick="location.href='/meseros'">Meseros</button>
+    <button class="nav-btn" onclick="location.href='/foro'">Foro</button>
+    <button class="nav-btn" onclick="location.href='/productos'">Productos</button>
+    <button class="nav-btn" onclick="location.href='/facturas'">Facturas</button>
+    <button class="nav-btn" onclick="location.href='/platillos'">Platillos</button>
+  </div>
+</nav>
 <div class="main-container">
   <h1><i class="fas fa-utensils"></i> Gestión de Mesas</h1>
   <div style="text-align: center;">

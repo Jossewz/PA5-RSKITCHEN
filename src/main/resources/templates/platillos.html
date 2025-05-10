@@ -29,30 +29,56 @@
       overflow-x: hidden;
     }
 
-    .volver-btn {
+    /* Barra de navegación */
+    .navbar {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--light-color);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+    }
+
+    .nav-container {
+      display: flex;
+      gap: 10px;
+      max-width: 1200px;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .nav-btn {
       background-color: var(--light-color);
       color: var(--primary-color);
-      border: none;
-      padding: 12px 25px;
+      border: 2px solid var(--primary-color);
+      padding: 10px 20px;
       border-radius: 50px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      z-index: 100;
-      font-size: 1rem;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      text-align: center;
+      flex: 1;
     }
 
-    .volver-btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    .nav-btn:hover {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.active {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      box-shadow: 0 4px 10px rgba(107, 185, 240, 0.3);
     }
 
     .main-container {
-      padding: 100px 20px 40px;
+      padding: 180px 20px 40px;
       text-align: center;
       animation: fadeIn 0.8s ease-out;
     }
@@ -349,7 +375,17 @@
 </head>
 <body>
 
-<button class="volver-btn" onclick="location.href='/'">Volver</button>
+<!-- Barra de navegación -->
+<nav class="navbar">
+  <div class="nav-container">
+    <button class="nav-btn" onclick="location.href='/mesas'">Mesas</button>
+    <button class="nav-btn" onclick="location.href='/meseros'">Meseros</button>
+    <button class="nav-btn" onclick="location.href='/foro'">Foro</button>
+    <button class="nav-btn" onclick="location.href='/productos'">Productos</button>
+    <button class="nav-btn" onclick="location.href='/facturas'">Facturas</button>
+    <button class="nav-btn active" onclick="location.href='/platillos'">Platillos</button>
+  </div>
+</nav>
 
 <div class="main-container">
   <h1>Gestión de Platillos</h1>
