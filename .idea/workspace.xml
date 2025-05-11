@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="157caf3a-946d-42da-99ba-e5f2b3cc26f6" name="Changes" comment="redireccionamientos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/MesaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Controller/MesaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/MesaRep.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/rskitchen5/Repository/MesaRep.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/mesa.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/mesa.html" afterDir="false" />
     </list>
@@ -36,22 +37,22 @@
     &quot;assignee&quot;: &quot;Jossewz&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Jossewz/PA5-RSKITCHEN.git",
-    "accountId": "2f331e61-2003-40b3-80c6-3d873fc60434"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Jossewz/PA5-RSKITCHEN.git&quot;,
+    &quot;accountId&quot;: &quot;2f331e61-2003-40b3-80c6-3d873fc60434&quot;
   },
-  "recentNewPullRequestHead": {
-    "server": {
-      "useHttp": false,
-      "host": "github.com",
-      "port": null,
-      "suffix": null
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
     },
-    "owner": "Jossewz",
-    "repository": "PA5-RSKITCHEN"
+    &quot;owner&quot;: &quot;Jossewz&quot;,
+    &quot;repository&quot;: &quot;PA5-RSKITCHEN&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>

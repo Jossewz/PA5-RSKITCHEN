@@ -31,6 +31,7 @@ public class MesaController {
 
     @PostMapping
     public Mesa crearMesa(@RequestBody Mesa mesa) {
+        System.out.println("Petición recibida: " + mesa);
         return mesaRepository.save(mesa);
     }
 

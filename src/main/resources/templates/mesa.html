@@ -2,55 +2,160 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Mesa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        form {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input[type="number"],
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"] {
+            margin-left: 10px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success {
+            color: #27ae60;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<h1>Formulario de Mesa</h1>
+<h1>Registro de Mesa</h1>
 <form id="mesaForm">
-    <label for="num">Número de mesa:</label>
-    <input type="number" id="num" name="num" required><br><br>
+    <div>
+        <label for="num">Número de mesa:</label>
+        <input type="number" id="num" name="num" required min="1">
+        <div id="numError" class="error"></div>
+    </div>
 
-    <label for="ocupado">¿Ocupado?</label>
-    <input type="checkbox" id="ocupado" name="ocupado"><br><br>
+    <div>
+        <label for="ocupado">¿Ocupado?</label>
+        <input type="checkbox" id="ocupado" name="ocupado">
+    </div>
 
-    <label for="meseroId">ID del mesero:</label>
-    <input type="text" id="meseroId" name="meseroId"><br><br>
+    <div>
+        <label for="meseroId">ID del mesero (opcional):</label>
+        <input type="text" id="meseroId" name="meseroId">
+    </div>
 
-    <label for="pedidosId">IDs de pedidos (separados por coma):</label>
-    <input type="text" id="pedidosId" name="pedidosId"><br><br>
+    <div>
+        <label for="pedidosId">IDs de pedidos (separados por coma, opcional):</label>
+        <input type="text" id="pedidosId" name="pedidosId" placeholder="Ej: 101, 102, 103">
+        <div id="pedidosError" class="error"></div>
+    </div>
 
     <button type="submit">Guardar Mesa</button>
+    <div id="message" class="success"></div>
 </form>
 
 <script>
-    document.getElementById("mesaForm").addEventListener("submit", function(e) {
+    document.getElementById("mesaForm").addEventListener("submit", async function(e) {
         e.preventDefault();
 
+        // Resetear mensajes de error
+        document.querySelectorAll('.error').forEach(el => el.textContent = '');
+        document.getElementById('message').textContent = '';
+
+        // Validación del número de mesa
+        const numInput = document.getElementById("num");
+        if (!numInput.value || parseInt(numInput.value) <= 0) {
+            document.getElementById("numError").textContent = "Por favor ingrese un número de mesa válido";
+            return;
+        }
+
+        // Validación de IDs de pedidos
+        const pedidosInput = document.getElementById("pedidosId");
+        const pedidosIds = pedidosInput.value
+            .split(",")
+            .map(id => id.trim())
+            .filter(id => id.length > 0);
+
+        // Verificar que todos los IDs sean numéricos si existen
+        if (pedidosIds.length > 0) {
+            const invalidIds = pedidosIds.filter(id => !/^\d+$/.test(id));
+            if (invalidIds.length > 0) {
+                document.getElementById("pedidosError").textContent =
+                    `IDs inválidos: ${invalidIds.join(', ')}. Solo se permiten números`;
+                return;
+            }
+        }
+
+        // Preparar datos para enviar
         const data = {
-            num: parseInt(document.getElementById("num").value),
+            num: parseInt(numInput.value),
             ocupado: document.getElementById("ocupado").checked,
-            meseroId: document.getElementById("meseroId").value,
-            pedidosId: document.getElementById("pedidosId").value
-                .split(",")
-                .map(id => id.trim())
-                .filter(id => id.length > 0)
+            meseroId: document.getElementById("meseroId").value.trim() || null,
+            pedidosId: pedidosIds.length > 0 ? pedidosIds : null
         };
 
-        fetch("/mesa", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
+        try {
+            const response = await fetch("/mesa", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
             if (response.ok) {
-                alert("Mesa guardada correctamente.");
+                const result = await response.json();
+                document.getElementById('message').textContent = `Mesa #${result.num} guardada correctamente!`;
                 document.getElementById("mesaForm").reset();
             } else {
-                alert("Error al guardar la mesa.");
+                const error = await response.json();
+                throw new Error(error.message || "Error al guardar la mesa");
             }
-        });
+        } catch (error) {
+            document.getElementById('message').textContent = error.message;
+            document.getElementById('message').className = 'error';
+            console.error("Error:", error);
+        }
     });
 </script>
 </body>
