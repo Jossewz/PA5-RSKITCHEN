@@ -54,6 +54,28 @@
       padding: 0 20px;
     }
 
+    .home-btn {
+      background-color: var(--primary-color);
+      color: var(--light-color);
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.9rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .home-btn:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+
     .nav-btn {
       background-color: var(--light-color);
       color: var(--primary-color);
@@ -411,6 +433,10 @@
         flex-wrap: wrap;
       }
 
+      .home-btn {
+        display: none; /* Ocultar en móviles para ahorrar espacio */
+      }
+
       .nav-btn {
         padding: 8px 12px;
         font-size: 0.8rem;
@@ -453,6 +479,9 @@
 <!-- Barra de navegación -->
 <nav class="navbar">
   <div class="nav-container">
+    <button class="home-btn" onclick="location.href='/menu'" title="Ir al Menú Principal">
+      <i class="fas fa-home"></i>
+    </button>
     <button class="nav-btn" onclick="location.href='/mesas'">Mesas</button>
     <button class="nav-btn" onclick="location.href='/meseros'">Meseros</button>
     <button class="nav-btn" onclick="location.href='/foro'">Foro</button>

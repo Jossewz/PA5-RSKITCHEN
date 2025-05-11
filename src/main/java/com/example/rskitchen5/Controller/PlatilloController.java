@@ -20,24 +20,23 @@ public class PlatilloController {
     }
 
     @PostMapping
-    public Platillo crearPlatillo(@RequestBody Platillo platillo){
+    public Platillo crearPlatillo(@RequestBody Platillo platillo) {
         return platilloRep.save(platillo);
     }
 
     @PutMapping("/{id}")
-    public Platillo updatePlatillo(@PathVariable String id, @RequestBody Platillo platillo) {
-        Platillo existingPlatillo = platilloRep.findById(id).orElseThrow();
+    public Platillo updatePlatillo(@PathVariable Long id, @RequestBody Platillo platillo) {
+        Platillo existingPlatillo = platilloRep.findById(id)
+                .orElseThrow(() -> new RuntimeException("Platillo no encontrado con id: " + id));
         existingPlatillo.setName(platillo.getName());
         existingPlatillo.setCant(platillo.getCant());
         existingPlatillo.setPrice(platillo.getPrice());
-        existingPlatillo.setIngredietns(platillo.getIngredietns());
-        existingPlatillo.setId(platillo.getId());
+        existingPlatillo.setIngredients(platillo.getIngredients());  // Cambié el nombre aquí también
         return platilloRep.save(existingPlatillo);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProducto(@PathVariable String id) {
+    public void deletePlatillo(@PathVariable Long id) {
         platilloRep.deleteById(id);
     }
-
 }

@@ -2,508 +2,195 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestión de Platillos</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-    :root {
-      --primary-color: #87CEEB;
-      --secondary-color: #6BB9F0;
-      --accent-color: #FF9800;
-      --text-color: #333;
-      --light-color: #FFF;
-      --shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-      min-height: 100vh;
-      color: var(--text-color);
-      overflow-x: hidden;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
     }
 
-    /* Barra de navegación */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: var(--light-color);
-      box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      padding: 15px 0;
+    header {
+        background-color: #003366;
+        color: white;
+        padding: 10px;
+        text-align: center;
     }
 
-    .nav-container {
-      display: flex;
-      gap: 10px;
-      max-width: 1200px;
-      width: 100%;
-      padding: 0 20px;
+    h1, h2 {
+        margin: 0;
     }
 
-    .nav-btn {
-      background-color: var(--light-color);
-      color: var(--primary-color);
-      border: 2px solid var(--primary-color);
-      padding: 10px 20px;
-      border-radius: 50px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.9rem;
-      text-align: center;
-      flex: 1;
+    main {
+        padding: 20px;
     }
 
-    .nav-btn:hover {
-      background-color: var(--primary-color);
-      color: var(--light-color);
-      transform: translateY(-2px);
+    .form-section, .platillos-list {
+        margin: 20px 0;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .nav-btn.active {
-      background-color: var(--primary-color);
-      color: var(--light-color);
-      box-shadow: 0 4px 10px rgba(107, 185, 240, 0.3);
+    form input {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
     }
 
-    .main-container {
-      padding: 180px 20px 40px;
-      text-align: center;
-      animation: fadeIn 0.8s ease-out;
+    form button {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
-    .main-container h1 {
-      color: var(--light-color);
-      font-size: 2.8rem;
-      margin-bottom: 40px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-      position: relative;
-      display: inline-block;
+    form button:hover {
+        background-color: #45a049;
     }
 
-    .main-container h1::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: var(--light-color);
-      border-radius: 2px;
+    #platillo-list {
+        list-style-type: none;
+        padding: 0;
     }
 
-    .abrir-btn {
-      background-color: var(--light-color);
-      color: var(--primary-color);
-      border: none;
-      padding: 18px 36px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      margin-bottom: 30px;
-      position: relative;
-      overflow: hidden;
+    #platillo-list li {
+        padding: 10px;
+        background-color: #fff;
+        margin: 10px 0;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .abrir-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: 0.5s;
+    button.edit, button.delete {
+        margin-left: 10px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
     }
 
-    .abrir-btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    button.edit {
+        background-color: #ff9800;
+        color: white;
     }
 
-    .abrir-btn:hover::before {
-      left: 100%;
+    button.delete {
+        background-color: #f44336;
+        color: white;
     }
 
-    .ventana {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(255, 255, 255, 0.98);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-      z-index: 1000;
-      width: 90%;
-      max-width: 500px;
-      backdrop-filter: blur(10px);
-      animation: modalFadeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      border: 1px solid rgba(255,255,255,0.3);
+    button.edit:hover {
+        background-color: #e68900;
     }
 
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: translate(-50%, -60%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
-    }
-
-    .ventana h2 {
-      color: var(--primary-color);
-      margin: 0 0 30px;
-      font-size: 1.8rem;
-      text-align: center;
-      position: relative;
-    }
-
-    .ventana h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: var(--primary-color);
-      border-radius: 3px;
-    }
-
-    .ventana label {
-      display: block;
-      margin: 25px 0 8px;
-      color: #555;
-      font-weight: 600;
-      font-size: 1rem;
-      text-align: left;
-    }
-
-    .ventana input, .ventana textarea {
-      width: 100%;
-      padding: 15px 20px;
-      border: 2px solid #e0e0e0;
-      border-radius: 12px;
-      font-family: 'Poppins', sans-serif;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      background-color: rgba(255,255,255,0.8);
-    }
-
-    .ventana input:focus, .ventana textarea:focus {
-      border-color: var(--primary-color);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
-      background-color: var(--light-color);
-    }
-
-    .ventana textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .botones {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 40px;
-      gap: 15px;
-    }
-
-    .botones button {
-      padding: 15px 25px;
-      border: none;
-      border-radius: 12px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      flex: 1;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .guardar-btn {
-      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-      color: var(--light-color);
-      box-shadow: 0 4px 15px rgba(107, 185, 240, 0.3);
-    }
-
-    .guardar-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(107, 185, 240, 0.4);
-    }
-
-    .cerrar-btn {
-      background-color: #f1f1f1;
-      color: #555;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    }
-
-    .cerrar-btn:hover {
-      background-color: #e0e0e0;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    }
-
-    .datos-guardados {
-      margin: 50px auto;
-      background-color: var(--light-color);
-      padding: 40px;
-      border-radius: 20px;
-      max-width: 800px;
-      box-shadow: var(--shadow);
-      animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .datos-guardados h2 {
-      color: var(--primary-color);
-      margin: 0 0 30px;
-      text-align: center;
-      font-size: 1.8rem;
-      position: relative;
-    }
-
-    .datos-guardados h2::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: var(--primary-color);
-      border-radius: 3px;
-    }
-
-    .platillo {
-      border-bottom: 1px solid #eee;
-      padding: 25px;
-      text-align: left;
-      position: relative;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      margin-bottom: 15px;
-      border-radius: 15px;
-      background-color: rgba(255,255,255,0.8);
-    }
-
-    .platillo:hover {
-      background-color: var(--light-color);
-      transform: translateX(10px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    }
-
-    .platillo:last-child {
-      margin-bottom: 0;
-    }
-
-    .platillo strong {
-      color: #555;
-      font-weight: 600;
-    }
-
-    .editar-btn {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: linear-gradient(135deg, var(--accent-color) 0%, #FFB74D 100%);
-      color: var(--light-color);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .editar-btn:hover {
-      transform: translateY(-50%) scale(1.05);
-      box-shadow: 0 6px 15px rgba(255, 152, 0, 0.4);
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 50px 0;
-      color: #888;
-      font-size: 1.1rem;
-    }
-
-    .empty-state img {
-      width: 120px;
-      opacity: 0.5;
-      margin-bottom: 20px;
-      filter: grayscale(100%) brightness(1.5);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Efecto de overlay al abrir el modal */
-    .overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 999;
-      backdrop-filter: blur(3px);
+    button.delete:hover {
+        background-color: #e53935;
     }
   </style>
 </head>
 <body>
-
-<!-- Barra de navegación -->
-<nav class="navbar">
-  <div class="nav-container">
-    <button class="nav-btn" onclick="location.href='/mesas'">Mesas</button>
-    <button class="nav-btn" onclick="location.href='/meseros'">Meseros</button>
-    <button class="nav-btn" onclick="location.href='/foro'">Foro</button>
-    <button class="nav-btn" onclick="location.href='/productos'">Productos</button>
-    <button class="nav-btn" onclick="location.href='/facturas'">Facturas</button>
-    <button class="nav-btn active" onclick="location.href='/platillos'">Platillos</button>
-  </div>
-</nav>
-
-<div class="main-container">
+<header>
   <h1>Gestión de Platillos</h1>
-  <button class="abrir-btn" onclick="mostrarVentana()">Crear Platillo</button>
-</div>
+</header>
 
-<div class="overlay" id="overlay"></div>
+<main>
+  <section class="form-section">
+    <h2>Crear Platillo</h2>
+    <form id="create-form">
+      <input type="text" id="name" placeholder="Nombre del platillo" required>
+      <input type="number" id="price" placeholder="Precio" required>
+      <input type="text" id="cant" placeholder="Cantidad disponible" required>
+      <input type="text" id="ingredients" placeholder="Ingredientes (separados por coma)" required>
+      <button type="submit">Crear Platillo</button>
+    </form>
+  </section>
 
-<div class="ventana" id="ventana">
-  <h2 id="tituloFormulario">Nuevo Platillo</h2>
-
-  <label for="nombre">Nombre del platillo</label>
-  <input type="text" id="nombre" required placeholder="Ej: Paella Valenciana">
-
-  <label for="ingredientes">Ingredientes</label>
-  <textarea id="ingredientes" rows="4" required placeholder="Lista los ingredientes separados por comas"></textarea>
-
-  <label for="precio">Precio de venta</label>
-  <input type="number" id="precio" required placeholder="Ej: 12.99" step="0.01" min="0">
-
-  <div class="botones">
-    <button class="guardar-btn" onclick="guardarPlatillo()">Guardar</button>
-    <button class="cerrar-btn" onclick="cerrarVentana()">Cerrar</button>
-  </div>
-</div>
-
-<div class="datos-guardados" id="listaPlatillos">
-  <h2>Platillos Guardados</h2>
-  <div class="empty-state" id="emptyState">
-    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjODdDZUUiIiBkPSJNNDY0IDI1NkEyMDggMjA4IDAgMSAwIDQ4IDI1NmEyMDggMjA4IDAgMSAwIDQxNiAwek0wIDI1NkEyNTYgMjU2IDAgMSAxIDUxMiAyNTZBMjU2IDI1NiAwIDEgMSAwIDI1NnoiLz48cGF0aCBmaWxsPSIjODdDZUUiIiBkPSJNMzMwLjcgMzUyLjdDMzI1LjUgMzU3LjkgMzE3LjQgMzYwIDMwOS4zIDM1Ny45bC0xNjAtODBDMTM2LjIgMjcyLjcgMTM2IDI2NC45IDE0MC4xIDI2MC44YzQuMS00LjEgMTEuOS00IDI0LjcgNi40bDEzMC4zIDY1LjIgMTMwLjMtNjUuMmMxMi44LTEwLjQgMjAuNi0xMC41IDI0LjctNi40czEwLjUgMjAuNi0uMSAzNC40bC0xMTIgMTEyek0xNDAuMSAxNjQuOGwtMTEyIDExMmMtMTAuNSAxMy44LTEwLjQgMjAuNi02LjMgMjQuN3MxMC45IDQuMSAyNC43LTYuNGwxMzAuMy02NS4yTDMwOS4zIDI3OGMxMy44IDEwLjQgMjAuNiAxMC41IDI0LjcgNi40czQuMS0xMS45LTYuMy0yNC43bC0xMTItMTEyYy0xMy4xLTE3LjEtMzUuOS0xNy4xLTc1LjYgMHoiLz48L3N2Zz4=" alt="No hay platillos">
-    <p>No hay platillos registrados aún</p>
-  </div>
-</div>
+  <section class="platillos-list">
+    <h2>Lista de Platillos</h2>
+    <ul id="platillo-list">
+      <!-- Aquí se mostrarán los platillos -->
+    </ul>
+  </section>
+</main>
 
 <script>
-  let modoEdicion = false;
-  let platilloActual = null;
+  // URL base de tu backend
+  const API_URL = 'http://localhost:8080/platillos';
 
-  function mostrarVentana() {
-    document.getElementById("overlay").style.display = "block";
-    document.getElementById("ventana").style.display = "block";
-    document.getElementById("tituloFormulario").textContent = modoEdicion ? "Editar Platillo" : "Nuevo Platillo";
+  // Función para obtener la lista de platillos desde el backend
+  async function getPlatillos() {
+      const response = await fetch(API_URL);
+      const platillos = await response.json();
 
-    if (!modoEdicion) {
-      document.getElementById("nombre").value = "";
-      document.getElementById("ingredientes").value = "";
-      document.getElementById("precio").value = "";
-    }
+      const platilloList = document.getElementById('platillo-list');
+      platilloList.innerHTML = '';
+
+      platillos.forEach(platillo => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+              <strong>${platillo.name}</strong>
+              <p>Precio: $${platillo.price}</p>
+              <p>Cantidad: ${platillo.cant}</p>
+              <p>Ingredientes: ${platillo.ingredietns.join(', ')}</p>
+              <button class="edit" onclick="editPlatillo('${platillo.id}')">Editar</button>
+              <button class="delete" onclick="deletePlatillo('${platillo.id}')">Eliminar</button>
+          `;
+          platilloList.appendChild(li);
+      });
   }
 
-  function cerrarVentana() {
-    document.getElementById("overlay").style.display = "none";
-    document.getElementById("ventana").style.display = "none";
-    modoEdicion = false;
-    platilloActual = null;
-  }
+  // Función para crear un nuevo platillo
+  document.getElementById('create-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
 
-  function guardarPlatillo() {
-    const nombre = document.getElementById("nombre").value.trim();
-    const ingredientes = document.getElementById("ingredientes").value.trim();
-    const precio = parseFloat(document.getElementById("precio").value).toFixed(2);
+      const platillo = {
+          name: document.getElementById('name').value,
+          price: parseFloat(document.getElementById('price').value),
+          cant: document.getElementById('cant').value,
+          ingredietns: document.getElementById('ingredients').value.split(',').map(ingredient => ingredient.trim())
+      };
 
-    if (!nombre || !ingredientes || isNaN(precio) || precio <= 0) {
-      alert("Por favor complete todos los campos correctamente.");
-      return;
-    }
+      const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(platillo)
+      });
 
-    if (modoEdicion && platilloActual) {
-      platilloActual.innerHTML = `
-        <strong>Nombre:</strong> ${nombre}<br>
-        <strong>Ingredientes:</strong> ${ingredientes}<br>
-        <strong>Precio:</strong> $${precio}
-        <button class="editar-btn" onclick="editarPlatillo(this)">Editar</button>
-      `;
-    } else {
-      const contenedor = document.getElementById("listaPlatillos");
-      const emptyState = document.getElementById("emptyState");
-
-      if (emptyState) {
-        emptyState.remove();
+      if (response.ok) {
+          getPlatillos();  // Actualiza la lista de platillos
+          document.getElementById('create-form').reset();  // Limpia el formulario
+      } else {
+          alert('Error al crear el platillo');
       }
+  });
 
-      const platilloDiv = document.createElement("div");
-      platilloDiv.className = "platillo";
-      platilloDiv.innerHTML = `
-        <strong>Nombre:</strong> ${nombre}<br>
-        <strong>Ingredientes:</strong> ${ingredientes}<br>
-        <strong>Precio:</strong> $${precio}
-        <button class="editar-btn" onclick="editarPlatillo(this)">Editar</button>
-      `;
-      contenedor.appendChild(platilloDiv);
-    }
-
-    cerrarVentana();
+  // Función para editar un platillo (puedes agregar un formulario similar para editar)
+  function editPlatillo(id) {
+      alert('Función de editar aún no implementada para el platillo con ID: ' + id);
   }
 
-  function editarPlatillo(boton) {
-    const platilloDiv = boton.parentElement;
-    const contenido = platilloDiv.innerHTML;
+  // Función para eliminar un platillo
+  async function deletePlatillo(id) {
+      const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
 
-    const nombreMatch = contenido.match(/<strong>Nombre:<\/strong> ([^<]+)/);
-    const ingredientesMatch = contenido.match(/<strong>Ingredientes:<\/strong> ([^<]+)/);
-    const precioMatch = contenido.match(/<strong>Precio:<\/strong> \$([^<]+)/);
-
-    if (nombreMatch && ingredientesMatch && precioMatch) {
-      document.getElementById("nombre").value = nombreMatch[1].trim();
-      document.getElementById("ingredientes").value = ingredientesMatch[1].trim();
-      document.getElementById("precio").value = precioMatch[1].trim();
-
-      modoEdicion = true;
-      platilloActual = platilloDiv;
-
-      mostrarVentana();
-    }
+      if (response.ok) {
+          getPlatillos();  // Actualiza la lista de platillos
+      } else {
+          alert('Error al eliminar el platillo');
+      }
   }
 
-  document.getElementById("overlay").addEventListener("click", cerrarVentana);
+  // Inicializa la lista de platillos al cargar la página
+  getPlatillos();
 </script>
-
 </body>
 </html>
