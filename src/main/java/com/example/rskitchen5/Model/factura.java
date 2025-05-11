@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Document(collection = "factura")
-public class Factura {
+public class factura {
 
     @Id
     private String id;
@@ -17,10 +17,10 @@ public class Factura {
     private LocalDateTime fecha;
     private double total;
 
-    public Factura() {
+    public factura() {
     }
 
-    public Factura(LocalDateTime fecha, String id, String mesaId, String pedidoId, String meseroId, double total) {
+    public factura(LocalDateTime fecha, String id, String mesaId, String pedidoId, String meseroId, double total) {
         this.fecha = fecha;
         this.id = id;
         this.mesaId = mesaId;

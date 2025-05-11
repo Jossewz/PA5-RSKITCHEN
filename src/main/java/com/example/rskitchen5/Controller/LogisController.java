@@ -10,4 +10,9 @@ public class LogisController {
     public String showLoginPage() {
         return "logis";
     }
+
+    @GetMapping("/home")
+    public String showHomePage() {
+        return "start";
+    }
 }
