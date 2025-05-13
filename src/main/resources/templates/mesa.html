@@ -424,27 +424,22 @@
 <div id="notification" class="notification" style="display: none;"></div>
 
 <script>
-  // Variables globales
+
   let mesas = [];
   let mesaEditando = null;
 
-  // Inicialización cuando el DOM esté listo
   document.addEventListener('DOMContentLoaded', () => {
-    // Configurar eventos
+
     document.getElementById('btnLlenarMesa').addEventListener('click', mostrarModal);
     document.getElementById('btnCerrarModal').addEventListener('click', cerrarModal);
     document.getElementById('btnCancelarModal').addEventListener('click', cerrarModal);
     document.getElementById('btnGuardarMesa').addEventListener('click', guardarMesa);
-
-    // Cargar mesas iniciales (vacías al principio)
     cargarMesas();
   });
 
-  // Función para mostrar el modal
   function mostrarModal() {
     const modal = document.getElementById('mesaModal');
 
-    // Configurar para nueva mesa o edición
     if (!mesaEditando) {
       document.getElementById('mesaForm').reset();
       document.getElementById('modalTitle').textContent = 'Nueva Mesa';
@@ -460,7 +455,6 @@
     }, 10);
   }
 
-  // Función para cerrar el modal
   function cerrarModal() {
     const modal = document.getElementById('mesaModal');
     modal.style.opacity = '0';
@@ -472,7 +466,6 @@
     }, 300);
   }
 
-  // Función para guardar mesa (con conexión a tu backend)
   async function guardarMesa() {
     const btnGuardar = document.getElementById('btnGuardarMesa');
     const form = document.getElementById('mesaForm');
@@ -492,10 +485,9 @@
     btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
 
     try {
-      // Asegúrate que la URL sea correcta
       const url = mesaEditando
-        ? `http://localhost:8080/api/mesa/${mesaEditando.id}`
-        : 'http://localhost:8080/api/mesa';
+        ? `http://localhost:8080/mesa/${mesaEditando.id}`
+        : 'http://localhost:8080/mesa';
 
       const response = await fetch(url, {
         method: mesaEditando ? 'PUT' : 'POST',
@@ -508,7 +500,6 @@
 
       console.log('Respuesta del servidor:', response);
 
-      // Verificar si la respuesta es JSON
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         const text = await response.text();
@@ -539,7 +530,6 @@
       console.error('Error en guardarMesa:', error);
       mostrarNotificacion(error.message || 'Error al comunicarse con el servidor', 'error');
 
-      // Depuración adicional:
       console.log('Datos enviados:', mesaData);
       if (response) {
         console.log('Respuesta del servidor:', {
@@ -553,11 +543,10 @@
     }
   }
 
-  // Función para cargar mesas desde tu backend
 async function cargarMesas() {
     try {
-      console.log('Cargando mesas desde /api/mesa/listar...');
-      const response = await fetch('/api/mesa/listar'); // Petición a la nueva ruta
+      console.log('Cargando mesas desde /mesa/listar...');
+      const response = await fetch('/mesa/listar');
       console.log('Respuesta del servidor:', response);
 
       if (!response.ok) {
@@ -585,7 +574,6 @@ async function cargarMesas() {
     }
   }
 
-  // Función para renderizar las mesas en la UI
   function renderizarMesas() {
     const contenedor = document.getElementById('contenedorMesas');
     const emptyState = document.getElementById('emptyState');
@@ -621,7 +609,6 @@ async function cargarMesas() {
     });
   }
 
-  // Función para editar mesa
   function editarMesa(id) {
     mesaEditando = mesas.find(m => m.id === id);
     if (mesaEditando) {
@@ -632,7 +619,6 @@ async function cargarMesas() {
     }
   }
 
-  // Función para eliminar mesa
   async function eliminarMesa(id) {
     if (!confirm('¿Está seguro de eliminar esta mesa?')) return;
 
@@ -645,7 +631,6 @@ async function cargarMesas() {
         throw new Error('Error al eliminar mesa');
       }
 
-      // Eliminar de la lista local
       mesas = mesas.filter(m => m.id !== id);
       renderizarMesas();
       mostrarNotificacion('Mesa eliminada correctamente', 'success');
@@ -656,7 +641,6 @@ async function cargarMesas() {
     }
   }
 
-  // Función para mostrar notificaciones
   function mostrarNotificacion(mensaje, tipo) {
     const notification = document.getElementById('notification');
     notification.textContent = mensaje;
@@ -668,7 +652,6 @@ async function cargarMesas() {
     }, 5000);
   }
 
-  // Hacer funciones accesibles globalmente
   window.editarMesa = editarMesa;
   window.eliminarMesa = eliminarMesa;
 </script>

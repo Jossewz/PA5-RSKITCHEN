@@ -5,13 +5,15 @@ import com.example.rskitchen5.Repository.MesaRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
-@RestController
-@RequestMapping("/api/mesa")
+@Controller
+@RequestMapping("/mesa")
 public class MesaController {
 
     private final MesaRep mesaRepository;
@@ -21,17 +23,17 @@ public class MesaController {
         this.mesaRepository = mesaRepository;
     }
 
-    @GetMapping // Para servir el HTML de la página (si es necesario)
-    public String mostrarVistaMesa() {
-        return "mesa"; // Retorna el nombre de la vista (archivo HTML)
+    @GetMapping("")
+    public String mostrarVistaMesa(Model model) {
+        model.addAttribute("listar",mesaRepository.findAll());
+        return "/mesa";
     }
 
-    @GetMapping("/listar") // Nueva ruta para obtener los datos de las mesas en JSON
+    @GetMapping("/listar")
     public List<Mesa> listarMesas() {
         return mesaRepository.findAll();
     }
 
-    // El resto de tu controlador (POST, GET por ID, PUT, DELETE) se queda igual
     @PostMapping
     public ResponseEntity<?> crearMesa(@RequestBody Mesa mesa) {
         try {

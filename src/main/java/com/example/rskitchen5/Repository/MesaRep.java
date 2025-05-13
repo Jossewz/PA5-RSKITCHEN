@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface MesaRep extends MongoRepository<Mesa, String> {
-    Optional<Mesa> findById (Long id);
+    Optional<Mesa> findById (String id);
 }
