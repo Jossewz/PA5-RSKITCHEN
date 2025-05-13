@@ -15,6 +15,7 @@
       --dark-color: #333333;
       --success-color: #4CAF50;
       --warning-color: #FF9800;
+      --danger-color: #f44336;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
@@ -112,47 +113,41 @@
       color: var(--light-color);
     }
 
-    .form-container {
+    /* Modal Styles */
+    #mesaModal {
       display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(255, 255, 255, 0.98);
-      padding: 0;
-      border-radius: 20px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
       z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 15px;
       width: 90%;
       max-width: 500px;
-      max-height: 90vh;
-      overflow-y: auto;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.3);
-      animation: modalFadeIn 0.6s ease-out;
+      box-shadow: var(--shadow);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
     }
 
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: translate(-50%, -60%); }
-      to { opacity: 1; transform: translate(-50%, -50%); }
-    }
-
-    .form-header {
-      padding: 15px 20px;
-      cursor: move;
-      background: rgba(58, 142, 219, 0.2);
-      border-radius: 20px 20px 0 0;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
+    .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 20px;
     }
 
-    .form-header h2 {
+    .modal-header h2 {
       color: var(--primary-color);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.5rem;
       margin: 0;
     }
 
@@ -163,190 +158,133 @@
       cursor: pointer;
       color: var(--secondary-color);
       transition: var(--transition);
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
     }
 
     .close-btn:hover {
-      color: var(--accent-color);
+      color: var(--danger-color);
       transform: rotate(90deg);
-      background: rgba(0,0,0,0.05);
-    }
-
-    .form-content {
-      padding: 20px;
     }
 
     .form-group {
-      margin-bottom: 25px;
-      position: relative;
+      margin-bottom: 20px;
     }
 
     .form-group label {
       display: block;
       margin-bottom: 8px;
       font-weight: 500;
-      color: var(--secondary-color);
-      text-align: left;
     }
 
     .form-group input,
-    .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 15px 20px;
-      border: 2px solid rgba(0,0,0,0.1);
-      border-radius: 12px;
-      font-size: 1rem;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
       transition: var(--transition);
-      background: rgba(255,255,255,0.8);
     }
 
     .form-group input:focus,
-    .form-group textarea:focus,
     .form-group select:focus {
-      outline: none;
       border-color: var(--primary-color);
-      box-shadow: 0 0 0 4px rgba(58, 142, 219, 0.3);
-      background: var(--light-color);
-    }
-
-    .form-group textarea {
-      min-height: 120px;
-      resize: vertical;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(58, 142, 219, 0.2);
     }
 
     .button-group {
       display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
       gap: 15px;
-    }
-
-    .button-group button {
-      padding: 15px 30px;
-      border: none;
-      border-radius: 50px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      margin-top: 30px;
     }
 
     .guardar-btn {
-      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-      color: var(--light-color);
-      box-shadow: 0 5px 15px rgba(70, 130, 180, 0.4);
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex: 1;
+      transition: var(--transition);
     }
 
     .guardar-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(70, 130, 180, 0.6);
-      background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+      background-color: #2a7ec4;
+      transform: translateY(-2px);
     }
 
     .cerrar-btn {
-      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+      background-color: #f0f0f0;
       color: var(--secondary-color);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex: 1;
+      transition: var(--transition);
     }
 
     .cerrar-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+      background-color: #e0e0e0;
+      transform: translateY(-2px);
     }
 
-    .output {
-      margin-top: 50px;
+    /* Mesas List */
+    .mesas-container {
       background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 20px;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-top: 40px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .output h2 {
-      color: var(--primary-color);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 30px;
-      text-align: center;
-      position: relative;
-    }
-
-    .output h2::after {
-      content: '';
-      display: block;
-      width: 80px;
-      height: 4px;
-      background: var(--primary-color);
-      margin: 15px auto;
-      border-radius: 2px;
     }
 
     .mesa-item {
       border-bottom: 1px solid rgba(0,0,0,0.1);
       padding: 25px;
-      text-align: left;
-      position: relative;
-      transition: var(--transition);
-      border-radius: 12px;
       margin-bottom: 15px;
-      background: var(--light-color);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      background: white;
+      transition: var(--transition);
+      position: relative;
     }
 
     .mesa-item:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-      border-bottom-color: transparent;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
-    .mesa-item strong {
+    .mesa-info strong {
       color: var(--primary-color);
-      font-weight: 600;
     }
 
-    .mesa-item p {
-      margin-bottom: 10px;
-      line-height: 1.6;
+    .mesa-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      justify-content: flex-end;
     }
 
-    .edit-btn {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      background: linear-gradient(135deg, var(--warning-color), #FFC107);
-      color: var(--light-color);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 50px;
+    .action-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: var(--transition);
-      box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
       display: flex;
       align-items: center;
       gap: 8px;
+      font-size: 14px;
+      transition: var(--transition);
+      border: none;
     }
 
-    .edit-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
-      background: linear-gradient(135deg, #FFC107, var(--warning-color));
+    .edit-btn {
+      background-color: var(--warning-color);
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: var(--danger-color);
+      color: white;
     }
 
     .empty-state {
@@ -361,38 +299,28 @@
       color: var(--primary-color);
     }
 
-    .floating-btn {
+    /* Notifications */
+    .notification {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 8px;
       color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      box-shadow: 0 5px 20px rgba(70, 130, 180, 0.6);
-      cursor: pointer;
-      z-index: 100;
-      transition: var(--transition);
-      animation: pulse 2s infinite;
+      box-shadow: var(--shadow);
+      z-index: 3000;
+      display: none;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    .notification.success {
+      background-color: var(--success-color);
     }
 
-    .floating-btn:hover {
-      transform: scale(1.1) rotate(90deg);
-      box-shadow: 0 10px 30px rgba(70, 130, 180, 0.8);
+    .notification.error {
+      background-color: var(--danger-color);
     }
 
-    /* Responsive design */
+    /* Responsive */
     @media (max-width: 768px) {
       .main-container {
         padding: 80px 20px 30px;
@@ -402,30 +330,8 @@
         font-size: 2.2rem;
       }
 
-      .form-container {
-        width: 95%;
-      }
-
-      .form-header {
-        padding: 12px 15px;
-      }
-
-      .form-content {
-        padding: 15px;
-      }
-
-      .button-group {
-        flex-direction: column;
-      }
-
       .mesa-item {
-        padding: 20px 15px;
-      }
-
-      .edit-btn {
-        position: static;
-        margin-top: 15px;
-        width: 100%;
+        padding: 20px;
       }
     }
 
@@ -436,16 +342,10 @@
 
       .btn {
         padding: 15px 25px;
-        font-size: 1rem;
       }
 
-      .volver-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-      }
-
-      .output {
-        padding: 20px;
+      .button-group {
+        flex-direction: column;
       }
     }
   </style>
@@ -460,273 +360,300 @@
 
 <div class="main-container">
   <h1><i class="fas fa-utensils"></i> Gestión de Mesas</h1>
+
   <div style="text-align: center;">
-    <button class="btn" onclick="mostrarFormulario()">
+    <button id="btnLlenarMesa" class="btn">
       <i class="fas fa-plus-circle"></i> Llenar Mesa
     </button>
   </div>
+
+  <div class="mesas-container" id="listaMesas">
+    <h2><i class="fas fa-list"></i> Mesas Registradas</h2>
+
+    <div id="contenedorMesas">
+    </div>
+
+    <div id="emptyState" class="empty-state">
+      <i class="fas fa-table"></i>
+      <h3>No hay mesas registradas</h3>
+      <p>Comienza agregando tu primera mesa</p>
+    </div>
+  </div>
 </div>
 
-<div class="form-container" id="formulario">
-  <div class="form-header" id="formHeader">
-    <h2 id="tituloFormulario">Nueva Mesa</h2>
-    <button class="close-btn" onclick="cerrarFormulario()">
-      <i class="fas fa-times"></i>
-    </button>
-  </div>
-
-  <div class="form-content">
-    <div class="form-group">
-      <label for="numeroMesa">Número de Mesa:</label>
-      <input type="number" id="numeroMesa" required>
-    </div>
-    <div class="form-group">
-      <label for="atendiendo">Atiende:</label>
-      <input type="text" id="atendiendo" required>
-    </div>
-    <div class="form-group">
-      <label for="orden">Orden:</label>
-      <textarea id="orden" rows="3" required></textarea>
-    </div>
-    <div class="form-group">
-      <label for="disponible">¿Disponible?</label>
-      <select id="disponible">
-        <option value="Sí">Sí</option>
-        <option value="No">No</option>
-      </select>
-    </div>
-    <div class="button-group">
-      <button class="guardar-btn" onclick="guardarMesa()">
-        <i class="fas fa-save"></i> Guardar
-      </button>
-      <button class="cerrar-btn" onclick="cerrarFormulario()">
-        <i class="fas fa-times"></i> Cancelar
+<div id="mesaModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Nueva Mesa</h2>
+      <button class="close-btn" id="btnCerrarModal">
+        <i class="fas fa-times"></i>
       </button>
     </div>
+
+    <form id="mesaForm">
+      <div class="form-group">
+        <label for="numeroMesa">Número de Mesa *</label>
+        <input type="number" id="numeroMesa" required min="1">
+      </div>
+
+      <div class="form-group">
+        <label for="estadoMesa">Estado *</label>
+        <select id="estadoMesa" required>
+          <option value="disponible">Disponible</option>
+          <option value="ocupada">Ocupada</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="meseroMesa">Mesero</label>
+        <input type="text" id="meseroMesa" placeholder="Opcional">
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="guardar-btn" id="btnGuardarMesa">
+          <i class="fas fa-save"></i> Guardar
+        </button>
+        <button type="button" class="cerrar-btn" id="btnCancelarModal">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
-<div class="output" id="listaMesas">
-  <h2><i class="fas fa-list"></i> Mesas Registradas</h2>
-
-  <div id="contenedorMesas">
-
-  </div>
-
-  <div id="emptyState" class="empty-state" style="display: none;">
-    <i class="fas fa-table"></i>
-    <h3>No hay mesas registradas</h3>
-    <p>Comienza agregando tu primera mesa</p>
-  </div>
-</div>
-
-<a href="#listaMesas" class="floating-btn">
-  <i class="fas fa-list"></i>
-</a>
+<div id="notification" class="notification" style="display: none;"></div>
 
 <script>
+
   let mesas = [];
-  let editIndex = null;
-  let isDragging = false;
-  let offsetX, offsetY;
+  let mesaEditando = null;
 
-  function hacerArrastrable() {
-    const formulario = document.getElementById("formulario");
-    const header = document.getElementById("formHeader");
+  document.addEventListener('DOMContentLoaded', () => {
 
-    header.addEventListener('mousedown', (e) => {
-      if (e.target.tagName === 'BUTTON' || e.target.tagName === 'I') return;
+    document.getElementById('btnLlenarMesa').addEventListener('click', mostrarModal);
+    document.getElementById('btnCerrarModal').addEventListener('click', cerrarModal);
+    document.getElementById('btnCancelarModal').addEventListener('click', cerrarModal);
+    document.getElementById('btnGuardarMesa').addEventListener('click', guardarMesa);
+    cargarMesas();
+  });
 
-      isDragging = true;
-      const rect = formulario.getBoundingClientRect();
-      offsetX = e.clientX - rect.left;
-      offsetY = e.clientY - rect.top;
-      formulario.style.cursor = 'grabbing';
-      formulario.style.userSelect = 'none';
-    });
+  function mostrarModal() {
+    const modal = document.getElementById('mesaModal');
 
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-
-      e.preventDefault();
-
-      let newX = e.clientX - offsetX;
-      let newY = e.clientY - offsetY;
-
-      const ventanaWidth = formulario.offsetWidth;
-      const ventanaHeight = formulario.offsetHeight;
-
-      newX = Math.max(0, Math.min(newX, window.innerWidth - ventanaWidth));
-      newY = Math.max(0, Math.min(newY, window.innerHeight - ventanaHeight));
-
-      formulario.style.left = `${newX}px`;
-      formulario.style.top = `${newY}px`;
-      formulario.style.transform = 'none';
-    });
-
-    document.addEventListener('mouseup', () => {
-      isDragging = false;
-      formulario.style.cursor = '';
-      formulario.style.userSelect = '';
-    });
-  }
-
-  function mostrarFormulario() {
-    const formulario = document.getElementById("formulario");
-    formulario.style.display = "block";
-    formulario.style.left = "50%";
-    formulario.style.top = "50%";
-    formulario.style.transform = "translate(-50%, -50%)";
-
-    document.getElementById("tituloFormulario").textContent = editIndex !== null ? "Editar Mesa" : "Nueva Mesa";
-
-    if (editIndex === null) {
-      limpiarFormulario();
+    if (!mesaEditando) {
+      document.getElementById('mesaForm').reset();
+      document.getElementById('modalTitle').textContent = 'Nueva Mesa';
+    } else {
+      document.getElementById('modalTitle').textContent = 'Editar Mesa';
     }
-  }
 
-  function cerrarFormulario() {
-    const formulario = document.getElementById("formulario");
-    formulario.style.animation = "modalFadeIn 0.4s reverse forwards";
+    // Mostrar con animación
+    modal.style.display = 'block';
     setTimeout(() => {
-      formulario.style.display = "none";
-      formulario.style.animation = "modalFadeIn 0.6s ease-out";
-      formulario.style.left = "50%";
-      formulario.style.top = "50%";
-      formulario.style.transform = "translate(-50%, -50%)";
-    }, 400);
-    editIndex = null;
+      modal.style.opacity = '1';
+      modal.querySelector('.modal-content').style.transform = 'translateY(0)';
+    }, 10);
   }
 
-  function limpiarFormulario() {
-    document.getElementById("numeroMesa").value = "";
-    document.getElementById("atendiendo").value = "";
-    document.getElementById("orden").value = "";
-    document.getElementById("disponible").value = "Sí";
+  function cerrarModal() {
+    const modal = document.getElementById('mesaModal');
+    modal.style.opacity = '0';
+    modal.querySelector('.modal-content').style.transform = 'translateY(-20px)';
+
+    setTimeout(() => {
+      modal.style.display = 'none';
+      mesaEditando = null;
+    }, 300);
   }
 
-  function guardarMesa() {
-    const numero = document.getElementById("numeroMesa").value;
-    const atendiendo = document.getElementById("atendiendo").value;
-    const orden = document.getElementById("orden").value;
-    const disponible = document.getElementById("disponible").value;
+  async function guardarMesa() {
+    const btnGuardar = document.getElementById('btnGuardarMesa');
+    const form = document.getElementById('mesaForm');
 
-    if (!numero || !atendiendo || !orden) {
-      alert("Por favor complete todos los campos requeridos.");
+    if (!form.checkValidity()) {
+      mostrarNotificacion('Complete los campos requeridos', 'error');
       return;
     }
 
-    const btnGuardar = document.querySelector('.guardar-btn');
-    btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+    const mesaData = {
+      num: parseInt(document.getElementById('numeroMesa').value),
+      ocupado: document.getElementById('estadoMesa').value === 'ocupada',
+      meseroId: document.getElementById('meseroMesa').value || null
+    };
+
     btnGuardar.disabled = true;
+    btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
 
-    setTimeout(() => {
-      const mesaData = {
-        numero,
-        atendiendo,
-        orden,
-        disponible,
-        fecha: new Date().toLocaleString()
-      };
+    try {
+      const url = mesaEditando
+        ? `http://localhost:8080/mesa/${mesaEditando.id}`
+        : 'http://localhost:8080/mesa';
 
-      if (editIndex !== null) {
-        mesas[editIndex] = mesaData;
-        actualizarMesaEnUI(mesaData);
-      } else {
-        mesas.push(mesaData);
-        agregarMesaAUi(mesaData);
-      }
-
-      btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar';
-      btnGuardar.disabled = false;
-      cerrarFormulario();
-      actualizarEstadoVacio();
-    }, 800);
-  }
-
-  function agregarMesaAUi(mesa) {
-    const contenedor = document.getElementById("contenedorMesas");
-    const mesaDiv = document.createElement("div");
-    mesaDiv.className = "mesa-item";
-    mesaDiv.dataset.id = mesa.numero;
-    mesaDiv.innerHTML = crearHTMLMesa(mesa);
-    contenedor.prepend(mesaDiv);
-
-    setTimeout(() => {
-      mesaDiv.style.animation = "fadeInUp 0.5s ease-out both";
-    }, 100);
-  }
-
-  function actualizarMesaEnUI(mesa) {
-    const mesaDiv = document.querySelector(`.mesa-item[data-id="${mesa.numero}"]`);
-    if (mesaDiv) {
-      mesaDiv.innerHTML = crearHTMLMesa(mesa);
-    }
-  }
-
-  function crearHTMLMesa(mesa) {
-    return `
-      <div class="mesa-info">
-        <p><strong>Mesa #:</strong> ${mesa.numero}</p>
-        <p><strong>Atiende:</strong> ${mesa.atendiendo}</p>
-        <p><strong>Orden:</strong> ${mesa.orden}</p>
-        <p><strong>Disponible:</strong> ${mesa.disponible}</p>
-        <p><small><strong>Actualizado:</strong> ${mesa.fecha}</small></p>
-      </div>
-      <div class="mesa-actions">
-        <button class="edit-btn" onclick="editarMesa('${mesa.numero}')">
-          <i class="fas fa-edit"></i> Editar
-        </button>
-        <button class="delete-btn" onclick="eliminarMesa('${mesa.numero}')">
-          <i class="fas fa-trash"></i> Eliminar
-        </button>
-      </div>
-    `;
-  }
-
-  function editarMesa(numero) {
-    const index = mesas.findIndex(m => m.numero === numero);
-    if (index === -1) return;
-
-    const mesa = mesas[index];
-    document.getElementById("numeroMesa").value = mesa.numero;
-    document.getElementById("atendiendo").value = mesa.atendiendo;
-    document.getElementById("orden").value = mesa.orden;
-    document.getElementById("disponible").value = mesa.disponible;
-
-    editIndex = index;
-    mostrarFormulario();
-  }
-
-  function eliminarMesa(numero) {
-    const index = mesas.findIndex(m => m.numero === numero);
-    if (index !== -1) {
-      if (confirm(`¿Seguro que deseas eliminar la mesa #${numero}?`)) {
-        mesas.splice(index, 1);
-        const mesaDiv = document.querySelector(`.mesa-item[data-id="${numero}"]`);
-        if (mesaDiv) mesaDiv.remove();
-        actualizarEstadoVacio();
-      }
-    }
-  }
-
-  function actualizarEstadoVacio() {
-    const emptyState = document.getElementById("emptyState");
-    emptyState.style.display = mesas.length === 0 ? "block" : "none";
-    document.getElementById("listaMesas").style.display = mesas.length > 0 ? "block" : "none";
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    hacerArrastrable();
-    actualizarEstadoVacio();
-
-    setTimeout(() => {
-      document.querySelectorAll('.mesa-item').forEach((mesa, index) => {
-        mesa.style.animation = `fadeInUp 0.5s ease-out ${index * 0.1}s both`;
+      const response = await fetch(url, {
+        method: mesaEditando ? 'PUT' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json' // Asegurar que esperamos JSON
+        },
+        body: JSON.stringify(mesaData)
       });
-    }, 300);
-  });
-</script>
 
+      console.log('Respuesta del servidor:', response);
+
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        throw new Error(`El servidor respondió con: ${text.substring(0, 100)}...`);
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Mesa guardada:', data);
+
+      // Actualizar la lista
+      if (mesaEditando) {
+        mesas = mesas.map(m => m.id === data.id ? data : m);
+      } else {
+        mesas.unshift(data);
+      }
+
+      // Actualizar UI
+      renderizarMesas();
+      cerrarModal();
+      mostrarNotificacion(`Mesa ${mesaEditando ? 'actualizada' : 'creada'} correctamente`, 'success');
+
+    } catch (error) {
+      console.error('Error en guardarMesa:', error);
+      mostrarNotificacion(error.message || 'Error al comunicarse con el servidor', 'error');
+
+      console.log('Datos enviados:', mesaData);
+      if (response) {
+        console.log('Respuesta del servidor:', {
+          status: response.status,
+          statusText: response.statusText
+        });
+      }
+    } finally {
+      btnGuardar.disabled = false;
+      btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar';
+    }
+  }
+
+async function cargarMesas() {
+    try {
+      console.log('Cargando mesas desde /mesa/listar...');
+      const response = await fetch('/mesa/listar');
+      console.log('Respuesta del servidor:', response);
+
+      if (!response.ok) {
+        console.log('Error en la respuesta:', response.status, response.statusText);
+        const errorText = await response.text();
+        console.log('Texto del error:', errorText);
+        throw new Error(`Error al cargar mesas: ${response.status} - ${response.statusText}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('Error: Se esperaba JSON, pero se recibió:', contentType, text);
+            throw new Error(`Error: Se esperaba JSON, pero se recibió: ${contentType}`);
+        }
+
+      const data = await response.json();
+      console.log('Datos recibidos:', data);
+      mesas = data;
+      renderizarMesas();
+
+    } catch (error) {
+      console.error('Error:', error);
+      mostrarNotificacion('Error al cargar las mesas', 'error');
+    }
+  }
+
+  function renderizarMesas() {
+    const contenedor = document.getElementById('contenedorMesas');
+    const emptyState = document.getElementById('emptyState');
+
+    contenedor.innerHTML = '';
+
+    if (mesas.length === 0) {
+      emptyState.style.display = 'block';
+      return;
+    }
+
+    emptyState.style.display = 'none';
+
+    mesas.forEach(mesa => {
+      const mesaElement = document.createElement('div');
+      mesaElement.className = 'mesa-item';
+      mesaElement.innerHTML = `
+        <div class="mesa-info">
+          <p><strong>Mesa #${mesa.num}</strong> • ${mesa.ocupado ? '<span style="color: var(--danger-color)">Ocupada</span>' : '<span style="color: var(--success-color)">Disponible</span>'}</p>
+          ${mesa.meseroId ? `<p><i class="fas fa-user"></i> ${mesa.meseroId}</p>` : ''}
+          <p><small>Última actualización: ${new Date().toLocaleString()}</small></p>
+        </div>
+        <div class="mesa-actions">
+          <button class="action-btn edit-btn" onclick="editarMesa('${mesa.id}')">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+          <button class="action-btn delete-btn" onclick="eliminarMesa('${mesa.id}')">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </div>
+      `;
+      contenedor.appendChild(mesaElement);
+    });
+  }
+
+  function editarMesa(id) {
+    mesaEditando = mesas.find(m => m.id === id);
+    if (mesaEditando) {
+      document.getElementById('numeroMesa').value = mesaEditando.num;
+      document.getElementById('estadoMesa').value = mesaEditando.ocupado ? 'ocupada' : 'disponible';
+      document.getElementById('meseroMesa').value = mesaEditando.meseroId || '';
+      mostrarModal();
+    }
+  }
+
+  async function eliminarMesa(id) {
+    if (!confirm('¿Está seguro de eliminar esta mesa?')) return;
+
+    try {
+      const response = await fetch(`/api/mesa/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar mesa');
+      }
+
+      mesas = mesas.filter(m => m.id !== id);
+      renderizarMesas();
+      mostrarNotificacion('Mesa eliminada correctamente', 'success');
+
+    } catch (error) {
+      console.error('Error:', error);
+      mostrarNotificacion('Error al eliminar la mesa', 'error');
+    }
+  }
+
+  function mostrarNotificacion(mensaje, tipo) {
+    const notification = document.getElementById('notification');
+    notification.textContent = mensaje;
+    notification.className = `notification ${tipo}`;
+    notification.style.display = 'block';
+
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 5000);
+  }
+
+  window.editarMesa = editarMesa;
+  window.eliminarMesa = eliminarMesa;
+</script>
 </body>
 </html>
