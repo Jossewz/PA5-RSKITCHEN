@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurante Elite | Gestión de Mesas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3a8edb;
+      --secondary-color: #1a1a1a;
+      --accent-color: #87CEEB;
+      --light-color: #ffffff;
+      --dark-color: #333333;
+      --success-color: #4CAF50;
+      --warning-color: #FF9800;
+      --danger-color: #f44336;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      color: var(--dark-color);
+    }
+
+    .top-bar {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .volver-btn {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .volver-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 20px rgba(0,0,0,0.1);
+      background-color: var(--accent-color);
+      color: var(--light-color);
+    }
+
+    .main-container {
+      padding: 100px 20px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--light-color);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    h1::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background: var(--light-color);
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+
+    .btn {
+      background-color: var(--light-color);
+      color: var(--primary-color);
+      border: none;
+      padding: 18px 36px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+      background-color: var(--accent-color);
+      color: var(--light-color);
+    }
+
+    /* Modal Styles */
+    #mesaModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: var(--shadow);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--secondary-color);
+      transition: var(--transition);
+    }
+
+    .close-btn:hover {
+      color: var(--danger-color);
+      transform: rotate(90deg);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(58, 142, 219, 0.2);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .guardar-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex: 1;
+      transition: var(--transition);
+    }
+
+    .guardar-btn:hover {
+      background-color: #2a7ec4;
+      transform: translateY(-2px);
+    }
+
+    .cerrar-btn {
+      background-color: #f0f0f0;
+      color: var(--secondary-color);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      flex: 1;
+      transition: var(--transition);
+    }
+
+    .cerrar-btn:hover {
+      background-color: #e0e0e0;
+      transform: translateY(-2px);
+    }
+
+    /* Mesas List */
+    .mesas-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 20px;
+      margin-top: 40px;
+      box-shadow: var(--shadow);
+    }
+
+    .mesa-item {
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      padding: 25px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      background: white;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .mesa-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .mesa-info strong {
+      color: var(--primary-color);
+    }
+
+    .mesa-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      justify-content: flex-end;
+    }
+
+    .action-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .edit-btn {
+      background-color: var(--warning-color);
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: var(--danger-color);
+      color: white;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #95a5a6;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+
+    /* Notifications */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 8px;
+      color: white;
+      box-shadow: var(--shadow);
+      z-index: 3000;
+      display: none;
+    }
+
+    .notification.success {
+      background-color: var(--success-color);
+    }
+
+    .notification.error {
+      background-color: var(--danger-color);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-container {
+        padding: 80px 20px 30px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .mesa-item {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .btn {
+        padding: 15px 25px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/home" class="volver-btn">
+    <i class="fas fa-arrow-left"></i> Volver
+  </a>
+</div>
+
+<div class="main-container">
+  <h1><i class="fas fa-utensils"></i> Gestión de Mesas</h1>
+
+  <div style="text-align: center;">
+    <button id="btnLlenarMesa" class="btn">
+      <i class="fas fa-plus-circle"></i> Llenar Mesa
+    </button>
+  </div>
+
+  <div class="mesas-container" id="listaMesas">
+    <h2><i class="fas fa-list"></i> Mesas Registradas</h2>
+
+    <div id="contenedorMesas">
+    </div>
+
+    <div id="emptyState" class="empty-state">
+      <i class="fas fa-table"></i>
+      <h3>No hay mesas registradas</h3>
+      <p>Comienza agregando tu primera mesa</p>
+    </div>
+  </div>
+</div>
+
+<div id="mesaModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Nueva Mesa</h2>
+      <button class="close-btn" id="btnCerrarModal">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <form id="mesaForm">
+      <div class="form-group">
+        <label for="numeroMesa">Número de Mesa *</label>
+        <input type="number" id="numeroMesa" required min="1">
+      </div>
+
+      <div class="form-group">
+        <label for="estadoMesa">Estado *</label>
+        <select id="estadoMesa" required>
+          <option value="disponible">Disponible</option>
+          <option value="ocupada">Ocupada</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="meseroMesa">Mesero</label>
+        <input type="text" id="meseroMesa" placeholder="Opcional">
+      </div>
+
+      <div class="button-group">
+        <button type="button" class="guardar-btn" id="btnGuardarMesa">
+          <i class="fas fa-save"></i> Guardar
+        </button>
+        <button type="button" class="cerrar-btn" id="btnCancelarModal">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="notification" class="notification" style="display: none;"></div>
+
+<script>
+  // Variables globales
+  let mesas = [];
+  let mesaEditando = null;
+
+  // Inicialización cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    // Configurar eventos
+    document.getElementById('btnLlenarMesa').addEventListener('click', mostrarModal);
+    document.getElementById('btnCerrarModal').addEventListener('click', cerrarModal);
+    document.getElementById('btnCancelarModal').addEventListener('click', cerrarModal);
+    document.getElementById('btnGuardarMesa').addEventListener('click', guardarMesa);
+
+    // Cargar mesas iniciales (vacías al principio)
+    cargarMesas();
+  });
+
+  // Función para mostrar el modal
+  function mostrarModal() {
+    const modal = document.getElementById('mesaModal');
+
+    // Configurar para nueva mesa o edición
+    if (!mesaEditando) {
+      document.getElementById('mesaForm').reset();
+      document.getElementById('modalTitle').textContent = 'Nueva Mesa';
+    } else {
+      document.getElementById('modalTitle').textContent = 'Editar Mesa';
+    }
+
+    // Mostrar con animación
+    modal.style.display = 'block';
+    setTimeout(() => {
+      modal.style.opacity = '1';
+      modal.querySelector('.modal-content').style.transform = 'translateY(0)';
+    }, 10);
+  }
+
+  // Función para cerrar el modal
+  function cerrarModal() {
+    const modal = document.getElementById('mesaModal');
+    modal.style.opacity = '0';
+    modal.querySelector('.modal-content').style.transform = 'translateY(-20px)';
+
+    setTimeout(() => {
+      modal.style.display = 'none';
+      mesaEditando = null;
+    }, 300);
+  }
+
+  // Función para guardar mesa (con conexión a tu backend)
+  async function guardarMesa() {
+    const btnGuardar = document.getElementById('btnGuardarMesa');
+    const form = document.getElementById('mesaForm');
+
+    if (!form.checkValidity()) {
+      mostrarNotificacion('Complete los campos requeridos', 'error');
+      return;
+    }
+
+    const mesaData = {
+      num: parseInt(document.getElementById('numeroMesa').value),
+      ocupado: document.getElementById('estadoMesa').value === 'ocupada',
+      meseroId: document.getElementById('meseroMesa').value || null
+    };
+
+    btnGuardar.disabled = true;
+    btnGuardar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+    try {
+      // Asegúrate que la URL sea correcta
+      const url = mesaEditando
+        ? `http://localhost:8080/api/mesa/${mesaEditando.id}`
+        : 'http://localhost:8080/api/mesa';
+
+      const response = await fetch(url, {
+        method: mesaEditando ? 'PUT' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json' // Asegurar que esperamos JSON
+        },
+        body: JSON.stringify(mesaData)
+      });
+
+      console.log('Respuesta del servidor:', response);
+
+      // Verificar si la respuesta es JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        throw new Error(`El servidor respondió con: ${text.substring(0, 100)}...`);
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Mesa guardada:', data);
+
+      // Actualizar la lista
+      if (mesaEditando) {
+        mesas = mesas.map(m => m.id === data.id ? data : m);
+      } else {
+        mesas.unshift(data);
+      }
+
+      // Actualizar UI
+      renderizarMesas();
+      cerrarModal();
+      mostrarNotificacion(`Mesa ${mesaEditando ? 'actualizada' : 'creada'} correctamente`, 'success');
+
+    } catch (error) {
+      console.error('Error en guardarMesa:', error);
+      mostrarNotificacion(error.message || 'Error al comunicarse con el servidor', 'error');
+
+      // Depuración adicional:
+      console.log('Datos enviados:', mesaData);
+      if (response) {
+        console.log('Respuesta del servidor:', {
+          status: response.status,
+          statusText: response.statusText
+        });
+      }
+    } finally {
+      btnGuardar.disabled = false;
+      btnGuardar.innerHTML = '<i class="fas fa-save"></i> Guardar';
+    }
+  }
+
+  // Función para cargar mesas desde tu backend
+async function cargarMesas() {
+    try {
+      console.log('Cargando mesas desde /api/mesa/listar...');
+      const response = await fetch('/api/mesa/listar'); // Petición a la nueva ruta
+      console.log('Respuesta del servidor:', response);
+
+      if (!response.ok) {
+        console.log('Error en la respuesta:', response.status, response.statusText);
+        const errorText = await response.text();
+        console.log('Texto del error:', errorText);
+        throw new Error(`Error al cargar mesas: ${response.status} - ${response.statusText}`);
+      }
+
+      const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('Error: Se esperaba JSON, pero se recibió:', contentType, text);
+            throw new Error(`Error: Se esperaba JSON, pero se recibió: ${contentType}`);
+        }
+
+      const data = await response.json();
+      console.log('Datos recibidos:', data);
+      mesas = data;
+      renderizarMesas();
+
+    } catch (error) {
+      console.error('Error:', error);
+      mostrarNotificacion('Error al cargar las mesas', 'error');
+    }
+  }
+
+  // Función para renderizar las mesas en la UI
+  function renderizarMesas() {
+    const contenedor = document.getElementById('contenedorMesas');
+    const emptyState = document.getElementById('emptyState');
+
+    contenedor.innerHTML = '';
+
+    if (mesas.length === 0) {
+      emptyState.style.display = 'block';
+      return;
+    }
+
+    emptyState.style.display = 'none';
+
+    mesas.forEach(mesa => {
+      const mesaElement = document.createElement('div');
+      mesaElement.className = 'mesa-item';
+      mesaElement.innerHTML = `
+        <div class="mesa-info">
+          <p><strong>Mesa #${mesa.num}</strong> • ${mesa.ocupado ? '<span style="color: var(--danger-color)">Ocupada</span>' : '<span style="color: var(--success-color)">Disponible</span>'}</p>
+          ${mesa.meseroId ? `<p><i class="fas fa-user"></i> ${mesa.meseroId}</p>` : ''}
+          <p><small>Última actualización: ${new Date().toLocaleString()}</small></p>
+        </div>
+        <div class="mesa-actions">
+          <button class="action-btn edit-btn" onclick="editarMesa('${mesa.id}')">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+          <button class="action-btn delete-btn" onclick="eliminarMesa('${mesa.id}')">
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </div>
+      `;
+      contenedor.appendChild(mesaElement);
+    });
+  }
+
+  // Función para editar mesa
+  function editarMesa(id) {
+    mesaEditando = mesas.find(m => m.id === id);
+    if (mesaEditando) {
+      document.getElementById('numeroMesa').value = mesaEditando.num;
+      document.getElementById('estadoMesa').value = mesaEditando.ocupado ? 'ocupada' : 'disponible';
+      document.getElementById('meseroMesa').value = mesaEditando.meseroId || '';
+      mostrarModal();
+    }
+  }
+
+  // Función para eliminar mesa
+  async function eliminarMesa(id) {
+    if (!confirm('¿Está seguro de eliminar esta mesa?')) return;
+
+    try {
+      const response = await fetch(`/api/mesa/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar mesa');
+      }
+
+      // Eliminar de la lista local
+      mesas = mesas.filter(m => m.id !== id);
+      renderizarMesas();
+      mostrarNotificacion('Mesa eliminada correctamente', 'success');
+
+    } catch (error) {
+      console.error('Error:', error);
+      mostrarNotificacion('Error al eliminar la mesa', 'error');
+    }
+  }
+
+  // Función para mostrar notificaciones
+  function mostrarNotificacion(mensaje, tipo) {
+    const notification = document.getElementById('notification');
+    notification.textContent = mensaje;
+    notification.className = `notification ${tipo}`;
+    notification.style.display = 'block';
+
+    setTimeout(() => {
+      notification.style.display = 'none';
+    }, 5000);
+  }
+
+  // Hacer funciones accesibles globalmente
+  window.editarMesa = editarMesa;
+  window.eliminarMesa = eliminarMesa;
+</script>
+</body>
+</html>

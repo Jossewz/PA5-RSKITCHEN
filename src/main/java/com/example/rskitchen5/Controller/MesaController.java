@@ -3,13 +3,15 @@ package com.example.rskitchen5.Controller;
 import com.example.rskitchen5.Model.Mesa;
 import com.example.rskitchen5.Repository.MesaRep;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
-@Controller
-@RequestMapping("/mesa")
+@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping("/api/mesa")
 public class MesaController {
 
     private final MesaRep mesaRepository;
@@ -19,37 +21,44 @@ public class MesaController {
         this.mesaRepository = mesaRepository;
     }
 
-    @GetMapping("/mesa")
+    @GetMapping // Para servir el HTML de la página (si es necesario)
     public String mostrarVistaMesa() {
-        return "mesa";
+        return "mesa"; // Retorna el nombre de la vista (archivo HTML)
     }
 
-    @GetMapping
+    @GetMapping("/listar") // Nueva ruta para obtener los datos de las mesas en JSON
     public List<Mesa> listarMesas() {
         return mesaRepository.findAll();
     }
 
+    // El resto de tu controlador (POST, GET por ID, PUT, DELETE) se queda igual
     @PostMapping
-    public Mesa crearMesa(@RequestBody Mesa mesa) {
-        return mesaRepository.save(mesa);
+    public ResponseEntity<?> crearMesa(@RequestBody Mesa mesa) {
+        try {
+            Mesa nuevaMesa = mesaRepository.save(mesa);
+            return ResponseEntity.ok(nuevaMesa);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Error interno al crear la mesa: " + e.getMessage()));
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Mesa> obtenerMesaPorId(@PathVariable String id) {
         return mesaRepository.findById(id)
-                .map(mesa -> ResponseEntity.ok(mesa))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Mesa> actualizarMesa(@PathVariable String id, @RequestBody Mesa nuevaMesa) {
+    public ResponseEntity<Mesa> actualizarMesa(@PathVariable String id, @RequestBody Mesa mesaActualizada) {
         return mesaRepository.findById(id)
-                .map(mesa -> {
-                    mesa.setNum(nuevaMesa.getNum());
-                    mesa.setOcupado(nuevaMesa.isOcupado());
-                    mesa.setMeseroId(nuevaMesa.getMeseroId());
-                    mesa.setPedidosId(nuevaMesa.getPedidosId());
-                    return ResponseEntity.ok(mesaRepository.save(mesa));
+                .map(mesaExistente -> {
+                    mesaExistente.setNum(mesaActualizada.getNum());
+                    mesaExistente.setOcupado(mesaActualizada.isOcupado());
+                    mesaExistente.setMeseroId(mesaActualizada.getMeseroId());
+                    Mesa guardada = mesaRepository.save(mesaExistente);
+                    return ResponseEntity.ok(guardada);
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -59,8 +68,8 @@ public class MesaController {
         if (mesaRepository.existsById(id)) {
             mesaRepository.deleteById(id);
             return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
-
 }
