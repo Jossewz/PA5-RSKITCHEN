@@ -10,7 +10,7 @@ import java.util.List;
 public class Pedido {
 
     @Id
-    private Long id;
+    private String id;
 
     private String mesaId; //id de Mesa que hizo el pedido
     private String meseroId; //id de mesero que atendió
@@ -22,7 +22,7 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(LocalDateTime fecha, Long id, List<ItemPedido> items, String mesaId, String meseroId, boolean pagado, double total) {
+    public Pedido(LocalDateTime fecha, String id, List<ItemPedido> items, String mesaId, String meseroId, boolean pagado, double total) {
         this.fecha = fecha;
         this.id = id;
         this.items = items;
@@ -40,11 +40,11 @@ public class Pedido {
         this.fecha = fecha;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

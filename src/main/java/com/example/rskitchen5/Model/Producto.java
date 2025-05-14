@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Producto {
 
     @Id
-    private Long id;
+    private String id;
 
     private String name;
     private String cant;
@@ -17,12 +17,12 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(String cant, Long id, String name, int stock, double price) {
+    public Producto(String cant, String id, String name, double price, int stock) {
         this.cant = cant;
         this.id = id;
         this.name = name;
-        this.stock = stock;
         this.price = price;
+        this.stock = stock;
     }
 
     public String getCant() {
@@ -33,11 +33,11 @@ public class Producto {
         this.cant = cant;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,19 +49,19 @@ public class Producto {
         this.name = name;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     public double getPrice() {
         return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }
