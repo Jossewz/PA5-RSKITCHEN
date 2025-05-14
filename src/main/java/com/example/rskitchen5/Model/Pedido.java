@@ -2,6 +2,7 @@ package com.example.rskitchen5.Model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,30 +15,28 @@ public class Pedido {
 
     private String mesaId;
     private String meseroId;
-    private LocalDateTime fecha;
+
+    @Field("fecha")
+    private LocalDateTime fecha; // Usar Date en lugar de LocalDateTime
+
     private List<ItemPedido> items;
     private double total;
     private boolean pagado;
 
+    // Constructor y getters/setters...
+
     public Pedido() {
+
     }
 
-    public Pedido(LocalDateTime fecha, String id, List<ItemPedido> items, String mesaId, String meseroId, boolean pagado, double total) {
-        this.fecha = fecha;
-        this.id = id;
-        this.items = items;
+    public Pedido(String mesaId, String id, String meseroId, LocalDateTime fecha, List<ItemPedido> items, double total, boolean pagado) {
         this.mesaId = mesaId;
+        this.id = id;
         this.meseroId = meseroId;
-        this.pagado = pagado;
-        this.total = total;
-    }
-
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+        this.items = items;
+        this.total = total;
+        this.pagado = pagado;
     }
 
     public String getId() {
@@ -56,20 +55,28 @@ public class Pedido {
         this.mesaId = mesaId;
     }
 
-    public List<ItemPedido> getItems() {
-        return items;
-    }
-
-    public void setItems(List<ItemPedido> items) {
-        this.items = items;
-    }
-
     public String getMeseroId() {
         return meseroId;
     }
 
     public void setMeseroId(String meseroId) {
         this.meseroId = meseroId;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public List<ItemPedido> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemPedido> items) {
+        this.items = items;
     }
 
     public double getTotal() {
@@ -88,3 +95,4 @@ public class Pedido {
         this.pagado = pagado;
     }
 }
+

@@ -57,4 +57,14 @@ public class ItemPedido {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public void setNombre(String name) {
+    }
+
+    public void setPrecio(double price) {
+    }
+
+    public void setCantidad(int i) {
+
+    }
 }

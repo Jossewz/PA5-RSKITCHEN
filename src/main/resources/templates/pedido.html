@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Pedido</title>
+</head>
+<body>
+<h1>Nuevo Pedido</h1>
+<form th:action="@{/pedidos/crear}" method="post" th:object="${pedido}">
+
+  <label>Mesa:</label>
+  <select th:field="*{mesaId}">
+    <option th:each="mesa : ${mesas}" th:value="${mesa.id}" th:text="${'Mesa ' + mesa.num}"></option>
+  </select><br><br>
+
+  <label>Mesero:</label>
+  <select th:field="*{meseroId}">
+    <option th:each="mesero : ${meseros}" th:value="${mesero.id}" th:text="${mesero.name}"></option>
+  </select><br><br>
+
+  <label>Platillos:</label><br>
+  <div th:each="platillo : ${platillos}">
+    <input type="checkbox" name="platillosIds" th:value="${platillo.id}" />
+    <span th:text="${platillo.name + ' - $' + platillo.price}"></span><br>
+  </div><br>
+
+  <button type="submit">Crear Pedido</button>
+</form>
+</body>
+</html>

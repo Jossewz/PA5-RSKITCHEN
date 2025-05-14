@@ -8,11 +8,10 @@
 </head>
 <body>
 
-<a href="home" class="volver-btn">Volver</a>
+<a th:href="@{/home}" class="volver-btn">Volver</a>
 
 <h1>Gestión de Mesas</h1>
 
-<!-- Formulario para crear nueva mesa -->
 <h2>Crear nueva mesa</h2>
 <form action="/mesa/crear" method="post">
   <label for="num">Número de mesa:</label>
@@ -37,18 +36,47 @@
   <thead>
   <tr>
     <th>Número</th>
-    <th>Mesero ID</th>
+    <th>Mesero</th>
     <th>Acciones</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="mesa : ${listar}">
     <td th:text="${mesa.num}"></td>
-    <td th:text="${mesa.meseroId}"></td>
+    <td th:text="${nombresMeseros[mesa.id]} ?: 'No asignado'"></td>
     <td><a th:href="@{/mesa/{id}(id=${mesa.id})}">Ver detalles</a></td>
   </tr>
   </tbody>
 </table>
+
+<!-- Detalle de la mesa seleccionada -->
+<div th:if="${mesaDetalle != null}">
+  <h2>Detalle de la Mesa</h2>
+  <p><strong>Número:</strong> <span th:text="${mesaDetalle.num}"></span></p>
+  <p><strong>Mesero:</strong> <span th:text="${nombreMesero} ?: 'No asignado'"></span></p>
+
+  <h3>Pedidos:</h3>
+  <div th:if="${#lists.isEmpty(pedidos)}">
+    <p>No hay pedidos para esta mesa.</p>
+  </div>
+  <div th:each="pedido : ${pedidos}">
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+      <p><strong>Fecha:</strong> <span th:text="${pedido.fecha}"></span></p>
+      <p><strong>Total:</strong> $<span th:text="${pedido.total}"></span></p>
+      <p><strong>Estado de pago:</strong>
+        <span th:text="${pedido.pagado} ? 'Pagado' : 'Pendiente'"></span></p>
+
+      <h4>Platillos:</h4>
+      <ul>
+        <li th:each="item : ${pedido.items}">
+          <span th:text="${item.platillo.name}"></span> -
+          Cantidad: <span th:text="${item.cantidad}"></span> -
+          Precio: $<span th:text="${item.platillo.price}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
