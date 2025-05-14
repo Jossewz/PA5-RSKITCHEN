@@ -4,7 +4,12 @@ import com.example.rskitchen5.Model.Pedido;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface PedidoRep extends MongoRepository<Pedido, String> { }
+public interface PedidoRep extends MongoRepository<Pedido, String> {
+    @Override
+    Optional<Pedido> findById(String id);
+}
 
 

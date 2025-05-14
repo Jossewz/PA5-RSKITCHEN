@@ -9,26 +9,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/platillo")
+@RequestMapping("/platillos") // Cambiado a plural
 public class PlatilloController {
 
     @Autowired
     private PlatilloRep platilloRep;
 
-    @GetMapping
+    @GetMapping("")
     public String getAllPlatillos(Model model) {
         List<Platillo> platillos = platilloRep.findAll();
         model.addAttribute("platillos", platillos);
-        return "platillos";
+        return "platillos"; // El nombre del archivo HTML
     }
 
-    @PostMapping
+    @PostMapping("")
     public String crearPlatillo(@ModelAttribute Platillo platillo) {
         platilloRep.save(platillo);
-        return "redirect:/platillos";
+        return "redirect:/platillos"; // Redirección corregida
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/{id}/actualizar") // Para manejar desde formulario HTML
     public String updatePlatillo(@PathVariable String id, @ModelAttribute Platillo platillo) {
         Platillo existingPlatillo = platilloRep.findById(id).orElseThrow();
         existingPlatillo.setName(platillo.getName());
@@ -39,7 +39,7 @@ public class PlatilloController {
         return "redirect:/platillos";
     }
 
-    @DeleteMapping("/{id}")
+    @GetMapping("/{id}/eliminar") // Para hacerlo compatible con enlaces
     public String deletePlatillo(@PathVariable String id) {
         platilloRep.deleteById(id);
         return "redirect:/platillos";
