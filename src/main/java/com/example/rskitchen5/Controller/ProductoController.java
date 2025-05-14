@@ -3,20 +3,27 @@ package com.example.rskitchen5.Controller;
 import com.example.rskitchen5.Model.Producto;
 import com.example.rskitchen5.Repository.ProductoRep;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController
-@RequestMapping("/producos")
+@Controller
+@RequestMapping("/producto")
 public class ProductoController {
+
 
     @Autowired
     private ProductoRep productoRep;
 
     @GetMapping
-    private List<Producto> getAllProductos() {
-        return productoRep.findAll();
+    public String getAllProductos(Model model) {
+        List<Producto>productos=productoRep.findAll();
+        model.addAttribute("productos", productoRep.findAll());
+        return "productos";
+
     }
+
 
     @PostMapping
     public Producto crearProducto(@RequestBody Producto producto) {
