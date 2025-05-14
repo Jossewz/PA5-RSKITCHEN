@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/platillo")
+@RequestMapping("/platillos")
 public class PlatilloController {
 
     @Autowired
@@ -17,31 +17,50 @@ public class PlatilloController {
 
     @GetMapping
     public String getAllPlatillos(Model model) {
-        List<Platillo> platillos = platilloRep.findAll();
-        model.addAttribute("platillos", platillos);
-        return "platillos";
+        try {
+            List<Platillo> platillos = platilloRep.findAll();
+            model.addAttribute("platillos", platillos);
+            model.addAttribute("platilloNuevo", new Platillo());
+            return "platillos";
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al cargar los platillos");
+            return "platillos";
+        }
     }
 
-    @PostMapping
-    public String crearPlatillo(@ModelAttribute Platillo platillo) {
-        platilloRep.save(platillo);
-        return "redirect:/platillos";
+    @PostMapping("/guardar")
+    public String crearPlatillo(@ModelAttribute("platilloNuevo") Platillo platillo, Model model) {
+        try {
+            platilloRep.save(platillo);
+            return "redirect:/platillos";
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al guardar el platillo");
+            return "platillos";
+        }
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/editar/{id}")
     public String updatePlatillo(@PathVariable String id, @ModelAttribute Platillo platillo) {
-        Platillo existingPlatillo = platilloRep.findById(id).orElseThrow();
-        existingPlatillo.setName(platillo.getName());
-        existingPlatillo.setCant(platillo.getCant());
-        existingPlatillo.setPrice(platillo.getPrice());
-        existingPlatillo.setIngredietns(platillo.getIngredietns());
-        platilloRep.save(existingPlatillo);
-        return "redirect:/platillos";
+        try {
+            Platillo existingPlatillo = platilloRep.findById(id).orElseThrow();
+            existingPlatillo.setName(platillo.getName());
+            existingPlatillo.setCant(platillo.getCant());
+            existingPlatillo.setPrice(platillo.getPrice());
+            existingPlatillo.setIngredients(platillo.getIngredients());
+            platilloRep.save(existingPlatillo);
+            return "redirect:/platillos";
+        } catch (Exception e) {
+            return "redirect:/platillos?error=update";
+        }
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/eliminar/{id}")
     public String deletePlatillo(@PathVariable String id) {
-        platilloRep.deleteById(id);
-        return "redirect:/platillos";
+        try {
+            platilloRep.deleteById(id);
+            return "redirect:/platillos";
+        } catch (Exception e) {
+            return "redirect:/platillos?error=delete";
+        }
     }
 }

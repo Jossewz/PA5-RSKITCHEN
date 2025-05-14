@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 
     @Id
-    private Long id;
+    private String id;
 
     private String name;
     private String password;
@@ -17,7 +17,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String mail, String name, String password, String rol) {
+    public User(String  id, String mail, String name, String password, String rol) {
         this.id = id;
         this.mail = mail;
         this.name = name;
@@ -25,11 +25,11 @@ public class User {
         this.rol = rol;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
