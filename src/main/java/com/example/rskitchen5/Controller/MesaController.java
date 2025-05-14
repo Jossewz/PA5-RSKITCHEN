@@ -23,55 +23,35 @@ public class MesaController {
         this.mesaRepository = mesaRepository;
     }
 
+    // Mostrar vista con lista de mesas y formulario de creación
     @GetMapping("")
     public String mostrarVistaMesa(Model model) {
-        model.addAttribute("listar",mesaRepository.findAll());
-        return "/mesa";
+        model.addAttribute("listar", mesaRepository.findAll());
+        model.addAttribute("nuevaMesa", new Mesa());  // Para mostrar el formulario de creación
+        return "mesa";  // Nombre de la vista, debe ser mesa.html
     }
 
-    @GetMapping("/listar")
-    public List<Mesa> listarMesas() {
-        return mesaRepository.findAll();
-    }
-
-    @PostMapping
-    public ResponseEntity<?> crearMesa(@RequestBody Mesa mesa) {
+    // Crear nueva mesa
+    @PostMapping("/crear")
+    public String crearMesa(@ModelAttribute Mesa mesa, Model model) {
         try {
-            Mesa nuevaMesa = mesaRepository.save(mesa);
-            return ResponseEntity.ok(nuevaMesa);
+            mesaRepository.save(mesa);  // Guardar la nueva mesa
+            model.addAttribute("listar", mesaRepository.findAll());  // Actualizar lista de mesas
+            model.addAttribute("nuevaMesa", new Mesa());  // Limpiar formulario
+            model.addAttribute("mensajeExito", "Mesa creada exitosamente");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("message", "Error interno al crear la mesa: " + e.getMessage()));
+            model.addAttribute("mensajeError", "Error al crear la mesa: " + e.getMessage());
         }
+        return "mesa";  // Volver a la misma vista
     }
 
+    // Mostrar detalles de una mesa (opcional)
     @GetMapping("/{id}")
-    public ResponseEntity<Mesa> obtenerMesaPorId(@PathVariable String id) {
-        return mesaRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Mesa> actualizarMesa(@PathVariable String id, @RequestBody Mesa mesaActualizada) {
-        return mesaRepository.findById(id)
-                .map(mesaExistente -> {
-                    mesaExistente.setNum(mesaActualizada.getNum());
-                    mesaExistente.setOcupado(mesaActualizada.isOcupado());
-                    mesaExistente.setMeseroId(mesaActualizada.getMeseroId());
-                    Mesa guardada = mesaRepository.save(mesaExistente);
-                    return ResponseEntity.ok(guardada);
-                })
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarMesa(@PathVariable String id) {
-        if (mesaRepository.existsById(id)) {
-            mesaRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public String mostrarMesaDetalle(@PathVariable String id, Model model) {
+        mesaRepository.findById(id).ifPresent(mesa -> {
+            model.addAttribute("mesaDetalle", mesa);
+        });
+        model.addAttribute("listar", mesaRepository.findAll());
+        return "mesa";  // Volver a la misma vista
     }
 }
