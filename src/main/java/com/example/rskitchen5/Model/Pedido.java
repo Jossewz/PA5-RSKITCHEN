@@ -12,8 +12,8 @@ public class Pedido {
     @Id
     private String id;
 
-    private String mesaId; //id de Mesa que hizo el pedido
-    private String meseroId; //id de mesero que atendió
+    private String mesaId;
+    private String meseroId;
     private LocalDateTime fecha;
     private List<ItemPedido> items;
     private double total;
