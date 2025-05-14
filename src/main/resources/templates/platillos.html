@@ -5,13 +5,15 @@
   <title>Gestión de Platillos</title>
   <link rel="stylesheet" th:href="@{/css/platillos.css}">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
-<a href="/" class="volver">Volver</a>
+<a href="/home" class="volver">Volver</a>
 
 <h1>Gestión de Platillos</h1>
+
+<!-- Mostrar errores -->
+<div th:if="${error}" class="error" th:text="${error}"></div>
 
 <div class="contenedor">
 
@@ -21,24 +23,34 @@
 
   <!-- Formulario para crear nuevo platillo -->
   <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
-    <input type="text" th:field="*{nombre}" placeholder="Nombre del platillo" required>
-    <textarea th:field="*{descripcion}" placeholder="Descripción del platillo" required></textarea>
-    <input type="number" th:field="*{precio}" placeholder="Precio" step="0.01" required>
+    <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required>
+    <input type="text" th:field="*{cant}" placeholder="Cantidad" required>
+    <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required>
+    <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
     <button type="submit">Guardar Platillo</button>
   </form>
 
   <!-- Lista de platillos -->
-  <div th:if="${platillos.isEmpty()}">
+  <div th:if="${platillos != null and platillos.isEmpty()}">
     <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
   </div>
 
   <div th:each="platillo : ${platillos}" class="platillo">
-    <div class="nombre" th:text="${platillo.nombre}">Nombre del platillo</div>
-    <div th:text="${platillo.descripcion}">Descripción</div>
-    <div th:text="'$' + ${platillo.precio}">Precio</div>
+    <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
+    <div th:text="${platillo.cant}">Cantidad</div>
+    <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
+    <div>
+      <strong>Ingredientes:</strong>
+      <span th:each="ing,iter : ${platillo.ingredients}"
+            th:text="${ing} + (${!iter.last} ? ', ' : '')"></span>
+    </div>
     <div class="acciones">
-      <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}">Editar</a>
-      <a th:href="@{/platillos/eliminar/{id}(id=${platillo.id})}">Eliminar</a>
+      <form th:action="@{/platillos/editar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
+        <button type="submit" class="btn-editar">Editar</button>
+      </form>
+      <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
+        <button type="submit" class="btn-eliminar">Eliminar</button>
+      </form>
     </div>
   </div>
 
@@ -46,4 +58,3 @@
 
 </body>
 </html>
-
