@@ -6,42 +6,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
 @RequestMapping("/producto")
 public class ProductoController {
 
-
     @Autowired
     private ProductoRep productoRep;
 
     @GetMapping
     public String getAllProductos(Model model) {
-        List<Producto>productos=productoRep.findAll();
-        model.addAttribute("productos", productoRep.findAll());
+        List<Producto> productos = productoRep.findAll();
+        model.addAttribute("productos", productos);
+        model.addAttribute("productoForm", new Producto()); // Inicializamos un nuevo producto
         return "productos";
+    }
 
+    @PostMapping("/guardar")
+    public String guardarProducto(@ModelAttribute("productoForm") Producto producto) {
+        if (producto.getId() == null || producto.getId().isEmpty()) {
+            producto.setId(null);
+        }
+        productoRep.save(producto);
+        return "redirect:/producto";
     }
 
 
-    @PostMapping
-    public Producto crearProducto(@RequestBody Producto producto) {
-        return productoRep.save(producto);
+    @GetMapping("/editar/{id}")
+    public String editarProducto(@PathVariable String id, Model model) {
+        Producto producto = productoRep.findById(id).orElse(new Producto());
+        model.addAttribute("productoForm", producto);
+        return "productos";
     }
 
-    @PutMapping("/{id}")
-    public Producto updateProducto(@PathVariable String id, @RequestBody Producto producto) {
-        Producto existingProducto = productoRep.findById(id).orElseThrow();
-        existingProducto.setName(producto.getName());
-        existingProducto.setCant(producto.getCant());
-        existingProducto.setPrice(producto.getPrice());
-        existingProducto.setStock(producto.getStock());
-        return productoRep.save(existingProducto);
+    @PostMapping("/actualizar")
+    public String actualizarProducto(@ModelAttribute("productoForm") Producto producto) {
+        productoRep.save(producto);
+        return "redirect:/producto";
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteProducto(@PathVariable String id) {
+    @GetMapping("/eliminar/{id}")
+    public String eliminarProducto(@PathVariable String id) {
         productoRep.deleteById(id);
+        return "redirect:/producto";
     }
 }
+

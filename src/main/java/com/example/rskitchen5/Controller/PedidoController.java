@@ -27,7 +27,7 @@ public class PedidoController {
     @GetMapping("/ver/{id}")
     public String verPedido(@PathVariable String id, Model model) {
         Long idLong = Long.parseLong(id);
-        Pedido pedido = pedidoRep.findById(idLong).orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
+        Pedido pedido = pedidoRep.findById(id).orElseThrow(() -> new IllegalArgumentException("ID inválido: " + id));
         model.addAttribute("pedido", pedido);
         return "pedido/ver";
     }
@@ -48,8 +48,7 @@ public class PedidoController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminarPedido(@PathVariable String id) {
-        Long idLong = Long.parseLong(id);
-        pedidoRep.deleteById(idLong);
+        pedidoRep.deleteById(id);
         return "redirect:/pedidos";
     }
 }

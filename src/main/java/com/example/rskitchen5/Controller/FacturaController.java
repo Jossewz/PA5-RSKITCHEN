@@ -30,7 +30,7 @@ public class FacturaController {
     }
 
     @PostMapping("/crear")
-    public String crearFactura(@RequestParam Long pedidoId) {
+    public String crearFactura(@RequestParam String pedidoId) {
         Pedido pedido = pedidoRep.findById(pedidoId)
                 .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
 

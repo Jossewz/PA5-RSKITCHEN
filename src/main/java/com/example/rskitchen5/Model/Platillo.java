@@ -9,7 +9,7 @@ import java.util.List;
 public class Platillo {
 
     @Id
-    private Long id;
+    private String id;
 
     private String name;
     private double price;
@@ -19,7 +19,7 @@ public class Platillo {
     public Platillo() {
     }
 
-    public Platillo(String cant, Long id, List<String> ingredients, String name, double price) {
+    public Platillo(String cant, String id, List<String> ingredients, String name, double price) {
         this.cant = cant;
         this.id = id;
         this.ingredients = ingredients;  // Cambié el nombre aquí también
@@ -27,7 +27,7 @@ public class Platillo {
         this.price = price;
     }
 
-    public Long getId() {
+    public String  getId() {
         return id;
     }
 
@@ -39,7 +39,7 @@ public class Platillo {
         this.cant = cant;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

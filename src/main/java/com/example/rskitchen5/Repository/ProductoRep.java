@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ProductoRep extends MongoRepository<Producto, String> {
     @Override
-    Optional<Producto> findById (String s);
+    Optional<Producto> findById (String id);
 }
