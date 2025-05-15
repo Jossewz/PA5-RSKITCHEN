@@ -1,7 +1,7 @@
 package com.example.rskitchen5.Model;
 
 public class ItemPedido {
-    private Long productId;       // ID del producto original
+    private String  productId;       // ID del producto original
     private String name;         // Nombre del producto en el momento del pedido
     private double price;         // Precio unitario en ese momento
     private String cant;           // Cantidad solicitada (ej: "2", "1.5", "una porción")
@@ -10,7 +10,7 @@ public class ItemPedido {
     public ItemPedido() {
     }
 
-    public ItemPedido(String name, String cant, double price, int unidades, Long productId) {
+    public ItemPedido(String name, String cant, double price, int unidades, String productId) {
         this.name = name;
         this.cant = cant;
         this.price = price;
@@ -42,11 +42,11 @@ public class ItemPedido {
         this.unidades = unidades;
     }
 
-    public Long getProductId() {
+    public String  getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(String  productId) {
         this.productId = productId;
     }
 

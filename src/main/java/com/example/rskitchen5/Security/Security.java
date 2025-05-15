@@ -25,15 +25,15 @@ public class Security {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configura CORS
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/mesa/**")
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/static/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/mesa/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/mesero/**").hasRole("MESERO")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")  // Cambiado de hasRole a hasAuthority
+                        .requestMatchers("/mesero/**").hasAuthority("MESERO") // Cambiado de hasRole a hasAuthority
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
