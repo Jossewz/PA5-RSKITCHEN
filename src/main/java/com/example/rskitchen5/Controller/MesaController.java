@@ -1,10 +1,13 @@
 package com.example.rskitchen5.Controller;
 
+import com.example.rskitchen5.DTO.ItemPedidoDetalleDTO;
+import com.example.rskitchen5.DTO.PedidoDetalleDTO;
+import com.example.rskitchen5.Model.ItemPedido;
 import com.example.rskitchen5.Model.Mesa;
 import com.example.rskitchen5.Model.Pedido;
-import com.example.rskitchen5.Model.User;
 import com.example.rskitchen5.Repository.MesaRep;
 import com.example.rskitchen5.Repository.PedidoRep;
+import com.example.rskitchen5.Repository.PlatilloRep;
 import com.example.rskitchen5.Repository.UserRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,41 +24,45 @@ public class MesaController {
     private final MesaRep mesaRepository;
     private final PedidoRep pedidoRep;
     private final UserRep userRep;
+    private final PlatilloRep platilloRep;
 
     @Autowired
-    public MesaController(MesaRep mesaRepository, PedidoRep pedidoRep, UserRep userRep) {
+    public MesaController(MesaRep mesaRepository, PedidoRep pedidoRep,
+                          UserRep userRep, PlatilloRep platilloRep) {
         this.mesaRepository = mesaRepository;
         this.pedidoRep = pedidoRep;
         this.userRep = userRep;
+        this.platilloRep = platilloRep;
     }
 
     @GetMapping("")
     public String mostrarVistaMesa(Model model) {
         List<Mesa> mesas = mesaRepository.findAll();
-        Map<String, List<Pedido>> pedidosPorMesa = new HashMap<>();
         Map<String, String> nombresMeseros = new HashMap<>();
+        Map<String, List<PedidoDetalleDTO>> pedidosPorMesa = new HashMap<>();
 
         for (Mesa mesa : mesas) {
-            List<Pedido> pedidos = new ArrayList<>();
+            if (mesa.getMeseroId() != null) {
+                userRep.findById(mesa.getMeseroId())
+                        .ifPresent(mesero -> nombresMeseros.put(mesa.getId(), mesero.getName()));
+            }
+
+            List<PedidoDetalleDTO> pedidosDTO = new ArrayList<>();
             if (mesa.getPedidosId() != null) {
                 for (String pedidoId : mesa.getPedidosId()) {
-                    pedidoRep.findById(pedidoId).ifPresent(pedidos::add);
+                    pedidoRep.findById(pedidoId).ifPresent(pedido -> {
+                        PedidoDetalleDTO dto = convertirPedidoADTO(pedido);
+                        pedidosDTO.add(dto);
+                    });
                 }
             }
-
-            pedidosPorMesa.put(mesa.getId(), pedidos);
-
-            if (mesa.getMeseroId() != null) {
-                userRep.findById(mesa.getMeseroId()).ifPresent(mesero -> {
-                    nombresMeseros.put(mesa.getId(), mesero.getName());
-                });
-            }
+            pedidosPorMesa.put(mesa.getId(), pedidosDTO);
         }
 
         model.addAttribute("listar", mesas);
         model.addAttribute("nuevaMesa", new Mesa());
-        model.addAttribute("pedidosPorMesa", pedidosPorMesa);
         model.addAttribute("nombresMeseros", nombresMeseros);
+        model.addAttribute("pedidosPorMesa", pedidosPorMesa);
         return "mesa";
     }
 
@@ -75,23 +82,59 @@ public class MesaController {
         mesaRepository.findById(id).ifPresent(mesa -> {
             model.addAttribute("mesaDetalle", mesa);
 
-            List<Pedido> pedidos = new ArrayList<>();
+            // Obtener detalles completos de los pedidos
+            List<PedidoDetalleDTO> pedidosDTO = new ArrayList<>();
             if (mesa.getPedidosId() != null) {
                 for (String pedidoId : mesa.getPedidosId()) {
-                    pedidoRep.findById(pedidoId).ifPresent(pedidos::add);
+                    pedidoRep.findById(pedidoId).ifPresent(pedido -> {
+                        PedidoDetalleDTO dto = convertirPedidoADTO(pedido);
+                        pedidosDTO.add(dto);
+                    });
                 }
             }
+            model.addAttribute("pedidos", pedidosDTO);
 
-            model.addAttribute("pedidos", pedidos);
-
+            // Obtener nombre del mesero
             if (mesa.getMeseroId() != null) {
-                userRep.findById(mesa.getMeseroId()).ifPresent(mesero -> {
-                    model.addAttribute("nombreMesero", mesero.getName());
-                });
+                userRep.findById(mesa.getMeseroId())
+                        .ifPresent(mesero -> model.addAttribute("nombreMesero", mesero.getName()));
             }
         });
 
-        model.addAttribute("listar", mesaRepository.findAll());
         return "mesa";
+    }
+
+    private PedidoDetalleDTO convertirPedidoADTO(Pedido pedido) {
+        PedidoDetalleDTO dto = new PedidoDetalleDTO();
+        dto.setId(pedido.getId());
+        dto.setFecha(pedido.getFecha());
+        dto.setTotal(pedido.getTotal());
+        dto.setPagado(pedido.isPagado());
+
+        // Obtener nombre del mesero
+        if (pedido.getMeseroId() != null) {
+            userRep.findById(pedido.getMeseroId())
+                    .ifPresent(mesero -> dto.setNombreMesero(mesero.getName()));
+        }
+
+        // Convertir items con nombres completos de platillos
+        List<ItemPedidoDetalleDTO> itemsDTO = new ArrayList<>();
+        for (ItemPedido item : pedido.getItems()) {
+            ItemPedidoDetalleDTO itemDTO = new ItemPedidoDetalleDTO();
+            itemDTO.setCantidad(item.getCant());
+            itemDTO.setPrecio(item.getPrice());
+
+            // Obtener nombre del platillo
+            platilloRep.findById(item.getProductId())
+                    .ifPresent(platillo -> {
+                        itemDTO.setNombrePlatillo(platillo.getName());
+                        itemDTO.setDescripcionPlatillo(platillo.getDescription());
+                    });
+
+            itemsDTO.add(itemDTO);
+        }
+        dto.setItems(itemsDTO);
+
+        return dto;
     }
 }

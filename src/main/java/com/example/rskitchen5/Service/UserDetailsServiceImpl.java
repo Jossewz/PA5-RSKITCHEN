@@ -22,11 +22,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRep.findByMail(mail)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con mail: " + mail));
 
+        // Elimina el prefijo ROLE_ ya que Spring lo agregará automáticamente para hasRole()
+        // Pero como ahora usamos hasAuthority(), podemos mantener el formato que queramos
+        String authority = user.getRol().toUpperCase().startsWith("ROLE_")
+                ? user.getRol().toUpperCase()
+                : "ROLE_" + user.getRol().toUpperCase();
+
         return new org.springframework.security.core.userdetails.User(
                 user.getMail(),
                 user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority("ROLE_" + user.getRol().toUpperCase()))
+                Collections.singleton(new SimpleGrantedAuthority(authority))
         );
     }
-
 }

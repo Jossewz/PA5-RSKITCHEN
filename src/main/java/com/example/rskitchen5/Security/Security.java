@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,8 +15,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+
 @Configuration
-@EnableMethodSecurity(prePostEnabled = true)
 public class Security {
 
     @Autowired
@@ -28,13 +27,13 @@ public class Security {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/mesa/**", "/mesero/**")
+                        .ignoringRequestMatchers("/mesa/**")
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/static/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/mesa/**").permitAll()
-                        .requestMatchers("/mesero/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")  // Cambiado de hasRole a hasAuthority
+                        .requestMatchers("/mesero/**").hasAuthority("MESERO") // Cambiado de hasRole a hasAuthority
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

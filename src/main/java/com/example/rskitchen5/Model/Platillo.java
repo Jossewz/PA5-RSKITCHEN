@@ -15,20 +15,18 @@ public class Platillo {
     private double price;
     private List<String> ingredients;  // Cambié el nombre del campo a ingredients
     private String cant;
+    private String description;
 
     public Platillo() {
     }
 
-    public Platillo(String cant, String id, List<String> ingredients, String name, double price) {
+    public Platillo(String cant, String description, String id, List<String> ingredients, String name, double price) {
         this.cant = cant;
+        this.description = description;
         this.id = id;
-        this.ingredients = ingredients;  // Cambié el nombre aquí también
+        this.ingredients = ingredients;
         this.name = name;
         this.price = price;
-    }
-
-    public String  getId() {
-        return id;
     }
 
     public String getCant() {
@@ -39,16 +37,28 @@ public class Platillo {
         this.cant = cant;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {  // Cambié el nombre del setter
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public double getPrice() {
