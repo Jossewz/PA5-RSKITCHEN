@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestión de Mesas</title>
-  <link rel="stylesheet" th:href="@{/css/mesa.css}">
+  <style>
+    .mesa-card {
+      border: 1px solid #ddd;
+      margin: 10px;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .pedido-card {
+      background-color: #f9f9f9;
+      margin: 10px 0;
+      padding: 10px;
+      border-left: 4px solid #4CAF50;
+    }
+    .platillo-item {
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
 
@@ -12,69 +29,58 @@
 
 <h1>Gestión de Mesas</h1>
 
-<h2>Crear nueva mesa</h2>
-<form action="/mesa/crear" method="post">
-  <label for="num">Número de mesa:</label>
-  <input type="number" id="num" name="num"
-         th:value="${nuevaMesa.num}" required min="1" max="50">
-
-  <label for="meseroId">ID del mesero:</label>
-  <input type="text" id="meseroId" name="meseroId"
-         th:value="${nuevaMesa.meseroId}" required>
-
-  <button type="submit">Crear Mesa</button>
-</form>
-
-<div class="mensajes">
-  <p style="color: green;" th:text="${mensajeExito}"></p>
-  <p style="color: red;" th:text="${mensajeError}"></p>
+<!-- Formulario para crear mesa -->
+<div class="mesa-card">
+  <h2>Crear nueva mesa</h2>
+  <form th:action="@{/mesa/crear}" method="post" th:object="${nuevaMesa}">
+    <div>
+      <label>Número de mesa:</label>
+      <input type="number" th:field="*{num}" min="1" required>
+    </div>
+    <button type="submit">Crear Mesa</button>
+  </form>
 </div>
+
+<!-- Mensajes de estado -->
+<div th:if="${mensajeExito}" style="color:green;" th:text="${mensajeExito}"></div>
+<div th:if="${mensajeError}" style="color:red;" th:text="${mensajeError}"></div>
 
 <!-- Listado de mesas -->
 <h2>Mesas existentes</h2>
-<table>
-  <thead>
-  <tr>
-    <th>Número</th>
-    <th>Mesero</th>
-    <th>Acciones</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="mesa : ${listar}">
-    <td th:text="${mesa.num}"></td>
-    <td th:text="${nombresMeseros[mesa.id]} ?: 'No asignado'"></td>
-    <td><a th:href="@{/mesa/{id}(id=${mesa.id})}">Ver detalles</a></td>
-  </tr>
-  </tbody>
-</table>
+<div th:each="mesa : ${listar}" class="mesa-card">
+  <h3>Mesa <span th:text="${mesa.num}"></span></h3>
+  <p><strong>Estado:</strong>
+    <span th:if="${mesa.ocupado}" style="color:red;">Ocupada</span>
+    <span th:unless="${mesa.ocupado}" style="color:green;">Disponible</span>
+  </p>
+  <p><strong>Mesero:</strong>
+    <span th:text="${nombresMeseros[mesa.id]} ?: 'No asignado'"></span>
+  </p>
 
-<!-- Detalle de la mesa seleccionada -->
-<div th:if="${mesaDetalle != null}">
-  <h2>Detalle de la Mesa</h2>
-  <p><strong>Número:</strong> <span th:text="${mesaDetalle.num}"></span></p>
-  <p><strong>Mesero:</strong> <span th:text="${nombreMesero} ?: 'No asignado'"></span></p>
-
-  <h3>Pedidos:</h3>
-  <div th:if="${#lists.isEmpty(pedidos)}">
-    <p>No hay pedidos para esta mesa.</p>
-  </div>
-  <div th:each="pedido : ${pedidos}">
-    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-      <p><strong>Fecha:</strong> <span th:text="${pedido.fecha}"></span></p>
-      <p><strong>Total:</strong> $<span th:text="${pedido.total}"></span></p>
-      <p><strong>Estado de pago:</strong>
+  <!-- Pedidos de la mesa -->
+  <div th:if="${pedidosPorMesa[mesa.id] != null and !pedidosPorMesa[mesa.id].isEmpty()}">
+    <h4>Pedidos:</h4>
+    <div th:each="pedido : ${pedidosPorMesa[mesa.id]}" class="pedido-card">
+      <p><strong>Fecha:</strong>
+        <span th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></span></p>
+      <p><strong>Total:</strong>
+        <span th:text="${'$' + #numbers.formatDecimal(pedido.total, 1, 2)}"></span></p>
+      <p><strong>Mesero:</strong>
+        <span th:text="${pedido.nombreMesero} ?: 'No asignado'"></span></p>
+      <p><strong>Estado:</strong>
         <span th:text="${pedido.pagado} ? 'Pagado' : 'Pendiente'"></span></p>
 
-      <h4>Platillos:</h4>
-      <ul>
-        <li th:each="item : ${pedido.items}">
-          <span th:text="${item.platillo.name}"></span> -
-          Cantidad: <span th:text="${item.cantidad}"></span> -
-          Precio: $<span th:text="${item.platillo.price}"></span>
-        </li>
-      </ul>
+      <h5>Platillos:</h5>
+      <div th:each="item : ${pedido.items}" class="platillo-item">
+        <p><strong th:text="${item.nombrePlatillo}"></strong></p>
+        <p th:text="${item.descripcionPlatillo}"></p>
+        <p>Cantidad: <span th:text="${item.cantidad}"></span></p>
+        <p>Precio: <span th:text="${'$' + #numbers.formatDecimal(item.precio, 1, 2)}"></span></p>
+      </div>
     </div>
+  </div>
+  <div th:if="${pedidosPorMesa[mesa.id] == null or pedidosPorMesa[mesa.id].isEmpty()}">
+    <p>No hay pedidos para esta mesa.</p>
   </div>
 </div>
 

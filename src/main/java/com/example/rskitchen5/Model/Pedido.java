@@ -1,6 +1,7 @@
 package com.example.rskitchen5.Model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -12,6 +13,12 @@ public class Pedido {
 
     @Id
     private String id;
+
+    @Transient
+    private String mesaNum;
+
+    @Transient
+    private String meseroName;
 
     private String mesaId;
     private String meseroId;
@@ -29,38 +36,16 @@ public class Pedido {
 
     }
 
-    public Pedido(String mesaId, String id, String meseroId, LocalDateTime fecha, List<ItemPedido> items, double total, boolean pagado) {
-        this.mesaId = mesaId;
-        this.id = id;
-        this.meseroId = meseroId;
+    public Pedido(LocalDateTime fecha, String id, List<ItemPedido> items, String mesaNum, String mesaId, String meseroId, boolean pagado, double total, String meseroName) {
         this.fecha = fecha;
-        this.items = items;
-        this.total = total;
-        this.pagado = pagado;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getMesaId() {
-        return mesaId;
-    }
-
-    public void setMesaId(String mesaId) {
+        this.items = items;
+        this.mesaNum = mesaNum;
         this.mesaId = mesaId;
-    }
-
-    public String getMeseroId() {
-        return meseroId;
-    }
-
-    public void setMeseroId(String meseroId) {
         this.meseroId = meseroId;
+        this.pagado = pagado;
+        this.total = total;
+        this.meseroName = meseroName;
     }
 
     public LocalDateTime getFecha() {
@@ -71,6 +56,14 @@ public class Pedido {
         this.fecha = fecha;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public List<ItemPedido> getItems() {
         return items;
     }
@@ -79,12 +72,36 @@ public class Pedido {
         this.items = items;
     }
 
-    public double getTotal() {
-        return total;
+    public String getMesaId() {
+        return mesaId;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setMesaId(String mesaId) {
+        this.mesaId = mesaId;
+    }
+
+    public String getMesaNum() {
+        return mesaNum;
+    }
+
+    public void setMesaNum(String mesaNum) {
+        this.mesaNum = mesaNum;
+    }
+
+    public String getMeseroId() {
+        return meseroId;
+    }
+
+    public void setMeseroId(String meseroId) {
+        this.meseroId = meseroId;
+    }
+
+    public String getMeseroName() {
+        return meseroName;
+    }
+
+    public void setMeseroName(String meseroName) {
+        this.meseroName = meseroName;
     }
 
     public boolean isPagado() {
@@ -94,5 +111,12 @@ public class Pedido {
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
     }
-}
 
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+}
