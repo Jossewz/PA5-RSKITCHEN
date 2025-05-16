@@ -1,7 +1,6 @@
 package com.example.rskitchen5.Model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -14,12 +13,8 @@ public class Pedido {
     @Id
     private String id;
 
-    @Transient
-    private String mesaNum;
-
-    @Transient
+    private int mesaNum;
     private String meseroName;
-
     private String mesaId;
     private String meseroId;
 
@@ -36,7 +31,7 @@ public class Pedido {
 
     }
 
-    public Pedido(LocalDateTime fecha, String id, List<ItemPedido> items, String mesaNum, String mesaId, String meseroId, boolean pagado, double total, String meseroName) {
+    public Pedido(LocalDateTime fecha, String id, List<ItemPedido> items, int mesaNum, String mesaId, String meseroId, boolean pagado, double total, String meseroName) {
         this.fecha = fecha;
         this.id = id;
         this.items = items;
@@ -80,11 +75,11 @@ public class Pedido {
         this.mesaId = mesaId;
     }
 
-    public String getMesaNum() {
+    public int getMesaNum() {
         return mesaNum;
     }
 
-    public void setMesaNum(String mesaNum) {
+    public void setMesaNum(int mesaNum) {
         this.mesaNum = mesaNum;
     }
 
