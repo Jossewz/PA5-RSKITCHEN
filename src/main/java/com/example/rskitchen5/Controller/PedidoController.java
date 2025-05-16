@@ -32,15 +32,9 @@ public class PedidoController {
     public String mostrarFormularioPedido(Model model) {
         try {
             model.addAttribute("pedido", new Pedido());
-
-            // Cargar solo mesas no ocupadas
-            List<Mesa> mesasDisponibles = mesaRep.findByOcupadoFalse();
-            model.addAttribute("mesas", mesasDisponibles);
-
-            // Cargar todos los platillos
+            model.addAttribute("mesas", mesaRep.findByOcupadoFalse());
             model.addAttribute("platillos", platilloRep.findAll());
 
-            // Cargar solo meseros (con filtro mejorado)
             List<User> meseros = userRep.findAll().stream()
                     .filter(user -> user.getRol() != null &&
                             ("MESERO".equalsIgnoreCase(user.getRol()) ||
@@ -48,14 +42,11 @@ public class PedidoController {
                     .collect(Collectors.toList());
             model.addAttribute("meseros", meseros);
 
-            // Cargar últimos pedidos
-            model.addAttribute("pedidosRecientes", pedidoRep.findTop5ByOrderByFechaDesc());
-
+            model.addAttribute("pedidosRecientes", getPedidosConDetalles());
             return "pedido";
 
         } catch (Exception e) {
             model.addAttribute("error", "Error al cargar el formulario de pedidos");
-            e.printStackTrace();
             return "error";
         }
     }
@@ -67,145 +58,124 @@ public class PedidoController {
                               @RequestParam(name = "cantidades", required = false) List<String> cantidades,
                               Model model) {
 
-        // Validación mejorada con mensajes específicos
-        if (result.hasErrors()) {
-            model.addAttribute("error", "Error en los datos del formulario");
-            return cargarDatosModelo(model);
-        }
-        if (pedido.getMesaId() == null) {
-            model.addAttribute("error", "Debe seleccionar una mesa");
-            return cargarDatosModelo(model);
-        }
-        if (pedido.getMeseroId() == null) {
-            model.addAttribute("error", "Debe seleccionar un mesero");
-            return cargarDatosModelo(model);
-        }
-        if (platillosIds == null || platillosIds.isEmpty()) {
-            model.addAttribute("error", "Debe seleccionar al menos un platillo");
+        // Validaciones básicas
+        if (result.hasErrors() || pedido.getMesaId() == null || pedido.getMeseroId() == null ||
+                platillosIds == null || platillosIds.isEmpty()) {
+            model.addAttribute("error", validarDatos(pedido, platillosIds));
             return cargarDatosModelo(model);
         }
 
         try {
-            // Debug: Imprimir IDs para seguimiento
-            System.out.println("[DEBUG] Intentando crear pedido para:");
-            System.out.println(" - Mesa ID: " + pedido.getMesaId());
-            System.out.println(" - Mesero ID: " + pedido.getMeseroId());
-            System.out.println(" - Platillos IDs: " + platillosIds);
-
-            // Verificar y obtener mesa
             Mesa mesa = mesaRep.findById(pedido.getMesaId())
-                    .orElseThrow(() -> {
-                        System.out.println("[ERROR] Mesa no encontrada con ID: " + pedido.getMesaId());
-                        return new IllegalArgumentException("La mesa seleccionada no existe");
-                    });
+                    .orElseThrow(() -> new IllegalArgumentException("Mesa no encontrada"));
+            User mesero = userRep.findById(pedido.getMeseroId())
+                    .orElseThrow(() -> new IllegalArgumentException("Mesero no encontrado"));
 
-            // Verificar y obtener mesero con debug extendido
-            Optional<User> meseroOpt = userRep.findById(pedido.getMeseroId());
-            if (!meseroOpt.isPresent()) {
-                System.out.println("[ERROR] Mesero no encontrado con ID: " + pedido.getMeseroId());
-                System.out.println("[DEBUG] Meseros disponibles:");
-                userRep.findAll().forEach(u -> {
-                    if (u.getRol() != null &&
-                            (u.getRol().equalsIgnoreCase("MESERO") ||
-                                    u.getRol().equalsIgnoreCase("ROLE_MESERO"))) {
-                        System.out.println(" - " + u.getId() + ": " + u.getName() + " (" + u.getRol() + ")");
-                    }
-                });
-                throw new IllegalArgumentException("El mesero seleccionado no existe");
-            }
-            User mesero = meseroOpt.get();
-
-            // Crear nuevo pedido
-            Pedido nuevoPedido = new Pedido();
-            nuevoPedido.setMesaId(pedido.getMesaId());
-            nuevoPedido.setMeseroId(pedido.getMeseroId());
-
-            // Procesar items del pedido
-            List<ItemPedido> items = new ArrayList<>();
-            double total = 0.0;
-
-            for (int i = 0; i < platillosIds.size(); i++) {
-                String platilloId = platillosIds.get(i);
-                String cantidad = cantidades != null && i < cantidades.size() ? cantidades.get(i) : "1";
-
-                Platillo platillo = platilloRep.findById(platilloId)
-                        .orElseThrow(() -> {
-                            System.out.println("[ERROR] Platillo no encontrado con ID: " + platilloId);
-                            return new IllegalArgumentException("El platillo seleccionado no existe");
-                        });
-
-                ItemPedido item = new ItemPedido();
-                item.setName(platillo.getName());
-                item.setCant(cantidad);
-                item.setPrice(platillo.getPrice());
-                item.setProductId(platilloId);
-                item.setUnidades(1);
-
-                items.add(item);
-                total += platillo.getPrice() * item.getUnidades();
-            }
-
-            nuevoPedido.setItems(items);
-            nuevoPedido.setFecha(LocalDateTime.now());
-            nuevoPedido.setTotal(total);
-            nuevoPedido.setPagado(false);
-
-            // Guardar pedido
+            Pedido nuevoPedido = crearNuevoPedido(pedido, mesa, mesero, platillosIds, cantidades);
             Pedido pedidoGuardado = pedidoRep.save(nuevoPedido);
-            System.out.println("[DEBUG] Pedido creado con ID: " + pedidoGuardado.getId());
-
-            // Actualizar mesa
-            if (mesa.getPedidosId() == null) {
-                mesa.setPedidosId(new ArrayList<>());
-            }
-            mesa.getPedidosId().add(pedidoGuardado.getId());
-            mesa.setOcupado(true);
-            mesa.setMeseroId(pedido.getMeseroId());
-            mesaRep.save(mesa);
-            System.out.println("[DEBUG] Mesa actualizada: " + mesa.getId());
+            actualizarMesa(mesa, pedidoGuardado, mesero);
 
             return "redirect:/pedidos?exito=Pedido+creado+correctamente";
 
         } catch (IllegalArgumentException e) {
-            // Error de datos no encontrados
             model.addAttribute("error", e.getMessage());
-            System.out.println("[ERROR] " + e.getMessage());
             return cargarDatosModelo(model);
         } catch (Exception e) {
-            // Error inesperado
-            String errorMsg = "Error inesperado al crear el pedido: " + e.getMessage();
-            model.addAttribute("error", errorMsg);
-            System.out.println("[ERROR] " + errorMsg);
-            e.printStackTrace();
+            model.addAttribute("error", "Error inesperado al crear el pedido");
             return cargarDatosModelo(model);
         }
     }
 
-    private String cargarDatosModelo(Model model) {
-        try {
-            // Cargar datos necesarios para mostrar el formulario nuevamente
-            model.addAttribute("pedido", new Pedido());
+    // Métodos auxiliares
+    private List<Pedido> getPedidosConDetalles() {
+        return pedidoRep.findTop5ByOrderByFechaDesc().stream()
+                .map(pedido -> {
+                    Mesa mesa = mesaRep.findById(pedido.getMesaId()).orElse(new Mesa());
+                    User mesero = userRep.findById(pedido.getMeseroId()).orElse(new User());
+                    pedido.setMesaNum(mesa.getNum());
+                    pedido.setMeseroName(mesero.getName());
+                    return pedido;
+                })
+                .collect(Collectors.toList());
+    }
 
-            // Mostrar todas las mesas (no solo disponibles) para corrección de errores
-            model.addAttribute("mesas", mesaRep.findAll());
-            model.addAttribute("platillos", platilloRep.findAll());
+    private String validarDatos(Pedido pedido, List<String> platillosIds) {
+        if (pedido.getMesaId() == null) return "Debe seleccionar una mesa";
+        if (pedido.getMeseroId() == null) return "Debe seleccionar un mesero";
+        if (platillosIds == null || platillosIds.isEmpty()) return "Debe seleccionar al menos un platillo";
+        return "Error en los datos del formulario";
+    }
 
-            // Filtrar solo meseros
-            List<User> meseros = userRep.findAll().stream()
-                    .filter(user -> user.getRol() != null &&
-                            ("MESERO".equalsIgnoreCase(user.getRol()) ||
-                                    "ROLE_MESERO".equalsIgnoreCase(user.getRol())))
-                    .collect(Collectors.toList());
-            model.addAttribute("meseros", meseros);
+    private Pedido crearNuevoPedido(Pedido pedido, Mesa mesa, User mesero,
+                                    List<String> platillosIds, List<String> cantidades) {
+        Pedido nuevoPedido = new Pedido();
+        nuevoPedido.setMesaId(mesa.getId());
+        nuevoPedido.setMesaNum(mesa.getNum());
+        nuevoPedido.setMeseroId(mesero.getId());
+        nuevoPedido.setMeseroName(mesero.getName());
 
-            // Cargar pedidos recientes
-            model.addAttribute("pedidosRecientes", pedidoRep.findTop5ByOrderByFechaDesc());
+        List<ItemPedido> items = new ArrayList<>();
+        double total = 0.0;
 
-            return "pedido";
-        } catch (Exception e) {
-            System.out.println("[ERROR] Error al cargar datos del modelo: " + e.getMessage());
-            model.addAttribute("error", "Error al cargar el formulario");
-            return "error";
+        for (int i = 0; i < platillosIds.size(); i++) {
+            String platilloId = platillosIds.get(i);
+            String cantidadStr = cantidades.get(i);
+            int cantidad = parseCantidad(cantidadStr);
+
+            Platillo platillo = platilloRep.findById(platilloId)
+                    .orElseThrow(() -> new IllegalArgumentException("Platillo no encontrado"));
+
+            ItemPedido item = new ItemPedido();
+            item.setName(platillo.getName());
+            item.setCant(String.valueOf(cantidad));
+            item.setPrice(platillo.getPrice());
+            item.setProductId(platilloId);
+            item.setUnidades(cantidad);
+
+            items.add(item);
+            total += platillo.getPrice() * cantidad;
         }
+
+        nuevoPedido.setItems(items);
+        nuevoPedido.setFecha(LocalDateTime.now());
+        nuevoPedido.setTotal(total);
+        nuevoPedido.setPagado(false);
+
+        return nuevoPedido;
+    }
+
+    private int parseCantidad(String cantidadStr) {
+        try {
+            int cantidad = Integer.parseInt(cantidadStr);
+            return cantidad > 0 ? cantidad : 1;
+        } catch (NumberFormatException e) {
+            return 1;
+        }
+    }
+
+    private void actualizarMesa(Mesa mesa, Pedido pedido, User mesero) {
+        if (mesa.getPedidosId() == null) {
+            mesa.setPedidosId(new ArrayList<>());
+        }
+        mesa.getPedidosId().add(pedido.getId());
+        mesa.setOcupado(true);
+        mesa.setMeseroId(mesero.getId());
+        mesaRep.save(mesa);
+    }
+
+    private String cargarDatosModelo(Model model) {
+        model.addAttribute("pedido", new Pedido());
+        model.addAttribute("mesas", mesaRep.findAll());
+        model.addAttribute("platillos", platilloRep.findAll());
+
+        List<User> meseros = userRep.findAll().stream()
+                .filter(user -> user.getRol() != null &&
+                        ("MESERO".equalsIgnoreCase(user.getRol()) ||
+                                "ROLE_MESERO".equalsIgnoreCase(user.getRol())))
+                .collect(Collectors.toList());
+        model.addAttribute("meseros", meseros);
+
+        model.addAttribute("pedidosRecientes", getPedidosConDetalles());
+        return "pedido";
     }
 }
