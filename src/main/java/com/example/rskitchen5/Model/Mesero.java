@@ -11,8 +11,8 @@ public class Mesero {
 
     private String name;
     private String mail;
-    private String role;
     private String password;
+    private String rol;
 
     public String getId_mesero() {
         return id_mesero;
@@ -39,11 +39,11 @@ public class Mesero {
     }
 
     public String getRole() {
-        return role;
+        return rol;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(String rol) {
+        this.rol = rol;
     }
 
     public String getPassword() {

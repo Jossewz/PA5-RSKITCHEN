@@ -25,9 +25,9 @@ public class MeseroController {
     @GetMapping("/registro")
     public String mostrarFormulario(Model model) {
         model.addAttribute("mesero", new Mesero());
+        model.addAttribute("meseros", usuarioRep.findAll());
         return "mesero";
     }
-
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/guardar")
     public String guardarMesero(@ModelAttribute Mesero mesero, Model model) {
@@ -35,6 +35,8 @@ public class MeseroController {
         usuarioRep.save(mesero);
         model.addAttribute("mensajeExito", "Mesero registrado correctamente.");
         model.addAttribute("mesero", new Mesero());
+        model.addAttribute("meseros", usuarioRep.findAll());
         return "mesero";
     }
+
 }
