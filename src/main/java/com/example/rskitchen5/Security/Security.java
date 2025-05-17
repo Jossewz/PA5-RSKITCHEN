@@ -32,8 +32,8 @@ public class Security {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/static/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/mesa/**").permitAll()
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")  // Cambiado de hasRole a hasAuthority
-                        .requestMatchers("/mesero/**").hasAuthority("MESERO") // Cambiado de hasRole a hasAuthority
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers("/mesero/**").hasAuthority("MESERO")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

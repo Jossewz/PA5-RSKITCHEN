@@ -4,29 +4,31 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Document(collection = "factura")
-public class factura {
-
+@Document(collection = "facturas")
+public class Factura {
     @Id
     private String id;
-
     private String pedidoId;
-    private String mesaId;
-    private String meseroId;
+    private String mesaNum;
+    private String meseroName;
     private LocalDateTime fecha;
+    private List<ItemPedido> items;
     private double total;
 
-    public factura() {
+    public Factura() {
     }
 
-    public factura(LocalDateTime fecha, String id, String mesaId, String pedidoId, String meseroId, double total) {
+    public Factura(LocalDateTime fecha, String id, List<ItemPedido> items, String mesaNum, String meseroName, String pedidoId, double total) {
         this.fecha = fecha;
         this.id = id;
-        this.mesaId = mesaId;
+        this.items = items;
+        this.mesaNum = mesaNum;
+        this.meseroName = meseroName;
         this.pedidoId = pedidoId;
-        this.meseroId = meseroId;
         this.total = total;
+
     }
 
     public LocalDateTime getFecha() {
@@ -45,20 +47,28 @@ public class factura {
         this.id = id;
     }
 
-    public String getMesaId() {
-        return mesaId;
+    public List<ItemPedido> getItems() {
+        return items;
     }
 
-    public void setMesaId(String mesaId) {
-        this.mesaId = mesaId;
+    public void setItems(List<ItemPedido> items) {
+        this.items = items;
     }
 
-    public String getMeseroId() {
-        return meseroId;
+    public String getMesaNum() {
+        return mesaNum;
     }
 
-    public void setMeseroId(String meseroId) {
-        this.meseroId = meseroId;
+    public void setMesaNum(String mesaNum) {
+        this.mesaNum = mesaNum;
+    }
+
+    public String getMeseroName() {
+        return meseroName;
+    }
+
+    public void setMeseroName(String meseroName) {
+        this.meseroName = meseroName;
     }
 
     public String getPedidoId() {

@@ -1,10 +1,10 @@
 package com.example.rskitchen5.Model;
 
 public class ItemPedido {
-    private String  productId;       // ID del producto original
-    private String name;         // Nombre del producto en el momento del pedido
-    private double price;         // Precio unitario en ese momento
-    private String cant;           // Cantidad solicitada (ej: "2", "1.5", "una porción")
+    private String  productId;
+    private String name;
+    private double price;
+    private String cant;
     private int unidades;
 
     public ItemPedido() {

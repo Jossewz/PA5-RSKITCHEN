@@ -13,7 +13,7 @@ public class Platillo {
 
     private String name;
     private double price;
-    private List<String> ingredients;  // Cambié el nombre del campo a ingredients
+    private List<String> ingredients;
     private String cant;
     private String description;
 

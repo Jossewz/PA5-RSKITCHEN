@@ -3,59 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Crear Pedido</title>
-  <style>
-    .success { color: green; }
-    .error { color: red; }
-    .pedido-card {
-      border: 1px solid #ddd;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 5px;
-      background: #f9f9f9;
-    }
-    .platillo-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .platillo-item {
-      padding: 12px;
-      border: 1px solid #eee;
-      border-radius: 5px;
-      background: white;
-    }
-    .form-group {
-      margin-bottom: 20px;
-    }
-    .form-control {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    .cantidad-input {
-      width: 60px;
-      text-align: center;
-      margin-left: 10px;
-    }
-    .total-section {
-      background: #e9ffe9;
-      padding: 10px;
-      border-radius: 5px;
-      margin: 15px 0;
-      font-size: 1.1em;
-    }
-    .item-list {
-      margin-top: 10px;
-    }
-    .item-list li {
-      margin-bottom: 5px;
-      padding: 5px;
-      background: #f5f5f5;
-      border-radius: 3px;
-    }
-  </style>
+  <link rel="stylesheet" href="pedido.css">
 </head>
 <body>
 
@@ -69,7 +17,7 @@
   <div th:if="${param.exito}" style="color: white; background-color: #2ecc71; padding: 10px; border-radius: 4px; margin-bottom: 15px;"
        th:text="${param.exito}"></div>
 
-  <form th:action="@{/pedidos/crear}" method="post" th:object="${pedido}">
+  <form th:action="@{/pedidos}" method="post" th:object="${pedido}">
 
     <div class="form-group">
       <label for="mesaId" style="display: block; margin-bottom: 5px; font-weight: bold;">Mesa:</label>
@@ -130,7 +78,7 @@
   <h2 style="margin-top: 30px; color: #2c3e50;">Últimos Pedidos</h2>
 
   <div th:if="${pedidosRecientes != null and !pedidosRecientes.isEmpty()}">
-    <div th:each="pedido : ${pedidosRecientes}" class="pedido-card">
+    <div th:each="pedido : ${pedidosRecientes}" class="pedido-card" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 6px;">
       <h3 style="margin-top: 0;">Pedido #<span th:text="${pedido.id.substring(0, 8)}"></span></h3>
       <p><strong>Mesa:</strong> <span th:text="${pedido.mesaNum}"></span></p>
       <p><strong>Mesero:</strong> <span th:text="${pedido.meseroName}"></span></p>
@@ -145,6 +93,18 @@
           <span th:text="${'$' + #numbers.formatDecimal(item.price, 1, 2)}"></span>
         </li>
       </ul>
+
+      <div style="margin-top: 10px;">
+        <a th:href="@{'/pedidos/editar/' + ${pedido.id}}"
+           style="padding: 6px 12px; background-color: #2980b9; color: white; border-radius: 4px; text-decoration: none; margin-right: 10px;">
+          Editar
+        </a>
+        <a th:href="@{'/pedidos/eliminar/' + ${pedido.id}}"
+           style="padding: 6px 12px; background-color: #c0392b; color: white; border-radius: 4px; text-decoration: none;"
+           onclick="return confirm('¿Seguro que desea eliminar este pedido?');">
+          Eliminar
+        </a>
+      </div>
     </div>
   </div>
 
