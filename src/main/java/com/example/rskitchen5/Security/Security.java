@@ -33,7 +33,6 @@ public class Security {
                         .requestMatchers("/login", "/static/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/mesa/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/mesero/**").hasAuthority("MESERO")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
