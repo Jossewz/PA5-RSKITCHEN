@@ -21,6 +21,13 @@
       padding: 5px;
       background-color: #f0f0f0;
     }
+    .volver-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -47,6 +54,15 @@
 <!-- Listado de mesas -->
 <h2>Mesas existentes</h2>
 <div th:each="mesa : ${listar}" class="mesa-card">
+
+  <form th:action="@{'/mesa/' + ${mesa.id} + '/generar-factura'}" method="post" style="margin-top:10px;">
+    <button type="submit"
+            th:disabled="${mesa.pedidosId == null or #lists.isEmpty(mesa.pedidosId)}"
+            onclick="return confirm('¿Seguro que deseas generar la factura y liberar esta mesa?');">
+      Generar Factura y Liberar Mesa
+    </button>
+  </form>
+
   <h3>Mesa <span th:text="${mesa.num}"></span></h3>
   <p><strong>Estado:</strong>
     <span th:if="${mesa.ocupado}" style="color:red;">Ocupada</span>

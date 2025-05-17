@@ -2,18 +2,18 @@ package com.example.rskitchen5.Controller;
 
 import com.example.rskitchen5.DTO.ItemPedidoDetalleDTO;
 import com.example.rskitchen5.DTO.PedidoDetalleDTO;
+import com.example.rskitchen5.Model.Factura;
 import com.example.rskitchen5.Model.ItemPedido;
 import com.example.rskitchen5.Model.Mesa;
 import com.example.rskitchen5.Model.Pedido;
-import com.example.rskitchen5.Repository.MesaRep;
-import com.example.rskitchen5.Repository.PedidoRep;
-import com.example.rskitchen5.Repository.PlatilloRep;
-import com.example.rskitchen5.Repository.UserRep;
+import com.example.rskitchen5.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @CrossOrigin(origins = "*")
@@ -25,14 +25,16 @@ public class MesaController {
     private final PedidoRep pedidoRep;
     private final UserRep userRep;
     private final PlatilloRep platilloRep;
+    private FacturaRep facturaRep;
 
     @Autowired
     public MesaController(MesaRep mesaRepository, PedidoRep pedidoRep,
-                          UserRep userRep, PlatilloRep platilloRep) {
+                          UserRep userRep, PlatilloRep platilloRep, FacturaRep facturaRep) {
         this.mesaRepository = mesaRepository;
         this.pedidoRep = pedidoRep;
         this.userRep = userRep;
         this.platilloRep = platilloRep;
+        this.facturaRep = facturaRep;
     }
 
     @GetMapping("")
@@ -111,20 +113,17 @@ public class MesaController {
         dto.setTotal(pedido.getTotal());
         dto.setPagado(pedido.isPagado());
 
-        // Obtener nombre del mesero
         if (pedido.getMeseroId() != null) {
             userRep.findById(pedido.getMeseroId())
                     .ifPresent(mesero -> dto.setNombreMesero(mesero.getName()));
         }
 
-        // Convertir items con nombres completos de platillos
         List<ItemPedidoDetalleDTO> itemsDTO = new ArrayList<>();
         for (ItemPedido item : pedido.getItems()) {
             ItemPedidoDetalleDTO itemDTO = new ItemPedidoDetalleDTO();
             itemDTO.setCantidad(item.getCant());
             itemDTO.setPrecio(item.getPrice());
 
-            // Obtener nombre del platillo
             platilloRep.findById(item.getProductId())
                     .ifPresent(platillo -> {
                         itemDTO.setNombrePlatillo(platillo.getName());
@@ -136,5 +135,56 @@ public class MesaController {
         dto.setItems(itemsDTO);
 
         return dto;
+    }
+
+    @PostMapping("/{id}/generar-factura")
+    public String generarFactura(@PathVariable String id, Model model) {
+        Optional<Mesa> optionalMesa = mesaRepository.findById(id);
+
+        if (optionalMesa.isEmpty()) {
+            model.addAttribute("mensajeError", "Mesa no encontrada");
+            return "redirect:/mesa";
+        }
+
+        Mesa mesa = optionalMesa.get();
+
+        if (mesa.getPedidosId() == null || mesa.getPedidosId().isEmpty()) {
+            model.addAttribute("mensajeError", "La mesa no tiene pedidos para facturar");
+            return "redirect:/mesa";
+        }
+
+        String pedidoId = mesa.getPedidosId().get(0);
+        Optional<Pedido> optionalPedido = pedidoRep.findById(pedidoId);
+
+        if (optionalPedido.isEmpty()) {
+            model.addAttribute("mensajeError", "Pedido no encontrado");
+            return "redirect:/mesa";
+        }
+
+        Pedido pedido = optionalPedido.get();
+
+        Factura factura = new Factura();
+        factura.setPedidoId(pedido.getId());
+        factura.setMesaNum(String.valueOf(mesa.getNum()));
+
+        if (mesa.getMeseroId() != null) {
+            userRep.findById(mesa.getMeseroId())
+                    .ifPresent(mesero -> factura.setMeseroName(mesero.getName()));
+        }
+
+        factura.setFecha(LocalDateTime.now());
+        factura.setItems(pedido.getItems());
+        factura.setTotal(pedido.getTotal());
+
+        facturaRep.save(factura);
+
+        mesa.setOcupado(false);
+        mesa.setMeseroId(null);
+        mesa.setPedidosId(new ArrayList<>());
+        mesaRepository.save(mesa);
+
+        model.addAttribute("mensajeExito", "Factura generada y mesa liberada con éxito");
+
+        return "redirect:/mesa";
     }
 }
