@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Crear Pedido</title>
-  <link rel="stylesheet" href="pedido.css">
+
 </head>
 <body>
 
@@ -45,7 +45,7 @@
       <div th:each="platillo : ${platillos}" class="platillo-item">
         <div style="display: flex; align-items: center; margin-bottom: 8px;">
           <input type="checkbox"
-                 name="platillosIds"
+                 name="platillosSeleccionados"
                  th:value="${platillo.id}"
                  id="platillo_${platillo.id}"
                  style="margin-right: 10px;">
@@ -57,7 +57,7 @@
         <div>
           <label>Cantidad:</label>
           <input type="number"
-                 name="cantidades"
+                 th:name="'cantidad_' + ${platillo.id}"
                  min="1"
                  value="1"
                  class="cantidad-input">
