@@ -32,6 +32,7 @@ public class Security {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/static/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/mesa/**").permitAll()
+                        .requestMatchers("/home/**").permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )

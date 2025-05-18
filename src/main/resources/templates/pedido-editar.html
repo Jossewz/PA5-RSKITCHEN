@@ -4,46 +4,64 @@
     <meta charset="UTF-8" />
     <title>Editar Pedido</title>
     <style>
-        /* Tu mismo estilo, sin cambios */
         body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-            background-color: #f4f4f4;
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff; /* fondo blanco */
+            color: #003366; /* azul oscuro para texto */
         }
         .container {
-            max-width: 700px;
-            background: #fff;
-            padding: 20px;
+            max-width: 800px;
             margin: auto;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            background-color: #e6f0ff; /* azul muy claro */
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0, 102, 204, 0.3);
         }
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            color: #004080; /* azul */
+            margin-bottom: 25px;
+            font-weight: 600;
         }
         label {
             font-weight: bold;
             display: block;
             margin-top: 15px;
+            color: #004080; /* azul */
         }
         select, input[type="text"], input[type="number"] {
             width: 100%;
-            padding: 8px 12px;
-            margin-top: 5px;
+            padding: 10px;
+            margin-top: 6px;
+            background-color: #ffffff; /* fondo blanco */
+            border: 2px solid #004080; /* borde azul */
             border-radius: 5px;
-            border: 1px solid #ccc;
+            color: #003366; /* texto azul oscuro */
             box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        select option {
+            background-color: #ffffff;
+            color: #003366;
+        }
+        select:focus, input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #0066cc;
+            outline: none;
         }
         .item-existente {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             padding: 10px;
-            background: #eef5fb;
+            background: #cce0ff; /* azul muy claro */
             border-radius: 5px;
+            color: #003366;
+            font-weight: 600;
         }
         .flex-row {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
             margin-top: 10px;
         }
@@ -51,26 +69,52 @@
             flex: 1;
         }
         button[type="submit"] {
-            margin-top: 20px;
-            background-color: #4CAF50;
+            margin-top: 25px;
+            background-color: #004080; /* azul */
             color: white;
             padding: 12px;
             width: 100%;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #0066cc;
+        }
+        .volver {
+            display: inline-block;
+            margin-bottom: 15px;
+            color: #004080;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .volver:hover {
+            text-decoration: underline;
+        }
+        /* Fondo de la mesa actual */
+        .mesa-actual {
+            background-color: #b3c6ff; /* azul claro */
+            padding: 10px;
+            border-radius: 4px;
+            color: #003366;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <a class="volver" th:href="@{/home}">← Volver</a>
+    <h2>Editar Pedido</h2>
     <form th:action="@{/pedidos/editar}" method="post">
         <input type="hidden" name="id" th:value="${pedido.id}" />
         <input type="hidden" name="mesaId" th:value="${pedido.mesaId}" />
 
         <label>Mesa actual:</label>
-        <div style="background-color: #f8f9fa; padding: 8px; border-radius: 4px;">
+        <div class="mesa-actual">
             <span th:if="${mesaActual != null}" th:text="'Mesa ' + ${mesaActual.num}"></span>
             <span th:if="${mesaActual == null}">No asignada</span>
         </div>
@@ -98,4 +142,3 @@
 </div>
 </body>
 </html>
-
