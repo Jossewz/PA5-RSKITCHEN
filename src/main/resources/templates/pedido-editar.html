@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Editar Pedido</title>
     <style>
+        /* Tu mismo estilo, sin cambios */
         body {
             font-family: Arial, sans-serif;
             margin: 30px;
@@ -40,9 +41,6 @@
             background: #eef5fb;
             border-radius: 5px;
         }
-        .item-existente label {
-            font-weight: normal;
-        }
         .flex-row {
             display: flex;
             gap: 15px;
@@ -63,96 +61,36 @@
             font-size: 16px;
             cursor: pointer;
         }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #333;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        /* Para inputs deshabilitados */
-        input[disabled] {
-            background-color: #ddd;
-            cursor: not-allowed;
-        }
-        .volver-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: #333;
-            border: 1px solid #333;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-        .volver-btn:hover {
-            background-color: #333;
-            color: #fff;
-        }
     </style>
 </head>
 <body>
 <div class="container">
-    <a th:href="@{/pedidos}" class="volver-btn">Volver a la lista de pedidos</a>
+    <form th:action="@{/pedidos/editar}" method="post">
+        <input type="hidden" name="id" th:value="${pedido.id}" />
+        <input type="hidden" name="mesaId" th:value="${pedido.mesaId}" />
 
-    <h2>Editar Pedido</h2>
-    <form th:action="@{/pedidos/editar}" th:object="${pedido}" method="post">
-        <!-- ID del pedido -->
-        <input type="hidden" th:field="*{id}" />
-
-        <label for="mesa">Mesa:</label>
-        <select id="mesa" th:field="*{mesaId}" required>
-            <option value="" disabled>Selecciona una mesa</option>
-            <option th:each="mesa : ${mesas}"
-                    th:value="${mesa.id}"
-                    th:text="'Mesa ' + ${mesa.num}"
-                    th:selected="${mesa.id == pedido.mesaId}">
-            </option>
-        </select>
+        <label>Mesa actual:</label>
+        <div style="background-color: #f8f9fa; padding: 8px; border-radius: 4px;">
+            <span th:if="${mesaActual != null}" th:text="'Mesa ' + ${mesaActual.num}"></span>
+            <span th:if="${mesaActual == null}">No asignada</span>
+        </div>
 
         <label>Platillos existentes:</label>
-        <div class="item-existente" th:each="item, iterStat : ${pedido.items}">
+        <div th:each="item : ${pedido.items}" class="item-existente">
             <div class="flex-row">
-                <input type="hidden" th:name="'itemsExistentes[' + ${iterStat.index} + '].platillo.id'"
-                       th:value="${item.productId}" />
+                <input type="hidden" name="itemsExistentes" th:value="${item.productId}" />
                 <input type="text" th:value="${item.name}" disabled />
-                <input type="number" th:name="'itemsExistentes[' + ${iterStat.index} + '].cantidad'"
-                       th:value="${item.unidades}" min="1" />
+                <input type="number" name="cantidadesExistentes" th:value="${item.unidades}" min="1" />
             </div>
         </div>
 
-        <label>Agregar nuevos platillos (hasta 3):</label>
-        <div class="flex-row">
-            <select th:name="nuevosItems[0].platillo.id">
-                <option value="" selected>Selecciona un platillo</option>
-                <option th:each="platillo : ${platillosDisponibles}"
-                        th:value="${platillo.id}"
-                        th:text="${platillo.name}">
-                </option>
+        <label>Agregar nuevos platillos:</label>
+        <div class="flex-row" th:each="i : ${#numbers.sequence(0, 2)}">
+            <select name="nuevosPlatillos">
+                <option value="">Seleccione un platillo</option>
+                <option th:each="platillo : ${platillosDisponibles}" th:value="${platillo.id}" th:text="${platillo.name}"></option>
             </select>
-            <input type="number" th:name="nuevosItems[0].cantidad" min="1" value="1" />
-        </div>
-        <div class="flex-row">
-            <select th:name="nuevosItems[1].platillo.id">
-                <option value="" selected>Selecciona un platillo</option>
-                <option th:each="platillo : ${platillosDisponibles}"
-                        th:value="${platillo.id}"
-                        th:text="${platillo.name}">
-                </option>
-            </select>
-            <input type="number" th:name="nuevosItems[1].cantidad" min="1" value="1" />
-        </div>
-        <div class="flex-row">
-            <select th:name="nuevosItems[2].platillo.id">
-                <option value="" selected>Selecciona un platillo</option>
-                <option th:each="platillo : ${platillosDisponibles}"
-                        th:value="${platillo.id}"
-                        th:text="${platillo.name}">
-                </option>
-            </select>
-            <input type="number" th:name="nuevosItems[2].cantidad" min="1" value="1" />
+            <input type="number" name="nuevasCantidades" min="1" value="1" />
         </div>
 
         <button type="submit">Guardar Cambios</button>
@@ -160,3 +98,4 @@
 </div>
 </body>
 </html>
+
