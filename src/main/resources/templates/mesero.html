@@ -4,11 +4,145 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registrar Mesero</title>
-    <link rel="stylesheet" th:href="@{/css/mesero.css}" />
+    <style>
+        body {
+          padding-top: 60px; /* espacio para barra fija */
+          font-family: 'Poppins', sans-serif;
+          background-color: #f0f4f8;
+          color: #002244;
+          margin: 0;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        nav {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 50px;
+          background-color: #004080; /* azul oscuro */
+          display: flex;
+          align-items: center;
+          padding: 0 20px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+          z-index: 1000;
+        }
+
+        nav a {
+          color: white;
+          margin-right: 20px;
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 16px;
+          transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+          color: #a3c2ff;
+        }
+
+        h1, h2 {
+          color: #004080;
+        }
+
+        .volver-btn {
+          display: inline-block;
+          margin-bottom: 20px;
+          padding: 8px 16px;
+          text-decoration: none;
+          background-color: #007acc;
+          color: white;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+        }
+
+        .volver-btn:hover {
+          background-color: #005b99;
+        }
+
+        form {
+          background-color: #ffffff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0, 51, 102, 0.1);
+          margin-bottom: 30px;
+          max-width: 500px;
+        }
+
+        label {
+          display: block;
+          margin: 10px 0 5px;
+          font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+          width: 100%;
+          padding: 8px;
+          margin-bottom: 15px;
+          border: 1px solid #a3c2ff;
+          border-radius: 5px;
+          box-sizing: border-box;
+        }
+
+        button {
+          background-color: #007acc;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+          background-color: #005b99;
+        }
+
+        .mensajes p {
+          margin: 5px 0;
+          font-weight: bold;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          background-color: #ffffff;
+          box-shadow: 0 4px 6px rgba(0, 51, 102, 0.1);
+        }
+
+        th, td {
+          border: 1px solid #b3d1ff;
+          padding: 10px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #cce6ff;
+        }
+
+        tbody tr:nth-child(even) {
+          background-color: #f2f7ff;
+        }
+
+        tbody tr:hover {
+          background-color: #d6eaff;
+        }
+    </style>
+
 </head>
 <body>
-
-<a th:href="@{/home}" class="volver-btn">Volver</a>
+<nav>
+    <a th:href="@{/home}">Rskitchen</a>
+    <a th:href="@{/mesa}">Mesa</a>
+    <a th:href="@{/mesero}">Mesero</a>
+    <a th:href="@{/pedidos}">Pedido</a>
+    <a th:href="@{/platillos}">Platillos</a>
+    <a th:href="@{/factura}">Factura</a>
+</nav>
 
 <h1>Registro de Mesero</h1>
 

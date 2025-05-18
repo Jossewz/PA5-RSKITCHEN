@@ -1,14 +1,197 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Gestión de Platillos</title>
-  <link rel="stylesheet" th:href="@{/css/platillos.css}">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+  <style>
+    /* Reset y base */
+    body {
+  padding-top: 60px; /* deja espacio para la barra fija */
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0f4f8;
+  color: #002244;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+    /* Barra de navegación fija */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #004080;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      z-index: 1000;
+      padding: 10px 30px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover {
+      background-color: #0066cc;
+    }
+    nav a.active {
+      background-color: #003366;
+    }
+
+    .volver {
+      text-decoration: none;
+      color: #004080;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #002244;
+    }
+
+    .error {
+      color: #a94442;
+      background-color: #f2dede;
+      border: 1px solid #ebccd1;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .contenedor {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .boton-toggle {
+      background-color: #004080;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      display: inline-block;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .boton-toggle:hover {
+      background-color: #0059b3;
+    }
+
+    #toggle-form {
+      display: none;
+    }
+
+    .formulario {
+      display: none;
+      margin-bottom: 30px;
+    }
+
+    #toggle-form:checked + label + .formulario {
+      display: block;
+    }
+
+    .formulario input,
+    .formulario textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccd6dd;
+      border-radius: 6px;
+      background-color: #f9fcff;
+    }
+
+    .formulario button {
+      background-color: #004080;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    .formulario button:hover {
+      background-color: #0059b3;
+    }
+
+    .platillo {
+      background-color: #eaf3fb;
+      border: 1px solid #c7dcef;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .platillo .nombre {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #002244;
+    }
+
+    .acciones {
+      margin-top: 15px;
+    }
+
+    .btn-editar,
+    .btn-eliminar {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-editar {
+      background-color: #2e8b57;
+      margin-right: 10px;
+    }
+
+    .btn-editar:hover {
+      background-color: #3fa26d;
+    }
+
+    .btn-eliminar {
+      background-color: #c0392b;
+    }
+
+    .btn-eliminar:hover {
+      background-color: #e74c3c;
+    }
+  </style>
 </head>
 <body>
-
-<a href="/home" class="volver">Volver</a>
+<nav>
+  <a th:href="@{/home}">Rskitchen</a>
+  <a th:href="@{/mesa}">Mesa</a>
+  <a th:href="@{/mesero}">Mesero</a>
+  <a th:href="@{/pedidos}">Pedido</a>
+  <a th:href="@{/platillos}">Platillos</a>
+  <a th:href="@{/factura}">Factura</a>
+</nav>
+>
 
 <h1>Gestión de Platillos</h1>
 
@@ -18,14 +201,14 @@
 <div class="contenedor">
 
   <!-- Botón toggle con checkbox invisible -->
-  <input type="checkbox" id="toggle-form">
+  <input type="checkbox" id="toggle-form" />
   <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
 
   <!-- Formulario para crear nuevo platillo -->
   <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
-    <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required>
-    <input type="text" th:field="*{cant}" placeholder="Cantidad" required>
-    <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required>
+    <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
+    <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
+    <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required />
     <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
     <button type="submit">Guardar Platillo</button>
   </form>
@@ -41,8 +224,10 @@
     <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
     <div>
       <strong>Ingredientes:</strong>
-      <span th:each="ing,iter : ${platillo.ingredients}"
-            th:text="${ing} + (${!iter.last} ? ', ' : '')"></span>
+      <span
+              th:each="ing,iter : ${platillo.ingredients}"
+              th:text="${ing} + (${!iter.last} ? ', ' : '')"
+      ></span>
     </div>
     <div class="acciones">
       <form th:action="@{/platillos/editar/{id}(id=${platillo.id})}" method="post" style="display: inline;">

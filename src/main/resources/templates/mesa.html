@@ -1,103 +1,263 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Gestión de Mesas</title>
   <style>
+    body {
+          padding-top: 60px; /* espacio para barra fija */
+          font-family: 'Poppins', sans-serif;
+          background-color: #f0f4f8;
+          color: #002244;
+          margin: 0;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+
+    /* Barra de navegación fija */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #003366;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 18px;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 10px 6px;
+      transition: background-color 0.3s ease;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background-color: #00509e;
+    }
+
+    h1, h2, h3, h4, h5 {
+      color: #003366;
+      margin-top: 0;
+    }
+
     .mesa-card {
-      border: 1px solid #ddd;
-      margin: 10px;
-      padding: 15px;
-      border-radius: 5px;
+      background-color: #ffffff;
+      border: 1px solid #cce0ff;
+      margin: 15px 0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 51, 102, 0.1);
+      transition: all 0.3s ease;
     }
+
     .pedido-card {
-      background-color: #f9f9f9;
+      background-color: #e6f2ff;
       margin: 10px 0;
-      padding: 10px;
-      border-left: 4px solid #4CAF50;
+      padding: 15px;
+      border-left: 5px solid #3399ff;
+      border-radius: 6px;
     }
+
     .platillo-item {
       margin: 5px 0;
-      padding: 5px;
-      background-color: #f0f0f0;
+      padding: 10px;
+      background-color: #f0f8ff;
+      border: 1px solid #cce0ff;
+      border-radius: 6px;
     }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #99ccff;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      color: #003366;
+      font-weight: 600;
+    }
+
+    button {
+      background-color: #3399ff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #007acc;
+    }
+
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+
     .volver-btn {
       display: inline-block;
       margin-bottom: 20px;
       text-decoration: none;
-      color: #333;
+      color: #003366;
       font-weight: bold;
+      background-color: #cce5ff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .volver-btn:hover {
+      background-color: #99ccff;
+    }
+
+    .mensaje-exito {
+      color: green;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .mensaje-error {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    /* Barra de búsqueda */
+    #barraBusqueda {
+      margin: 10px auto 30px auto;
+      padding: 8px 12px;
+      border: 2px solid #003366;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #003366;
+      background-color: #f0f8ff;
+      width: 100%;
+      max-width: 400px;
+      display: block;
     }
   </style>
 </head>
 <body>
 
-<a th:href="@{/home}" class="volver-btn">Volver</a>
+<!-- Barra de navegación fija -->
+<nav>
+  <a th:href="@{/home}">Rskitchen</a>
+  <a th:href="@{/mesa}">Mesa</a>
+  <a th:href="@{/mesero}">Mesero</a>
+  <a th:href="@{/pedidos}">Pedido</a>
+  <a th:href="@{/platillos}">Platillos</a>
+  <a th:href="@{/factura}">Factura</a>
+</nav>
 
 <h1>Gestión de Mesas</h1>
+
+<!-- Barra de búsqueda -->
+<input type="text" id="barraBusqueda" placeholder="Buscar mesas por número o estado..." onkeyup="filtrarMesas()" />
 
 <div class="mesa-card">
   <h2>Crear nueva mesa</h2>
   <form th:action="@{/mesa/crear}" method="post" th:object="${nuevaMesa}">
     <div>
       <label>Número de mesa:</label>
-      <input type="number" th:field="*{num}" min="1" required>
+      <input type="number" th:field="*{num}" min="1" required />
     </div>
     <button type="submit">Crear Mesa</button>
   </form>
 </div>
 
 <!-- Mensajes de estado -->
-<div th:if="${mensajeExito}" style="color:green;" th:text="${mensajeExito}"></div>
-<div th:if="${mensajeError}" style="color:red;" th:text="${mensajeError}"></div>
+<div th:if="${mensajeExito}" class="mensaje-exito" th:text="${mensajeExito}"></div>
+<div th:if="${mensajeError}" class="mensaje-error" th:text="${mensajeError}"></div>
 
 <!-- Listado de mesas -->
 <h2>Mesas existentes</h2>
-<div th:each="mesa : ${listar}" class="mesa-card">
+<div id="listaMesas">
+  <div th:each="mesa : ${listar}" class="mesa-card">
 
-  <form th:action="@{'/mesa/' + ${mesa.id} + '/generar-factura'}" method="post" style="margin-top:10px;">
-    <button type="submit"
-            th:disabled="${mesa.pedidosId == null or #lists.isEmpty(mesa.pedidosId)}"
-            onclick="return confirm('¿Seguro que deseas generar la factura y liberar esta mesa?');">
-      Generar Factura y Liberar Mesa
-    </button>
-  </form>
+    <form th:action="@{'/mesa/' + ${mesa.id} + '/generar-factura'}" method="post" style="margin-top:10px;">
+      <button type="submit"
+              th:disabled="${mesa.pedidosId == null or #lists.isEmpty(mesa.pedidosId)}"
+              onclick="return confirm('¿Seguro que deseas generar la factura y liberar esta mesa?');">
+        Generar Factura y Liberar Mesa
+      </button>
+    </form>
 
-  <h3>Mesa <span th:text="${mesa.num}"></span></h3>
-  <p><strong>Estado:</strong>
-    <span th:if="${mesa.ocupado}" style="color:red;">Ocupada</span>
-    <span th:unless="${mesa.ocupado}" style="color:green;">Disponible</span>
-  </p>
-  <p><strong>Mesero:</strong>
-    <span th:text="${nombresMeseros[mesa.id]} ?: 'No asignado'"></span>
-  </p>
+    <h3>Mesa <span th:text="${mesa.num}"></span></h3>
+    <p><strong>Estado:</strong>
+      <span th:if="${mesa.ocupado}" style="color:red;">Ocupada</span>
+      <span th:unless="${mesa.ocupado}" style="color:green;">Disponible</span>
+    </p>
+    <p><strong>Mesero:</strong>
+      <span th:text="${nombresMeseros[mesa.id]} ?: 'No asignado'"></span>
+    </p>
 
-  <!-- Pedidos de la mesa -->
-  <div th:if="${pedidosPorMesa[mesa.id] != null and !pedidosPorMesa[mesa.id].isEmpty()}">
-    <h4>Pedidos:</h4>
-    <div th:each="pedido : ${pedidosPorMesa[mesa.id]}" class="pedido-card">
-      <p><strong>Fecha:</strong>
-        <span th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></span></p>
-      <p><strong>Total:</strong>
-        <span th:text="${'$' + #numbers.formatDecimal(pedido.total, 1, 2)}"></span></p>
-      <p><strong>Mesero:</strong>
-        <span th:text="${pedido.nombreMesero} ?: 'No asignado'"></span></p>
-      <p><strong>Estado:</strong>
-        <span th:text="${pedido.pagado} ? 'Pagado' : 'Pendiente'"></span></p>
+    <!-- Pedidos de la mesa -->
+    <div th:if="${pedidosPorMesa[mesa.id] != null and !pedidosPorMesa[mesa.id].isEmpty()}">
+      <h4>Pedidos:</h4>
+      <div th:each="pedido : ${pedidosPorMesa[mesa.id]}" class="pedido-card">
+        <p><strong>Fecha:</strong>
+          <span th:text="${#temporals.format(pedido.fecha, 'dd/MM/yyyy HH:mm')}"></span></p>
+        <p><strong>Total:</strong>
+          <span th:text="${'$' + #numbers.formatDecimal(pedido.total, 1, 2)}"></span></p>
+        <p><strong>Mesero:</strong>
+          <span th:text="${pedido.nombreMesero} ?: 'No asignado'"></span></p>
+        <p><strong>Estado:</strong>
+          <span th:text="${pedido.pagado} ? 'Pagado' : 'Pendiente'"></span></p>
 
-      <h5>Platillos:</h5>
-      <div th:each="item : ${pedido.items}" class="platillo-item">
-        <p><strong th:text="${item.nombrePlatillo}"></strong></p>
-        <p th:text="${item.descripcionPlatillo}"></p>
-        <p>Cantidad: <span th:text="${item.cantidad}"></span></p>
-        <p>Precio: <span th:text="${'$' + #numbers.formatDecimal(item.precio, 1, 2)}"></span></p>
+        <h5>Platillos:</h5>
+        <div th:each="item : ${pedido.items}" class="platillo-item">
+          <p><strong th:text="${item.nombrePlatillo}"></strong></p>
+          <p th:text="${item.descripcionPlatillo}"></p>
+          <p>Cantidad: <span th:text="${item.cantidad}"></span></p>
+          <p>Precio: <span th:text="${'$' + #numbers.formatDecimal(item.precio, 1, 2)}"></span></p>
+        </div>
       </div>
     </div>
-  </div>
-  <div th:if="${pedidosPorMesa[mesa.id] == null or pedidosPorMesa[mesa.id].isEmpty()}">
-    <p>No hay pedidos para esta mesa.</p>
+    <div th:if="${pedidosPorMesa[mesa.id] == null or pedidosPorMesa[mesa.id].isEmpty()}">
+      <p>No hay pedidos para esta mesa.</p>
+    </div>
   </div>
 </div>
+
+<script>
+  function filtrarMesas() {
+    const input = document.getElementById('barraBusqueda');
+    const filter = input.value.toLowerCase();
+    const listaMesas = document.getElementById('listaMesas');
+    const mesas = listaMesas.getElementsByClassName('mesa-card');
+
+    for (let i = 0; i < mesas.length; i++) {
+      let mesa = mesas[i];
+      const numeroMesaElem = mesa.querySelector('h3');
+      const estadoElem = mesa.querySelector('p strong + span') || mesa.querySelector('p span');
+      const textoMesa = (numeroMesaElem?.innerText || "") + " " + (estadoElem?.innerText || "");
+      if (textoMesa.toLowerCase().indexOf(filter) > -1) {
+        mesa.style.display = "";
+      } else {
+        mesa.style.display = "none";
+      }
+    }
+  }
+</script>
 
 </body>
 </html>
