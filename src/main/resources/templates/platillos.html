@@ -5,7 +5,7 @@
   <title>Gestión de Platillos</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
   <style>
-    /* Reset y base */
+
     body {
   padding-top: 60px; /* deja espacio para la barra fija */
   font-family: 'Poppins', sans-serif;
@@ -16,8 +16,6 @@
   padding-right: 20px;
 }
 
-
-    /* Barra de navegación fija */
     nav {
       position: fixed;
       top: 0;
@@ -191,20 +189,16 @@
   <a th:href="@{/platillos}">Platillos</a>
   <a th:href="@{/factura}">Factura</a>
 </nav>
->
 
 <h1>Gestión de Platillos</h1>
 
-<!-- Mostrar errores -->
 <div th:if="${error}" class="error" th:text="${error}"></div>
 
 <div class="contenedor">
 
-  <!-- Botón toggle con checkbox invisible -->
   <input type="checkbox" id="toggle-form" />
   <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
 
-  <!-- Formulario para crear nuevo platillo -->
   <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
     <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
     <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
@@ -213,7 +207,6 @@
     <button type="submit">Guardar Platillo</button>
   </form>
 
-  <!-- Lista de platillos -->
   <div th:if="${platillos != null and platillos.isEmpty()}">
     <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
   </div>
@@ -228,14 +221,12 @@
               th:each="ing,iter : ${platillo.ingredients}"
               th:text="${ing} + (${!iter.last} ? ', ' : '')"
       ></span>
-    </div>
-    <div class="acciones">
-      <form th:action="@{/platillos/editar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
-        <button type="submit" class="btn-editar">Editar</button>
-      </form>
-      <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
-        <button type="submit" class="btn-eliminar">Eliminar</button>
-      </form>
+      <div class="acciones">
+        <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
+        <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
+          <button type="submit" class="btn-eliminar">Eliminar</button>
+        </form>
+      </div>
     </div>
   </div>
 

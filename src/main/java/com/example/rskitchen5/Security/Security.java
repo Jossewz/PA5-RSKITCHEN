@@ -31,11 +31,11 @@ public class Security {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/static/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/mesa/**").permitAll()
-                        .requestMatchers("/home/**").permitAll()
+                        .requestMatchers("/mesa/**", "/pedido/**", "/factura/**").hasAnyAuthority("ADMIN", "MESERO")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
