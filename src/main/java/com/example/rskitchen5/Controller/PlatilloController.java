@@ -63,4 +63,16 @@ public class PlatilloController {
             return "redirect:/platillos?error=delete";
         }
     }
+
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditarPlatillo(@PathVariable String id, Model model) {
+        try {
+            Platillo platillo = platilloRep.findById(id).orElseThrow(() -> new IllegalArgumentException("Platillo no encontrado"));
+            model.addAttribute("platillo", platillo);
+            return "editar-platillo"; // Crea un nuevo archivo HTML llamado "editar-platillo.html"
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al cargar el platillo para editar");
+            return "platillos";
+        }
+    }
 }

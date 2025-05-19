@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Platillo</title>
+</head>
+<body>
+<h1>Editar Platillo</h1>
+<form th:action="@{/platillos/editar/{id}(id=${platillo.id})}" method="post" th:object="${platillo}">
+  <input type="hidden" th:field="*{id}" />
+  <label for="name">Nombre:</label>
+  <input type="text" th:field="*{name}" id="name" required />
+  <label for="cant">Cantidad:</label>
+  <input type="text" th:field="*{cant}" id="cant" required />
+  <label for="price">Precio:</label>
+  <input type="number" th:field="*{price}" id="price" step="0.01" min="0" required />
+  <label for="ingredients">Ingredientes:</label>
+  <textarea th:field="*{ingredients}" id="ingredients"></textarea>
+  <button type="submit">Guardar Cambios</button>
+</form>
+<a th:href="@{/platillos}">Volver a la lista de platillos</a>
+</body>
+</html>
