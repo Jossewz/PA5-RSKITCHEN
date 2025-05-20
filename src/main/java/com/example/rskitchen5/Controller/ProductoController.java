@@ -20,7 +20,7 @@ public class ProductoController {
     public String getAllProductos(Model model) {
         List<Producto> productos = productoRep.findAll();
         model.addAttribute("productos", productos);
-        model.addAttribute("productoForm", new Producto()); // Inicializamos un nuevo producto
+        model.addAttribute("productoForm", new Producto());
         return "productos";
     }
 

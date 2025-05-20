@@ -126,7 +126,6 @@
 <div class="contenedor">
   <h1>Gestión de Productos</h1>
 
-  <!-- Formulario de creación/edición -->
   <div class="formulario">
     <form th:action="@{/producto/guardar}" method="post" th:object="${productoForm}">
       <input type="hidden" th:field="*{id}" />
@@ -159,7 +158,6 @@
     </form>
   </div>
 
-  <!-- Tabla de productos -->
   <table>
     <thead>
     <tr>
