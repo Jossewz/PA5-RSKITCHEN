@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8" />
   <title>Gestión de Mesas</title>
@@ -23,8 +23,8 @@
       width: 100%;
       background-color: #003366;
       display: flex;
-      justify-content: center;
       align-items: center;
+
       height: 50px;
       z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
@@ -159,12 +159,13 @@
 <body>
 
 <!-- Barra de navegación fija -->
+
 <nav>
   <a th:href="@{/home}">Rskitchen</a>
   <a th:href="@{/mesa}">Mesa</a>
-  <a th:href="@{/mesero}">Mesero</a>
+  <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+  <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
   <a th:href="@{/pedidos}">Pedido</a>
-  <a th:href="@{/platillos}">Platillos</a>
   <a th:href="@{/factura}">Factura</a>
 </nav>
 
