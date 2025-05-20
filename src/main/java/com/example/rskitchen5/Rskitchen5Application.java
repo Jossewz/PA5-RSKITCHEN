@@ -11,5 +11,4 @@ public class Rskitchen5Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Rskitchen5Application.class, args);
 	}
-
 }
