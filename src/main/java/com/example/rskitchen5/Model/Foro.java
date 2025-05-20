@@ -17,7 +17,6 @@ public class Foro {
     public Foro(String fnombre, String fcomentario, LocalDateTime fecha) {
         this.fnombre = fnombre;
         this.fcomentario = fcomentario;
-        this.fecha = fecha;
     }
 
     public String getId() {
@@ -42,14 +41,6 @@ public class Foro {
 
     public void setFcomentario(String fcomentario) {
         this.fcomentario = fcomentario;
-    }
-
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
     }
 }
 

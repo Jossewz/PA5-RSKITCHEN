@@ -19,13 +19,11 @@ public class Pedido {
     private String meseroId;
 
     @Field("fecha")
-    private LocalDateTime fecha; // Usar Date en lugar de LocalDateTime
+    private LocalDateTime fecha;
 
     private List<ItemPedido> items;
     private double total;
     private boolean pagado;
-
-    // Constructor y getters/setters...
 
     public Pedido() {
 

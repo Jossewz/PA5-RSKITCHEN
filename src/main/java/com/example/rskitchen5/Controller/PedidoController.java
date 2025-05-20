@@ -131,8 +131,8 @@ public class PedidoController {
                         ItemPedido item = existingItemsMap.get(platilloId);
                         item.setUnidades(cantidad);
                         item.setCant(String.valueOf(cantidad));
-                        itemsActualizados.add(item); // Añadir a la lista actualizada
-                        existingItemsMap.remove(platilloId); // Evitar duplicados si también se añade como nuevo
+                        itemsActualizados.add(item);
+                        existingItemsMap.remove(platilloId);
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class PedidoController {
                     String platilloId = platillosNuevosIds.get(i);
                     if (platilloId != null && !platilloId.isEmpty()) {
                         Integer cantidad = cantidadesNuevas.get(i);
-                        if (cantidad != null && cantidad > 0 && !existingItemsMap.containsKey(platilloId)) { // Evitar duplicados
+                        if (cantidad != null && cantidad > 0 && !existingItemsMap.containsKey(platilloId)) {
                             Platillo platillo = platilloRep.findById(platilloId)
                                     .orElseThrow(() -> new IllegalArgumentException("Platillo nuevo no encontrado con ID: " + platilloId));
                             ItemPedido nuevoItem = new ItemPedido();
@@ -156,7 +156,7 @@ public class PedidoController {
                             nuevoItem.setCant(String.valueOf(cantidad));
                             itemsActualizados.add(nuevoItem);
                         } else if (cantidad != null && cantidad > 0 && existingItemsMap.containsKey(platilloId)) {
-                            // Si el nuevo platillo coincide con uno existente (quizás por error en el formulario), actualizar cantidad
+
                             ItemPedido itemExistente = existingItemsMap.get(platilloId);
                             itemExistente.setUnidades(itemExistente.getUnidades() + cantidad);
                             itemExistente.setCant(String.valueOf(itemExistente.getUnidades()));
@@ -478,7 +478,7 @@ public class PedidoController {
                 }
             }
             pedido.setItems(itemsActualizados);
-            pedido.setTotal(calcularTotal(itemsActualizados)); // LLamada al método corregido
+            pedido.setTotal(calcularTotal(itemsActualizados));
             pedidoRep.save(pedido);
             actualizarEstadoMesa(mesa, pedidoId, pedido.getMeseroId());
             return "redirect:/pedidos?exito=Pedido+editado+correctamente";
@@ -512,15 +512,15 @@ public class PedidoController {
             redirectAttributes.addFlashAttribute("error", "Pedido no encontrado para editar.");
             return "redirect:/pedidos";
         }
-        // Se debe obtener la mesa del pedido o la nueva mesaId si se permite cambiarla
+
         Mesa mesaDelPedido = mesaRep.findById(pedido.getMesaId()).orElse(null);
-        Mesa mesaParaActualizar = mesaRep.findById(mesaId).orElse(mesaDelPedido); // Usa la nueva mesaId si es válida, sino la del pedido
+        Mesa mesaParaActualizar = mesaRep.findById(mesaId).orElse(mesaDelPedido);
 
         if (mesaParaActualizar == null) {
             redirectAttributes.addFlashAttribute("error", "Mesa asociada al pedido no encontrada.");
             return "redirect:/pedidos";
         }
-        pedido.setMesaId(mesaParaActualizar.getId()); // Actualizar mesa en el pedido si es necesario
+        pedido.setMesaId(mesaParaActualizar.getId());
         pedido.setMesaNum(mesaParaActualizar.getNum());
 
 
@@ -529,15 +529,15 @@ public class PedidoController {
             if (itemsExistentes != null && cantidadesExistentes != null && itemsExistentes.size() == cantidadesExistentes.size()) {
                 for (int i = 0; i < itemsExistentes.size(); i++) {
                     String platilloId = itemsExistentes.get(i);
-                    Integer cantidad = cantidadesExistentes.get(i); // Es Integer
-                    if (platilloId != null && !platilloId.isEmpty() && cantidad != null && cantidad > 0) { // Chequeo de nulidad para cantidad
+                    Integer cantidad = cantidadesExistentes.get(i);
+                    if (platilloId != null && !platilloId.isEmpty() && cantidad != null && cantidad > 0) {
                         Platillo platillo = platilloRep.findById(platilloId)
                                 .orElseThrow(() -> new IllegalArgumentException("Platillo existente no encontrado: " + platilloId));
                         ItemPedido item = new ItemPedido();
                         item.setProductId(platillo.getId());
                         item.setName(platillo.getName());
                         item.setPrice(platillo.getPrice());
-                        item.setUnidades(cantidad); // cantidad es Integer, se hará unboxing si setUnidades toma int
+                        item.setUnidades(cantidad);
                         itemsActualizados.add(item);
                     }
                 }
@@ -569,7 +569,7 @@ public class PedidoController {
                 }
             }
             pedido.setItems(itemsActualizados);
-            pedido.setTotal(calcularTotal(itemsActualizados)); // LLamada al método corregido
+            pedido.setTotal(calcularTotal(itemsActualizados));
             pedido.setFecha(LocalDateTime.now());
 
             pedidoRep.save(pedido);

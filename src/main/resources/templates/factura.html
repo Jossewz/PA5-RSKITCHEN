@@ -4,43 +4,50 @@
   <meta charset="UTF-8" />
   <title>Facturas</title>
   <style>
-    /* Barra fija superior */
+    body {
+          padding-top: 60px; /* espacio para barra fija */
+          font-family: 'Poppins', sans-serif;
+          background-color: #f0f4f8;
+          color: #002244;
+          margin: 0;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+
+    /* Barra de navegación fija */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 50px;
-      background-color: #0059b3;
+      background-color: #003366;
       display: flex;
       align-items: center;
-      padding: 0 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+
+      height: 50px;
       z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
     nav a {
       color: white;
       text-decoration: none;
+      margin: 0 18px;
       font-weight: 600;
-      margin-right: 20px;
-      padding: 8px 12px;
-      border-radius: 5px;
+      font-size: 1rem;
+      padding: 10px 6px;
       transition: background-color 0.3s ease;
+      border-radius: 4px;
     }
 
     nav a:hover {
-      background-color: #003d80;
+      background-color: #00509e;
     }
 
-    body {
-      padding-top: 60px; /* espacio para la barra fija */
-      font-family: 'Poppins', sans-serif;
-      background-color: #f0f4f8;
-      color: #002244;
-      margin: 0;
-      padding-left: 20px;
-      padding-right: 20px;
+    h1, h2, h3, h4, h5 {
+      color: #003366;
+      margin-top: 0;
     }
 
     h1, h2 {

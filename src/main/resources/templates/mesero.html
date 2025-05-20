@@ -6,7 +6,7 @@
     <title>Registrar Mesero</title>
     <style>
         body {
-          padding-top: 60px;
+          padding-top: 60px; /* espacio para barra fija */
           font-family: 'Poppins', sans-serif;
           background-color: #f0f4f8;
           color: #002244;
@@ -15,36 +15,42 @@
           padding-right: 20px;
         }
 
-        nav {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 50px;
-          background-color: #004080;
-          display: flex;
-          align-items: center;
-          padding: 0 20px;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-          z-index: 1000;
-        }
 
-        nav a {
-          color: white;
-          margin-right: 20px;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 16px;
-          transition: color 0.3s ease;
-        }
+    /* Barra de navegación fija */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #003366;
+      display: flex;
+      align-items: center;
 
-        nav a:hover {
-          color: #a3c2ff;
-        }
+      height: 50px;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
 
-        h1, h2 {
-          color: #004080;
-        }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 18px;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 10px 6px;
+      transition: background-color 0.3s ease;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background-color: #00509e;
+    }
+
+    h1, h2, h3, h4, h5 {
+      color: #003366;
+      margin-top: 0;
+    }
+
 
         .volver-btn {
           display: inline-block;
