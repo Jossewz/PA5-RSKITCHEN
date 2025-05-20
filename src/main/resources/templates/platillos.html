@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8" />
   <title>Gestión de Platillos</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
   <style>
-
     body {
-  padding-top: 60px; /* deja espacio para la barra fija */
-  font-family: 'Poppins', sans-serif;
-  background-color: #f0f4f8;
-  color: #002244;
-  margin: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-}
+      padding-top: 60px;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f0f4f8;
+      color: #002244;
+      margin: 0;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
 
     nav {
       position: fixed;
@@ -31,6 +30,7 @@
       font-weight: 600;
       font-size: 16px;
     }
+
     nav a {
       color: white;
       text-decoration: none;
@@ -38,9 +38,11 @@
       border-radius: 6px;
       transition: background-color 0.3s ease;
     }
+
     nav a:hover {
       background-color: #0066cc;
     }
+
     nav a.active {
       background-color: #003366;
     }
@@ -181,56 +183,59 @@
   </style>
 </head>
 <body>
+
 <nav>
   <a th:href="@{/home}">Rskitchen</a>
   <a th:href="@{/mesa}">Mesa</a>
-  <a th:href="@{/mesero}">Mesero</a>
+  <a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a>
+  <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
   <a th:href="@{/pedidos}">Pedido</a>
-  <a th:href="@{/platillos}">Platillos</a>
   <a th:href="@{/factura}">Factura</a>
 </nav>
 
-<h1>Gestión de Platillos</h1>
+<main style="max-width: 1200px; margin: auto;">
+  <h1>Gestión de Platillos</h1>
 
-<div th:if="${error}" class="error" th:text="${error}"></div>
+  <div th:if="${error}" class="error" th:text="${error}"></div>
 
-<div class="contenedor">
+  <div class="contenedor">
 
-  <input type="checkbox" id="toggle-form" />
-  <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
+    <input type="checkbox" id="toggle-form" />
+    <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
 
-  <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
-    <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
-    <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
-    <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required />
-    <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
-    <button type="submit">Guardar Platillo</button>
-  </form>
+    <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
+      <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
+      <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
+      <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required />
+      <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
+      <button type="submit">Guardar Platillo</button>
+    </form>
 
-  <div th:if="${platillos != null and platillos.isEmpty()}">
-    <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
-  </div>
+    <div th:if="${platillos != null and platillos.isEmpty()}">
+      <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
+    </div>
 
-  <div th:each="platillo : ${platillos}" class="platillo">
-    <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
-    <div th:text="${platillo.cant}">Cantidad</div>
-    <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
-    <div>
-      <strong>Ingredientes:</strong>
-      <span
-              th:each="ing,iter : ${platillo.ingredients}"
-              th:text="${ing} + (${!iter.last} ? ', ' : '')"
-      ></span>
-      <div class="acciones">
-        <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
-        <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
-          <button type="submit" class="btn-eliminar">Eliminar</button>
-        </form>
+    <div th:each="platillo : ${platillos}" class="platillo">
+      <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
+      <div th:text="${platillo.cant}">Cantidad</div>
+      <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
+      <div>
+        <strong>Ingredientes:</strong>
+        <span
+                th:each="ing,iter : ${platillo.ingredients}"
+                th:text="${ing} + (${!iter.last} ? ', ' : '')"
+        ></span>
+        <div class="acciones">
+          <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
+          <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
+            <button type="submit" class="btn-eliminar">Eliminar</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
+</main>
 
 </body>
 </html>
