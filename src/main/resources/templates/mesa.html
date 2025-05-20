@@ -5,7 +5,7 @@
   <title>Gestión de Mesas</title>
   <style>
     body {
-          padding-top: 60px; /* espacio para barra fija */
+          padding-top: 60px;
           font-family: 'Poppins', sans-serif;
           background-color: #f0f4f8;
           color: #002244;
@@ -14,8 +14,6 @@
           padding-right: 20px;
         }
 
-
-    /* Barra de navegación fija */
     nav {
       position: fixed;
       top: 0;
@@ -158,8 +156,6 @@
 </head>
 <body>
 
-<!-- Barra de navegación fija -->
-
 <nav>
   <a th:href="@{/home}">Rskitchen</a>
   <a th:href="@{/mesa}">Mesa</a>
@@ -171,7 +167,6 @@
 
 <h1>Gestión de Mesas</h1>
 
-<!-- Barra de búsqueda -->
 <input type="text" id="barraBusqueda" placeholder="Buscar mesas por número o estado..." onkeyup="filtrarMesas()" />
 
 <div class="mesa-card">
@@ -185,11 +180,9 @@
   </form>
 </div>
 
-<!-- Mensajes de estado -->
 <div th:if="${mensajeExito}" class="mensaje-exito" th:text="${mensajeExito}"></div>
 <div th:if="${mensajeError}" class="mensaje-error" th:text="${mensajeError}"></div>
 
-<!-- Listado de mesas -->
 <h2>Mesas existentes</h2>
 <div id="listaMesas">
   <div th:each="mesa : ${listar}" class="mesa-card">
@@ -211,7 +204,6 @@
       <span th:text="${nombresMeseros[mesa.id]} ?: 'No asignado'"></span>
     </p>
 
-    <!-- Pedidos de la mesa -->
     <div th:if="${pedidosPorMesa[mesa.id] != null and !pedidosPorMesa[mesa.id].isEmpty()}">
       <h4>Pedidos:</h4>
       <div th:each="pedido : ${pedidosPorMesa[mesa.id]}" class="pedido-card">
