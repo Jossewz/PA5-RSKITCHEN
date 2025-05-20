@@ -96,7 +96,6 @@ public class MesaController {
             }
             model.addAttribute("pedidos", pedidosDTO);
 
-            // Obtener nombre del mesero
             if (mesa.getMeseroId() != null) {
                 userRep.findById(mesa.getMeseroId())
                         .ifPresent(mesero -> model.addAttribute("nombreMesero", mesero.getName()));
