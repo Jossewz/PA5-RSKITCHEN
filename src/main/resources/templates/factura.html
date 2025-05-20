@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <title>Facturas</title>
   <style>
-    /* Barra fija superior */
+    /* Barra de navegación fija */
     nav {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
+      right: 0;
       height: 50px;
-      background-color: #0059b3;
+      background-color: #004080;
       display: flex;
       align-items: center;
       padding: 0 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
       z-index: 1000;
     }
 
@@ -27,14 +27,16 @@
       padding: 8px 12px;
       border-radius: 5px;
       transition: background-color 0.3s ease;
+      font-size: 16px;
     }
 
     nav a:hover {
       background-color: #003d80;
     }
 
+    /* Separar contenido para que no quede oculto tras la barra */
     body {
-      padding-top: 60px; /* espacio para la barra fija */
+      padding-top: 60px; /* espacio para barra fija */
       font-family: 'Poppins', sans-serif;
       background-color: #f0f4f8;
       color: #002244;
@@ -136,7 +138,6 @@
   </style>
 </head>
 <body>
-
 <nav>
   <a th:href="@{/home}">Rskitchen</a>
   <a th:href="@{/mesa}">Mesa</a>
