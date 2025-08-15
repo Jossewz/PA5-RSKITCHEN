@@ -21,9 +21,10 @@
           left: 0;
           right: 0;
           height: 50px;
-          background-color: #004080;
+          background-color: #006edc;
           display: flex;
           align-items: center;
+          justify-content: center;
           padding: 0 20px;
           box-shadow: 0 2px 5px rgba(0,0,0,0.2);
           z-index: 1000;
@@ -143,6 +144,7 @@
     <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
     <a th:href="@{/pedidos}">Pedido</a>
     <a th:href="@{/factura}">Factura</a>
+    <button type="submit">Cerrar Sesión</button>
 </nav>
 
 <h1>Registro de Mesero</h1>

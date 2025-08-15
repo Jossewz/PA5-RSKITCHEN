@@ -21,10 +21,10 @@
       top: 0;
       left: 0;
       width: 100%;
-      background-color: #003366;
+      background-color: #006edc;
       display: flex;
       align-items: center;
-
+      justify-content: center;
       height: 50px;
       z-index: 1000;
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
@@ -167,6 +167,7 @@
   <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
   <a th:href="@{/pedidos}">Pedido</a>
   <a th:href="@{/factura}">Factura</a>
+  <button type="submit">Cerrar Sesión</button>
 </nav>
 
 <h1>Gestión de Mesas</h1>

@@ -9,7 +9,7 @@
       padding-top: 60px;
       font-family: 'Poppins', sans-serif;
       background-color: #f0f4f8;
-      color: #002244;
+      color: #78bcff;
       margin: 0;
       padding-left: 20px;
       padding-right: 20px;
@@ -20,11 +20,12 @@
       top: 0;
       left: 0;
       width: 100%;
-      background-color: #004080;
+      background-color: #006edc;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       z-index: 1000;
       padding: 10px 30px;
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 30px;
       font-weight: 600;
@@ -191,6 +192,7 @@
   <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
   <a th:href="@{/pedidos}">Pedido</a>
   <a th:href="@{/factura}">Factura</a>
+  <button type="submit">Cerrar Sesión</button>
 </nav>
 
 <main style="max-width: 1200px; margin: auto;">
