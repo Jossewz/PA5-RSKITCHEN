@@ -69,7 +69,7 @@ public class PlatilloController {
         try {
             Platillo platillo = platilloRep.findById(id).orElseThrow(() -> new IllegalArgumentException("Platillo no encontrado"));
             model.addAttribute("platillo", platillo);
-            return "editar-platillo"; // Crea un nuevo archivo HTML llamado "editar-platillo.html"
+            return "editar-platillo";
         } catch (Exception e) {
             model.addAttribute("error", "Error al cargar el platillo para editar");
             return "platillos";
