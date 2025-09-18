@@ -8,7 +8,7 @@
     body {
       padding-top: 60px;
       font-family: 'Poppins', sans-serif;
-      background-color: #f0f4f8;
+      background: linear-gradient(120deg, #78bcff, #ffffff);
       color: #78bcff;
       margin: 0;
       padding-left: 20px;
@@ -46,6 +46,21 @@
 
     nav a.active {
       background-color: #003366;
+    }
+
+    .btn-logout {
+      background-color: #004080;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-logout:hover {
+      background-color: #0059b3;
     }
 
     .volver {
@@ -192,7 +207,11 @@
   <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
   <a th:href="@{/pedidos}">Pedido</a>
   <a th:href="@{/factura}">Factura</a>
-  <button type="submit">Cerrar Sesión</button>
+
+  <!-- Botón de cerrar sesión -->
+  <form th:action="@{/logout}" method="post" style="display:inline;">
+    <button type="submit" class="btn-logout">Cerrar Sesión</button>
+  </form>
 </nav>
 
 <main style="max-width: 1200px; margin: auto;">

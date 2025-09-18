@@ -6,9 +6,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-  padding-top: 60px; /* deja espacio para la barra fija */
+  padding-top: 60px;
   font-family: 'Poppins', sans-serif;
-  background-color: #f0f4f8;
+  background: linear-gradient(120deg, #78bcff, #ffffff);
   color: #002244;
   margin: 0;
   padding-left: 20px;
@@ -121,6 +121,11 @@
   <a th:href="@{/pedidos}">Pedido</a>
   <a th:href="@{/platillos}">Platillos</a>
   <a th:href="@{/factura}">Factura</a>
+
+  <form th:action="@{/logout}" method="post" style="display:inline;">
+    <button type="submit" class="btn-logout">Cerrar Sesión</button>
+  </form>
+
 </nav>
 
 <div class="contenedor">
