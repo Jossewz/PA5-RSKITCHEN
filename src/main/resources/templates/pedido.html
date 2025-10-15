@@ -11,26 +11,52 @@
       left: 0;
       width: 100%;
       height: 60px;
-      background-color: #006edc;
-      display: flex;
+      background: linear-gradient(120deg, #78bcff, #ffffff);
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       padding: 0 30px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.15);
       z-index: 1000;
     }
 
-    nav a {
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
+    .nav-links a, .nav-links li {
       color: white;
       text-decoration: none;
       font-weight: 600;
-      margin-right: 25px;
+      margin: 0 15px;
       transition: color 0.3s ease;
       font-size: 1.1em;
     }
 
-    nav a:hover {
+    .nav-links a:hover {
       color: #007acc;
+    }
+
+    .logout-container {
+      margin-left: auto;
+    }
+
+    .btn-logout {
+      background-color: #0059b3;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 0.9em;
+      white-space: nowrap;
+    }
+
+    .btn-logout:hover {
+      background-color: #004080;
     }
 
     body {
@@ -156,16 +182,20 @@
 <body>
 
 <nav>
-  <a th:href="@{/home}">Rskitchen</a>
-  <a th:href="@{/mesa}">Mesa</a>
-  <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
-  <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
-  <a th:href="@{/pedidos}">Pedido</a>
-  <a th:href="@{/factura}">Factura</a>
-  <form th:action="@{/logout}" method="post" style="display:inline;">
-    <button type="submit" class="btn-logout">Cerrar Sesión</button>
-  </form>
+  <div class="nav-links">
+    <a th:href="@{/home}">Rskitchen</a>
+    <a th:href="@{/mesa}">Mesa</a>
+    <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+    <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+    <a th:href="@{/pedidos}">Pedido</a>
+    <a th:href="@{/factura}">Factura</a>
+  </div>
 
+  <div class="logout-container">
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+      <button type="submit" class="btn-logout">Cerrar Sesión</button>
+    </form>
+  </div>
 </nav>
 
 <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">

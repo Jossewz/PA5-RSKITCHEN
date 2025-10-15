@@ -15,7 +15,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-
 @Configuration
 public class Security {
 
@@ -30,12 +29,19 @@ public class Security {
                         .ignoringRequestMatchers("/mesa/**")
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/static/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/mesa/**", "/pedido/**", "/factura/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MESERO")
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(
+                                "/login",
+                                "/css/**",
+                                "/js/**",
+                                "/img/**",     // 👈 carpeta de imágenes en static
+                                "/images/**"   // 👈 por si usas también esta ruta
+                        ).permitAll()
+                        .requestMatchers("/mesa/**", "/pedido/**", "/factura/**")
+                        .hasAnyAuthority("ROLE_ADMIN", "ROLE_MESERO")
+                        .requestMatchers("/admin/**")
+                        .hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )
-
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
