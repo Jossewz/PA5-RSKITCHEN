@@ -1,211 +1,152 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8">
-  <title>Menú Principal</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(120deg, #78bcff, #ffffff);
-      overflow-x: hidden;
-      transition: background 0.5s ease;
-    }
+    <meta charset="UTF-8">
+    <title>Inicio | Kitchen</title>
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        body {
+          margin: 0;
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #b3e5fc, #ffffff);
+          color: #1a1a1a;
+          overflow-x: hidden;
+        }
 
-    .dark-mode {
-      background: linear-gradient(120deg, #1a1a1a, #444);
-      color: white;
-    }
+        /* --- NAVBAR --- */
+        .menu-bar {
+          background-color: #ffffff;
+          padding: 15px 0;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
 
-    .menu-bar {
-      background-color: ffffff;
-      padding: 20px 0;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      transition: background-color 0.3s ease;
-    }
+        .menu-bar ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
 
-    .dark-mode .menu-bar {
-      background-color: #222;
-    }
+        .menu-bar ul li a {
+          text-decoration: none;
+          font-weight: 600;
+          padding: 10px 20px;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+          background-color: #1a1a1a;
+          color: white;
+          display: inline-block;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
 
-    .menu-bar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+        .menu-bar ul li a:hover {
+          background-color: #87CEEB;
+          color: black;
+          transform: translateY(-2px);
+        }
 
-    .menu-bar ul li {
-      display: inline-block;
-      margin: 0 20px;
-    }
+        /* Botón Cerrar Sesión */
+        .logout-nav form {
+          display: inline-block;
+        }
 
-    .menu-bar ul li a {
-      text-decoration: none;
-      font-weight: bold;
-      padding: 12px 24px;
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      background-color: #1a1a1a;
-      color: white;
-      display: inline-block;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
+        .logout-nav button {
+          background: #d9534f;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-weight: 600;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+        }
 
-    .menu-bar ul li a:hover {
-      background-color: #87CEEB;
-      color: black;
-    }
+        .logout-nav button:hover {
+          background: #ff6b6b;
+          color: black;
+          transform: translateY(-2px);
+        }
 
-    .content {
-      text-align: center;
-      padding: 100px 20px;
-      color: #1a1a1a;
-    }
+        /* --- CONTENIDO PRINCIPAL --- */
+        .content {
+          text-align: center;
+          padding: 100px 20px 60px;
+          animation: fadeIn 1s ease-in-out;
+        }
 
-    .dark-mode .content {
-      color: white;
-    }
+        .content h1 {
+          font-size: 42px;
+          margin-bottom: 20px;
+          color: #1a1a1a;
+          text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+        }
 
-    .content h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      animation: fadeIn 2s ease-in-out;
-    }
+        .content p {
+          font-size: 18px;
+          color: #333;
+          margin-bottom: 0;
+        }
 
-    .content p {
-      font-size: 22px;
-      animation: fadeIn 3s ease-in-out;
-    }
+        /* --- ANIMACIÓN --- */
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+          .menu-bar ul {
+            flex-direction: column;
+            gap: 10px;
+          }
 
-    .toggle-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #1a1a1a;
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 50px;
-      cursor: pointer;
-      z-index: 999;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
+          .content {
+            padding: 60px 20px;
+          }
 
-    .toggle-btn:hover {
-      background: #87CEEB;
-      color: black;
-      transform: scale(1.05);
-    }
-
-    .particle {
-      position: fixed;
-      border-radius: 50%;
-      background-color: rgba(255,255,255,0.6);
-      pointer-events: none;
-      animation: float 6s linear infinite;
-      z-index: 0;
-    }
-
-    @keyframes float {
-      from {
-        transform: translateY(100vh) scale(0.5);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-10vh) scale(1.2);
-        opacity: 0;
-      }
-    }
-
-    form button[type="submit"] {
-      margin: 30px auto;
-      display: block;
-      background-color: #d9534f;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    form button[type="submit"]:hover {
-      background-color: #c9302c;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .menu-bar ul li {
-        display: block;
-        margin: 10px 0;
-      }
-
-      .content h1 {
-        font-size: 32px;
-      }
-
-      .content p {
-        font-size: 18px;
-      }
-
-      .toggle-btn {
-        padding: 10px 14px;
-        font-size: 14px;
-      }
-    }
-  </style>
+          .content h1 {
+            font-size: 32px;
+          }
+        }
+    </style>
 </head>
 <body>
 
 <nav class="menu-bar">
-  <ul>
-    <li><a href="/mesa" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MESERO')">Mesa</a></li>
-    <li><a href="/pedidos" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MESERO')">Pedidos</a></li>
-    <li><a href="/factura" sec:authorize="hasAnyAuthority('ROLE_ADMIN', 'ROLE_MESERO')">Facturas</a></li>
-    <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
-    <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
-
-  </ul>
+    <ul>
+        <li><a href="/home" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Inicio</a></li>
+        <li><a href="/mesa" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Mesa</a></li>
+        <li><a href="/pedidos" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Pedidos</a></li>
+        <li><a href="/factura" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Facturas</a></li>
+        <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+        <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+        <li class="logout-nav">
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Cerrar Sesión</button>
+            </form>
+        </li>
+    </ul>
 </nav>
 
 <div class="content">
-  <h1>Bienvenido a RsKitchen</h1>
-  <p>Selecciona una opción del menú para comenzar</p>
+    <h1>Bienvenido a SR Kitchen</h1>
+    <p>Selecciona una opción del menú para comenzar.</p>
 </div>
-
-<form th:action="@{/logout}" method="post">
-  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-  <button type="submit">Cerrar Sesión</button>
-</form>
-
-<script>
-  function toggleMode() {
-    document.body.classList.toggle('dark-mode');
-  }
-
-  for (let i = 0; i < 40; i++) {
-    let particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.width = `${Math.random() * 5 + 2}px`;
-    particle.style.height = particle.style.width;
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.animationDuration = `${Math.random() * 6 + 4}s`;
-    document.body.appendChild(particle);
-  }
-</script>
 
 </body>
 </html>

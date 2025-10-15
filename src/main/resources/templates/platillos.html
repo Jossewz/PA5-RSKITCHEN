@@ -1,291 +1,306 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8" />
-  <title>Gestión de Platillos</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
-  <style>
-    /* RESET */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <title>Gestión de Platillos | Kitchen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-    body {
-      padding-top: 60px;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #78bcff, #ffffff);
-      color: #78bcff;
-      margin: 0;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
+    <style>
+        body {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          background: linear-gradient(120deg, #78bcff, #ffffff);
+          color: #1a1a1a;
+          overflow-x: hidden;
+        }
 
-    /* --- BARRA CON EFECTO BLUR CORREGIDO --- */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 50px;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
+        /* --- NAVBAR --- */
+        .menu-bar {
+          background-color: #ffffff;
+          padding: 15px 0;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
 
-    .nav-container {
-        width: 100%;
-        max-width: 1400px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-    }
+        .menu-bar ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
 
-    .nav-links {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0;
-        flex-grow: 1;
-    }
+        .menu-bar ul li a {
+          text-decoration: none;
+          font-weight: 600;
+          padding: 10px 20px;
+          border-radius: 12px;
+          transition: all 0.3s ease;
+          background-color: #1a1a1a;
+          color: white;
+          display: inline-block;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
 
-    .nav-links a {
-        color: #003366;
-        text-decoration: none;
-        margin: 0 18px;
-        font-weight: 600;
-        font-size: 1rem;
-        padding: 10px 6px;
-        transition: all 0.3s ease;
-        border-radius: 4px;
-    }
+        .menu-bar ul li a:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
 
-    .nav-links a:hover {
-        background-color: #00509e;
-        color: white;
-        transform: translateY(-1px); /* 🔹 EFECTO ELEVACIÓN */
-    }
+        .logout-nav {
+          margin-left: 50px;
+        }
 
-    /* 🔹 BOTÓN CERRAR SESIÓN */
-    .btn-logout {
-        background-color: #3399ff;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        font-size: 1rem;
-    }
+        .logout-nav button {
+          background: #d9534f;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-weight: 600;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+          transition: all 0.3s ease;
+        }
 
-    .btn-logout:hover {
-        background-color: #007acc;
-        transform: translateY(-1px);
-    }
+        .logout-nav button:hover {
+          background-color: #ff6b6b;
+          color: black;
+        }
 
-    .volver {
-      text-decoration: none;
-      color: #004080;
-      font-weight: 600;
-      margin-bottom: 20px;
-      display: inline-block;
-    }
+        /* --- CONTENIDO PRINCIPAL --- */
+        main {
+          max-width: 1200px;
+          margin: 50px auto;
+          padding: 0 20px;
+          animation: fadeIn 1s ease-in-out;
+        }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #002244;
-    }
+        h1 {
+          text-align: center;
+          font-size: 36px;
+          margin-bottom: 30px;
+          color: #1a1a1a;
+        }
 
-    .error {
-      color: #a94442;
-      background-color: #f2dede;
-      border: 1px solid #ebccd1;
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
+        /* --- FORMULARIO DE NUEVO PLATILLO --- */
+        .boton-toggle {
+          display: inline-block;
+          background-color: #1a1a1a;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
 
-    .contenedor {
-      max-width: 900px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
+        .boton-toggle:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
 
-    .boton-toggle {
-      background-color: #004080;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      display: inline-block;
-      cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 20px;
-      transition: background-color 0.3s;
-    }
+        #toggle-form {
+          display: none;
+        }
 
-    .boton-toggle:hover {
-      background-color: #0059b3;
-    }
+        .formulario {
+          display: none;
+          background: white;
+          padding: 25px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          margin: 20px auto;
+          max-width: 500px;
+          animation: fadeIn 0.8s ease-in-out;
+        }
 
-    #toggle-form {
-      display: none;
-    }
+        #toggle-form:checked ~ .formulario {
+          display: block;
+        }
 
-    .formulario {
-      display: none;
-      margin-bottom: 30px;
-    }
+        .formulario input,
+        .formulario textarea {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 12px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          font-size: 15px;
+        }
 
-    #toggle-form:checked + label + .formulario {
-      display: block;
-    }
+        .formulario button {
+          background-color: #1a1a1a;
+          color: white;
+          border: none;
+          padding: 12px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-weight: bold;
+          width: 100%;
+          transition: all 0.3s ease;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
 
-    .formulario input,
-    .formulario textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccd6dd;
-      border-radius: 6px;
-      background-color: #f9fcff;
-    }
+        .formulario button:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
 
-    .formulario button {
-      background-color: #004080;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      width: 100%;
-    }
+        /* --- TARJETAS DE PLATILLOS --- */
+        .platillo {
+          background-color: white;
+          border-radius: 12px;
+          box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+          padding: 20px;
+          margin: 20px auto;
+          width: 90%;
+          max-width: 800px;
+          animation: fadeIn 1s ease-in-out;
+          transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
 
-    .formulario button:hover {
-      background-color: #0059b3;
-    }
+        .platillo:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
 
-    .platillo {
-      background-color: #eaf3fb;
-      border: 1px solid #c7dcef;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
+        .platillo .nombre {
+          font-size: 22px;
+          font-weight: 600;
+          margin-bottom: 10px;
+          color: #1a1a1a;
+        }
 
-    .platillo .nombre {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: #002244;
-    }
+        .platillo div {
+          margin-bottom: 8px;
+          font-size: 15px;
+        }
 
-    .acciones {
-      margin-top: 15px;
-    }
+        .acciones {
+          margin-top: 10px;
+          display: flex;
+          gap: 10px;
+          justify-content: flex-end;
+        }
 
-    .btn-editar,
-    .btn-eliminar {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
+        .btn-editar,
+        .btn-eliminar {
+          text-decoration: none;
+          color: white;
+          padding: 8px 14px;
+          border-radius: 8px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          display: inline-block;
+        }
 
-    .btn-editar {
-      background-color: #2e8b57;
-      margin-right: 10px;
-    }
+        .btn-editar {
+          background-color: #1a1a1a;
+        }
 
-    .btn-editar:hover {
-      background-color: #3fa26d;
-    }
+        .btn-editar:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
 
-    .btn-eliminar {
-      background-color: #c0392b;
-    }
+        .btn-eliminar {
+          background-color: #d9534f;
+          border: none;
+          cursor: pointer;
+        }
 
-    .btn-eliminar:hover {
-      background-color: #e74c3c;
-    }
-  </style>
+        .btn-eliminar:hover {
+          background-color: #ff6b6b;
+          color: black;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .platillo {
+            width: 95%;
+          }
+          .acciones {
+            flex-direction: column;
+            align-items: stretch;
+          }
+        }
+    </style>
 </head>
 <body>
 
-<!-- BARRA SUPERIOR CON BLUR MEJORADO -->
-<nav>
-  <div class="nav-container">
-    <div class="nav-links">
-      <a th:href="@{/home}">Rskitchen</a>
-      <a th:href="@{/mesa}">Mesa</a>
-      <a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a>
-      <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
-      <a th:href="@{/pedidos}">Pedido</a>
-      <a th:href="@{/factura}">Factura</a>
-    </div>
-
-    <form th:action="@{/logout}" method="post">
-      <button type="submit" class="btn-logout">Cerrar Sesión</button>
-    </form>
-  </div>
+<nav class="menu-bar">
+    <ul>
+        <li><a href="/home" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Inicio</a></li>
+        <li><a href="/mesa" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Mesa</a></li>
+        <li><a href="/pedidos" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Pedidos</a></li>
+        <li><a href="/factura" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Facturas</a></li>
+        <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+        <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+        <li class="logout-nav">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Cerrar Sesión</button>
+            </form>
+        </li>
+    </ul>
 </nav>
 
-<main style="max-width: 1200px; margin: auto;">
-  <h1>Gestión de Platillos</h1>
+<!-- CONTENIDO -->
+<main>
+    <h1>Gestión de Platillos</h1>
 
-  <div th:if="${error}" class="error" th:text="${error}"></div>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
 
-  <div class="contenedor">
+    <div class="contenedor">
+        <input type="checkbox" id="toggle-form" />
+        <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
 
-    <input type="checkbox" id="toggle-form" />
-    <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
+        <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
+            <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
+            <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
+            <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required />
+            <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
+            <button type="submit">Guardar Platillo</button>
+        </form>
 
-    <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
-      <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
-      <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
-      <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required />
-      <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
-      <button type="submit">Guardar Platillo</button>
-    </form>
-
-    <div th:if="${platillos != null and platillos.isEmpty()}">
-      <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
-    </div>
-
-    <div th:each="platillo : ${platillos}" class="platillo">
-      <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
-      <div th:text="${platillo.cant}">Cantidad</div>
-      <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
-      <div>
-        <strong>Ingredientes:</strong>
-        <span
-                th:each="ing,iter : ${platillo.ingredients}"
-                th:text="${ing} + (${!iter.last} ? ', ' : '')"
-        ></span>
-        <div class="acciones">
-          <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
-          <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
-            <button type="submit" class="btn-eliminar">Eliminar</button>
-          </form>
+        <div th:if="${platillos != null and platillos.isEmpty()}">
+            <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
         </div>
-      </div>
-    </div>
 
-  </div>
+        <div th:each="platillo : ${platillos}" class="platillo">
+            <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
+            <div th:text="${platillo.cant}">Cantidad</div>
+            <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
+            <div>
+                <strong>Ingredientes:</strong>
+                <span th:each="ing,iter : ${platillo.ingredients}" th:text="${ing} + (${!iter.last} ? ', ' : '')"></span>
+            </div>
+            <div class="acciones">
+                <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
+                <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
+                    <button type="submit" class="btn-eliminar">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 
 </body>
