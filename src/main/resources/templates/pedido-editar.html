@@ -8,20 +8,20 @@
             font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #ffffff; /* fondo blanco */
-            color: #003366; /* azul oscuro para texto */
+            background-color: #ffffff;
+            color: #003366;
         }
         .container {
             max-width: 800px;
             margin: auto;
             padding: 30px;
-            background-color: #e6f0ff; /* azul muy claro */
+            background-color: #e6f0ff;
             border-radius: 10px;
             box-shadow: 0 0 12px rgba(0, 102, 204, 0.3);
         }
         h2 {
             text-align: center;
-            color: #004080; /* azul */
+            color: #004080;
             margin-bottom: 25px;
             font-weight: 600;
         }
@@ -29,16 +29,16 @@
             font-weight: bold;
             display: block;
             margin-top: 15px;
-            color: #004080; /* azul */
+            color: #004080;
         }
         select, input[type="text"], input[type="number"] {
             width: 100%;
             padding: 10px;
             margin-top: 6px;
-            background-color: #ffffff; /* fondo blanco */
-            border: 2px solid #004080; /* borde azul */
+            background-color: #ffffff;
+            border: 2px solid #004080;
             border-radius: 5px;
-            color: #003366; /* texto azul oscuro */
+            color: #003366;
             box-sizing: border-box;
             font-size: 14px;
             transition: border-color 0.3s ease;
@@ -54,7 +54,7 @@
         .item-existente {
             margin-bottom: 15px;
             padding: 10px;
-            background: #cce0ff; /* azul muy claro */
+            background: #cce0ff;
             border-radius: 5px;
             color: #003366;
             font-weight: 600;
@@ -70,7 +70,7 @@
         }
         button[type="submit"] {
             margin-top: 25px;
-            background-color: #004080; /* azul */
+            background-color: #004080;
             color: white;
             padding: 12px;
             width: 100%;
@@ -95,16 +95,43 @@
         .volver:hover {
             text-decoration: underline;
         }
-        /* Fondo de la mesa actual */
         .mesa-actual {
-            background-color: #b3c6ff; /* azul claro */
+            background-color: #b3c6ff;
             padding: 10px;
             border-radius: 4px;
             color: #003366;
             font-weight: 600;
         }
+        .search-row {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .search-row input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffffff;
+            border: 2px solid #004080;
+            border-radius: 5px;
+            color: #003366;
+            font-size: 14px;
+        }
+        .search-row input[type="number"] {
+            width: 80px;
+            padding: 10px;
+            border: 2px solid #004080;
+            border-radius: 5px;
+            color: #003366;
+            font-size: 14px;
+        }
+        .search-row input:focus {
+            border-color: #0066cc;
+            outline: none;
+        }
     </style>
 </head>
+
 <body>
 <div class="container">
     <a class="volver" th:href="@{/home}">← Volver</a>
@@ -129,16 +156,31 @@
         </div>
 
         <label>Agregar nuevos platillos:</label>
-        <div class="flex-row" th:each="i : ${#numbers.sequence(0, 2)}">
-            <select name="nuevosPlatillos">
-                <option value="">Seleccione un platillo</option>
-                <option th:each="platillo : ${platillosDisponibles}" th:value="${platillo.id}" th:text="${platillo.name}"></option>
-            </select>
+        <div class="search-row" th:each="i : ${#numbers.sequence(0, 2)}">
+            <input type="text" class="platillo-busqueda" list="platillosList" placeholder="Buscar platillo..." />
+            <input type="hidden" name="nuevosPlatillos" />
             <input type="number" name="nuevasCantidades" min="1" value="1" />
         </div>
+
+        <datalist id="platillosList">
+            <option th:each="platillo : ${platillosDisponibles}" th:data-id="${platillo.id}" th:value="${platillo.name}"></option>
+        </datalist>
 
         <button type="submit">Guardar Cambios</button>
     </form>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const opciones = [...document.querySelectorAll("#platillosList option")];
+        document.querySelectorAll(".platillo-busqueda").forEach((inputBusqueda, index) => {
+            const hiddenInput = document.getElementsByName("nuevosPlatillos")[index];
+            inputBusqueda.addEventListener("change", () => {
+                const seleccionado = opciones.find(opt => opt.value === inputBusqueda.value);
+                hiddenInput.value = seleccionado ? seleccionado.dataset.id : "";
+            });
+        });
+    });
+</script>
 </body>
 </html>

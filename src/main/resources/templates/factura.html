@@ -1,52 +1,51 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <title>Facturas</title>
   <style>
+    body {
+          padding-top: 60px;
+          font-family: 'Poppins', sans-serif;
+          background: linear-gradient(120deg, #78bcff, #ffffff);
+          color: #002244;
+          margin: 0;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
 
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 50px;
-      background-color: #006edc;
-       display: flex;
+      background-color: #white;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      height: 50px;
       z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
     nav a {
       color: white;
       text-decoration: none;
+      margin: 0 18px;
       font-weight: 600;
-      margin-right: 20px;
-      padding: 8px 12px;
-      border-radius: 5px;
+      font-size: 1rem;
+      padding: 10px 6px;
       transition: background-color 0.3s ease;
+      border-radius: 4px;
     }
 
     nav a:hover {
-      background-color: #003d80;
+      background-color: #00509e;
     }
 
-    body {
-      padding-top: 60px; /* espacio para la barra fija */
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #78bcff, #ffffff);
-      color: #006edc;
-      margin: 0;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-
-    h1, h2 {
-      text-align: center;
+    h1, h2, h3, h4, h5 {
       color: #003366;
+      margin-top: 0;
     }
 
     a:not(nav a) {
@@ -141,14 +140,10 @@
 <nav>
   <a th:href="@{/home}">Rskitchen</a>
   <a th:href="@{/mesa}">Mesa</a>
-  <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
-  <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+  <a th:href="@{/mesero}">Mesero</a>
   <a th:href="@{/pedidos}">Pedido</a>
+  <a th:href="@{/platillos}">Platillos</a>
   <a th:href="@{/factura}">Factura</a>
-  <form th:action="@{/logout}" method="post" style="display:inline;">
-    <button type="submit" class="btn-logout">Cerrar Sesión</button>
-  </form>
-
 </nav>
 
 <h1>Listado de Facturas</h1>

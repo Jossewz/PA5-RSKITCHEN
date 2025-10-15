@@ -2,11 +2,20 @@
 <html lang="es" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Registrar Mesero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-          padding-top: 60px;
+            padding-top: 60px;
           font-family: 'Poppins', sans-serif;
           background: linear-gradient(120deg, #78bcff, #ffffff);
           color: #002244;
@@ -15,185 +24,251 @@
           padding-right: 20px;
         }
 
+        /* --- BARRA IDÉNTICA A MESA --- */
         nav {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 50px;
-          background: linear-gradient(120deg, #78bcff, #ffffff);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0 20px;
-          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-          z-index: 1000;
+            position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50px;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        nav a {
-          color: white;
-          margin-right: 20px;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 16px;
-          transition: color 0.3s ease;
+        .nav-container {
+            width: 100%;
+            max-width: 1400px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
         }
 
-        nav a:hover {
-          color: #a3c2ff;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* 🔹 CENTRADO DE LOS ENLACES */
+            gap: 0;
+            flex-grow: 1; /* 🔹 OCUPA TODO EL ESPACIO DISPONIBLE */
         }
 
-        h1, h2 {
-          color: #004080;
+        .nav-links a {
+            color: #003366; /* 🔹 MISMO COLOR de texto que mesa */
+            text-decoration: none;
+            margin: 0 18px; /* 🔹 MISMO MARGIN que mesa */
+            font-weight: 600;
+            font-size: 1rem; /* 🔹 MISMO TAMAÑO que mesa */
+            padding: 10px 6px; /* 🔹 MISMO PADDING que mesa */
+            transition: background-color 0.3s ease;
+            border-radius: 4px; /* 🔹 MISMO BORDER-RADIUS */
         }
 
-        .volver-btn {
-          display: inline-block;
-          margin-bottom: 20px;
-          padding: 8px 16px;
-          text-decoration: none;
-          background-color: #007acc;
-          color: white;
-          border-radius: 5px;
-          transition: background-color 0.3s ease;
+        .nav-links a:hover {
+            background-color: #00509e; /* 🔹 MISMO HOVER que mesa */
+            color: white;
         }
 
-        .volver-btn:hover {
-          background-color: #005b99;
+        /* 🔹 BOTÓN CERRAR SESIÓN IDÉNTICO AL DE MESA */
+        .btn-logout {
+            background-color: #3399ff; /* 🔹 MISMO COLOR que botones mesa */
+            color: white;
+            border: none;
+            padding: 10px 15px; /* 🔹 MISMO PADDING que botones mesa */
+            border-radius: 6px; /* 🔹 MISMO BORDER-RADIUS */
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
         }
 
-        form {
-          background-color: #ffffff;
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0 4px 6px rgba(0, 51, 102, 0.1);
-          margin: 0 auto 30px auto;
-          max-width: 500px;
+        .btn-logout:hover {
+            background-color: #007acc; /* 🔹 MISMO HOVER que botones mesa */
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #003366; /* 🔹 MISMO COLOR que títulos mesa */
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #003366; /* 🔹 MISMO COLOR que títulos mesa */
+            margin: 30px 0 15px 0;
+            font-size: 20px;
+        }
+
+        /* Formulario de registro */
+        .form-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px; /* 🔹 MISMO BORDER-RADIUS que mesa-card */
+            box-shadow: 0 2px 5px rgba(0, 51, 102, 0.1); /* 🔹 MISMA SOMBRA que mesa-card */
+            margin: 0 auto 30px auto;
+            max-width: 500px;
+            border: 1px solid #cce0ff; /* 🔹 MISMO BORDE que mesa-card */
         }
 
         label {
-          display: block;
-          margin: 10px 0 5px;
-          font-weight: bold;
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: bold;
+            color: #003366; /* 🔹 MISMO COLOR que etiquetas mesa */
+            font-size: 14px;
         }
 
         input[type="text"],
         input[type="email"],
         input[type="password"] {
-          width: 100%;
-          padding: 8px;
-          margin-bottom: 15px;
-          border: 1px solid #a3c2ff;
-          border-radius: 5px;
-          box-sizing: border-box;
+            width: 100%;
+            padding: 8px; /* 🔹 MISMO PADDING que inputs mesa */
+            border: 1px solid #99ccff; /* 🔹 MISMO BORDE que inputs mesa */
+            border-radius: 4px; /* 🔹 MISMO BORDER-RADIUS */
+            margin-bottom: 10px;
+            color: #003366; /* 🔹 MISMO COLOR */
+            font-weight: 600;
+            font-size: 14px;
         }
 
-        button {
-          background-color: #007acc;
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          font-weight: bold;
-          transition: background-color 0.3s ease;
+        input:focus {
+            outline: none;
+            border-color: #007acc;
         }
 
-        button:hover {
-          background-color: #005b99;
+        .btn-submit {
+            background-color: #3399ff; /* 🔹 MISMO COLOR que botones mesa */
+            color: white;
+            padding: 10px 15px; /* 🔹 MISMO PADDING que botones mesa */
+            border: none;
+            border-radius: 6px; /* 🔹 MISMO BORDER-RADIUS */
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .mensajes p {
-          margin: 5px 0;
-          font-weight: bold;
+        .btn-submit:hover {
+            background-color: #007acc; /* 🔹 MISMO HOVER que botones mesa */
+        }
+
+        /* Tabla de meseros */
+        .table-container {
+            background-color: #ffffff;
+            border-radius: 10px; /* 🔹 MISMO BORDER-RADIUS que mesa-card */
+            box-shadow: 0 2px 5px rgba(0, 51, 102, 0.1); /* 🔹 MISMA SOMBRA que mesa-card */
+            overflow: hidden;
+            margin: 0 auto 40px auto;
+            width: 95%;
+            border: 1px solid #cce0ff; /* 🔹 MISMO BORDE que mesa-card */
         }
 
         table {
-          width: 100%;
-          border-collapse: collapse;
-          background-color: #ffffff;
-          box-shadow: 0 4px 6px rgba(0, 51, 102, 0.1);
+            width: 100%;
+            border-collapse: collapse;
         }
 
         th, td {
-          border: 1px solid #b3d1ff;
-          padding: 10px;
-          text-align: left;
+            border: 1px solid #cce0ff; /* 🔹 MISMO COLOR de borde que mesa-card */
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
         }
 
         th {
-          background-color: #cce6ff;
+            background-color: #cce5ff; /* 🔹 SIMILAR al color de fondo de mesa-card */
+            color: #003366;
+            font-weight: 600;
         }
 
         tbody tr:nth-child(even) {
-          background-color: #f2f7ff;
+            background-color: #f0f8ff; /* 🔹 SIMILAR al color de platillo-item */
         }
 
         tbody tr:hover {
-          background-color: #d6eaff;
+            background-color: #e6f2ff; /* 🔹 SIMILAR al color de pedido-card */
         }
     </style>
-
 </head>
 <body>
 
+<!-- BARRA SUPERIOR IDÉNTICA A MESA -->
 <nav>
-    <a th:href="@{/home}">Rskitchen</a>
-    <a th:href="@{/mesa}">Mesa</a>
-    <a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a>
-    <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
-    <a th:href="@{/pedidos}">Pedido</a>
-    <a th:href="@{/factura}">Factura</a>
-    <form th:action="@{/logout}" method="post" style="display:inline;">
-        <button type="submit" class="btn-logout">Cerrar Sesión</button>
-    </form>
+    <div class="nav-container">
+        <div class="nav-links">
+            <a th:href="@{/home}">Rskitchen</a>
+            <a th:href="@{/mesa}">Mesa</a>
+            <a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a>
+            <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
+            <a th:href="@{/pedidos}">Pedido</a>
+            <a th:href="@{/factura}">Factura</a>
+        </div>
 
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn-logout">Cerrar Sesión</button>
+        </form>
+    </div>
 </nav>
 
-<h1>Registro de Mesero</h1>
+<div class="container">
+    <h1>Registro de Mesero</h1>
 
-<form th:action="@{/mesero/guardar}" method="post" th:object="${mesero}">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <div class="form-container">
+        <form th:action="@{/mesero/guardar}" method="post" th:object="${mesero}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-    <label for="id_mesero">ID del Mesero:</label>
-    <input type="text" id="id_mesero" th:field="*{id_mesero}" required />
+            <label for="id_mesero">ID del Mesero:</label>
+            <input type="text" id="id_mesero" th:field="*{id_mesero}" required />
 
-    <label for="name">Nombre:</label>
-    <input type="text" id="name" th:field="*{name}" required />
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" th:field="*{name}" required />
 
-    <label for="mail">Correo Electrónico:</label>
-    <input type="email" id="mail" th:field="*{mail}" required />
+            <label for="mail">Correo Electrónico:</label>
+            <input type="email" id="mail" th:field="*{mail}" required />
 
-    <label for="password">Contraseña:</label>
-    <input type="password" id="password" th:field="*{password}" required />
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" th:field="*{password}" required />
 
-    <button type="submit">Registrar Mesero</button>
-</form>
+            <button type="submit" class="btn-submit">Registrar Mesero</button>
+        </form>
+    </div>
 
-<div class="mensajes" th:if="${mensajeExito} != null or ${mensajeError} != null">
-    <p style="color: green;" th:if="${mensajeExito}" th:text="${mensajeExito}"></p>
-    <p style="color: red;" th:if="${mensajeError}" th:text="${mensajeError}"></p>
+    <h2>Meseros Registrados</h2>
+
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="m : ${meseros}">
+                <td th:text="${m.id_mesero}">ID</td>
+                <td th:text="${m.name}">Nombre</td>
+                <td th:text="${m.mail}">Correo</td>
+                <td th:text="${m.role}">Rol</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<h2>Meseros Registrados</h2>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Correo</th>
-        <th>Rol</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="m : ${meseros}">
-        <td th:text="${m.id_mesero}">ID</td>
-        <td th:text="${m.name}">Nombre</td>
-        <td th:text="${m.mail}">Correo</td>
-        <td th:text="${m.role}">Rol</td>
-    </tr>
-    </tbody>
-</table>
 
 </body>
 </html>

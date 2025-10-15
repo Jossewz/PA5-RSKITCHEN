@@ -28,10 +28,17 @@
       box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    nav a {
+    .nav-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
+    .nav-center a, .nav-center li {
       color: white;
       text-decoration: none;
-      margin: 0 18px;
+      margin: 0 10px; /* Reducido de 18px a 10px */
       font-weight: 600;
       font-size: 1rem;
       padding: 10px 6px;
@@ -39,7 +46,7 @@
       border-radius: 4px;
     }
 
-    nav a:hover {
+    .nav-center a:hover {
       background-color: #00509e;
     }
 
@@ -152,21 +159,31 @@
       max-width: 400px;
       display: block;
     }
+
+    /* Estilos para el botón de cerrar sesión en la esquina derecha */
+    .logout-container {
+      position: absolute;
+      right: 30px;
+    }
   </style>
 </head>
 <body>
 
 <nav>
-  <a th:href="@{/home}">Rskitchen</a>
-  <a th:href="@{/mesa}">Mesa</a>
-  <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
-  <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
-  <a th:href="@{/pedidos}">Pedido</a>
-  <a th:href="@{/factura}">Factura</a>
-  <form th:action="@{/logout}" method="post" style="display:inline;">
-    <button type="submit" class="btn-logout">Cerrar Sesión</button>
-  </form>
+  <div class="nav-center">
+    <a th:href="@{/home}">Rskitchen</a>
+    <a th:href="@{/mesa}">Mesa</a>
+    <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+    <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+    <a th:href="@{/pedidos}">Pedido</a>
+    <a th:href="@{/factura}">Factura</a>
+  </div>
 
+  <div class="logout-container">
+    <form th:action="@{/logout}" method="post" style="display:inline;">
+      <button type="submit">Cerrar Sesión</button>
+    </form>
+  </div>
 </nav>
 
 <h1>Gestión de Mesas</h1>
