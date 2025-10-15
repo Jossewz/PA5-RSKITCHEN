@@ -1,291 +1,68 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-  <meta charset="UTF-8" />
-  <title>Gestión de Platillos</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
-  <style>
-    /* RESET */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <meta charset="UTF-8" />
+    <title>Gestión de Platillos | Kitchen</title>
+    <link rel="stylesheet" th:href="@{/css/platillos.css}">
 
-    body {
-      padding-top: 60px;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(120deg, #78bcff, #ffffff);
-      color: #78bcff;
-      margin: 0;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-
-    /* --- BARRA CON EFECTO BLUR CORREGIDO --- */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 50px;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-    .nav-container {
-        width: 100%;
-        max-width: 1400px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-    }
-
-    .nav-links {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0;
-        flex-grow: 1;
-    }
-
-    .nav-links a {
-        color: #003366;
-        text-decoration: none;
-        margin: 0 18px;
-        font-weight: 600;
-        font-size: 1rem;
-        padding: 10px 6px;
-        transition: all 0.3s ease;
-        border-radius: 4px;
-    }
-
-    .nav-links a:hover {
-        background-color: #00509e;
-        color: white;
-        transform: translateY(-1px); /* 🔹 EFECTO ELEVACIÓN */
-    }
-
-    /* 🔹 BOTÓN CERRAR SESIÓN */
-    .btn-logout {
-        background-color: #3399ff;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        font-size: 1rem;
-    }
-
-    .btn-logout:hover {
-        background-color: #007acc;
-        transform: translateY(-1px);
-    }
-
-    .volver {
-      text-decoration: none;
-      color: #004080;
-      font-weight: 600;
-      margin-bottom: 20px;
-      display: inline-block;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #002244;
-    }
-
-    .error {
-      color: #a94442;
-      background-color: #f2dede;
-      border: 1px solid #ebccd1;
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-    }
-
-    .contenedor {
-      max-width: 900px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .boton-toggle {
-      background-color: #004080;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      display: inline-block;
-      cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 20px;
-      transition: background-color 0.3s;
-    }
-
-    .boton-toggle:hover {
-      background-color: #0059b3;
-    }
-
-    #toggle-form {
-      display: none;
-    }
-
-    .formulario {
-      display: none;
-      margin-bottom: 30px;
-    }
-
-    #toggle-form:checked + label + .formulario {
-      display: block;
-    }
-
-    .formulario input,
-    .formulario textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccd6dd;
-      border-radius: 6px;
-      background-color: #f9fcff;
-    }
-
-    .formulario button {
-      background-color: #004080;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      width: 100%;
-    }
-
-    .formulario button:hover {
-      background-color: #0059b3;
-    }
-
-    .platillo {
-      background-color: #eaf3fb;
-      border: 1px solid #c7dcef;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
-    }
-
-    .platillo .nombre {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: #002244;
-    }
-
-    .acciones {
-      margin-top: 15px;
-    }
-
-    .btn-editar,
-    .btn-eliminar {
-      padding: 8px 15px;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn-editar {
-      background-color: #2e8b57;
-      margin-right: 10px;
-    }
-
-    .btn-editar:hover {
-      background-color: #3fa26d;
-    }
-
-    .btn-eliminar {
-      background-color: #c0392b;
-    }
-
-    .btn-eliminar:hover {
-      background-color: #e74c3c;
-    }
-  </style>
 </head>
 <body>
 
-<!-- BARRA SUPERIOR CON BLUR MEJORADO -->
-<nav>
-  <div class="nav-container">
-    <div class="nav-links">
-      <a th:href="@{/home}">Rskitchen</a>
-      <a th:href="@{/mesa}">Mesa</a>
-      <a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a>
-      <a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a>
-      <a th:href="@{/pedidos}">Pedido</a>
-      <a th:href="@{/factura}">Factura</a>
-    </div>
-
-    <form th:action="@{/logout}" method="post">
-      <button type="submit" class="btn-logout">Cerrar Sesión</button>
-    </form>
-  </div>
+<nav class="menu-bar">
+    <ul>
+        <li><a href="/home" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Inicio</a></li>
+        <li><a href="/mesa" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Mesa</a></li>
+        <li><a href="/pedidos" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Pedidos</a></li>
+        <li><a href="/factura" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Facturas</a></li>
+        <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+        <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+        <li class="logout-nav">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit">Cerrar Sesión</button>
+            </form>
+        </li>
+    </ul>
 </nav>
 
-<main style="max-width: 1200px; margin: auto;">
-  <h1>Gestión de Platillos</h1>
+<!-- CONTENIDO -->
+<main>
+    <h1>Gestión de Platillos</h1>
 
-  <div th:if="${error}" class="error" th:text="${error}"></div>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
 
-  <div class="contenedor">
+    <div class="contenedor">
+        <input type="checkbox" id="toggle-form" />
+        <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
 
-    <input type="checkbox" id="toggle-form" />
-    <label for="toggle-form" class="boton-toggle">Crear nuevo platillo</label>
+        <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
+            <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
+            <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
+            <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required />
+            <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
+            <button type="submit">Guardar Platillo</button>
+        </form>
 
-    <form class="formulario" th:action="@{/platillos/guardar}" method="post" th:object="${platilloNuevo}">
-      <input type="text" th:field="*{name}" placeholder="Nombre del platillo" required />
-      <input type="text" th:field="*{cant}" placeholder="Cantidad" required />
-      <input type="number" th:field="*{price}" placeholder="Precio" step="0.01" min="0" required />
-      <textarea th:field="*{ingredients}" placeholder="Ingredientes (separados por comas)"></textarea>
-      <button type="submit">Guardar Platillo</button>
-    </form>
-
-    <div th:if="${platillos != null and platillos.isEmpty()}">
-      <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
-    </div>
-
-    <div th:each="platillo : ${platillos}" class="platillo">
-      <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
-      <div th:text="${platillo.cant}">Cantidad</div>
-      <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
-      <div>
-        <strong>Ingredientes:</strong>
-        <span
-                th:each="ing,iter : ${platillo.ingredients}"
-                th:text="${ing} + (${!iter.last} ? ', ' : '')"
-        ></span>
-        <div class="acciones">
-          <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
-          <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
-            <button type="submit" class="btn-eliminar">Eliminar</button>
-          </form>
+        <div th:if="${platillos != null and platillos.isEmpty()}">
+            <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
         </div>
-      </div>
-    </div>
 
-  </div>
+        <div th:each="platillo : ${platillos}" class="platillo">
+            <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
+            <div th:text="${platillo.cant}">Cantidad</div>
+            <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
+            <div>
+                <strong>Ingredientes:</strong>
+                <span th:each="ing,iter : ${platillo.ingredients}" th:text="${ing} + (${!iter.last} ? ', ' : '')"></span>
+            </div>
+            <div class="acciones">
+                <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
+                <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
+                    <button type="submit" class="btn-eliminar">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 
 </body>

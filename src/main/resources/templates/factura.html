@@ -1,206 +1,88 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8" />
-  <title>Facturas</title>
-  <style>
-    body {
-          padding-top: 60px;
-          font-family: 'Poppins', sans-serif;
-          background: linear-gradient(120deg, #78bcff, #ffffff);
-          color: #002244;
-          margin: 0;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
+    <meta charset="UTF-8" />
+    <title>Facturas | Kitchen</title>
+    <link rel="stylesheet" th:href="@{/css/factura.css}" />
 
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 50px;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 18px;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 10px 6px;
-      transition: background-color 0.3s ease;
-      border-radius: 4px;
-    }
-
-    nav a:hover {
-      background-color: #00509e;
-    }
-
-    h1, h2, h3, h4, h5 {
-      color: #003366;
-      margin-top: 0;
-    }
-
-    a:not(nav a) {
-      color: #003366;
-      text-decoration: none;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background-color: #ffffff;
-      box-shadow: 0 4px 8px rgba(0, 51, 102, 0.1);
-    }
-
-    th, td {
-      border: 1px solid #b3d1ff;
-      padding: 10px;
-      text-align: center;
-    }
-
-    th {
-      background-color: #cce6ff;
-      color: #002244;
-    }
-
-    tbody tr:nth-child(even) {
-      background-color: #e6f0ff;
-    }
-
-    tbody tr:hover {
-      background-color: #d0e3ff;
-    }
-
-    .detalle-factura {
-      margin-top: 50px;
-      border-top: 3px solid #004080;
-      padding-top: 25px;
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 102, 0.1);
-    }
-
-    .detalle-factura p {
-      margin: 10px 0;
-      font-size: 16px;
-    }
-
-    .total {
-      font-weight: bold;
-      font-size: 18px;
-      text-align: right;
-      margin-top: 15px;
-      color: #003366;
-    }
-
-    button {
-      background-color: #007acc;
-      color: white;
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #005c99;
-    }
-
-    @media print {
-      button, nav a {
-        display: none;
-      }
-
-      body {
-        background-color: white;
-        color: black;
-      }
-
-      .detalle-factura {
-        box-shadow: none;
-        border: none;
-      }
-    }
-  </style>
 </head>
 <body>
 
-<nav>
-  <a th:href="@{/home}">Rskitchen</a>
-  <a th:href="@{/mesa}">Mesa</a>
-  <a th:href="@{/mesero}">Mesero</a>
-  <a th:href="@{/pedidos}">Pedido</a>
-  <a th:href="@{/platillos}">Platillos</a>
-  <a th:href="@{/factura}">Factura</a>
+<nav class="menu-bar">
+    <ul>
+        <li><a href="/home" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Inicio</a></li>
+        <li><a href="/mesa" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Mesa</a></li>
+        <li><a href="/pedidos" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Pedidos</a></li>
+        <li><a href="/factura" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Facturas</a></li>
+        <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+        <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+        <li class="logout-nav">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" style="background:#d9534f;">Cerrar Sesión</button>
+            </form>
+        </li>
+    </ul>
 </nav>
 
-<h1>Listado de Facturas</h1>
-<table>
-  <thead>
-  <tr>
-    <th>Mesa</th>
-    <th>Mesero</th>
-    <th>Fecha</th>
-    <th>Total</th>
-    <th>Acción</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="factura : ${facturas}">
-    <td th:text="${factura.mesaNum}">Número de mesa</td>
-    <td th:text="${factura.meseroName}">Nombre Mesero</td>
-    <td th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</td>
-    <td th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}">Total</td>
-    <td>
-      <a th:href="@{'/factura/' + ${factura.id}}">Ver detalle</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<main>
+    <h1>Listado de Facturas</h1>
 
-<div class="detalle-factura" th:if="${factura != null}">
-  <h2>Factura Detalle</h2>
-  <p><strong>Mesa:</strong> <span th:text="${factura.mesaNum}">Mesa</span></p>
-  <p><strong>Mesero:</strong> <span th:text="${factura.meseroName}">Mesero</span></p>
-  <p><strong>Fecha:</strong> <span th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</span></p>
+    <div class="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Mesa</th>
+                <th>Mesero</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="factura : ${facturas}">
+                <td th:text="${factura.mesaNum}">Número de mesa</td>
+                <td th:text="${factura.meseroName}">Nombre Mesero</td>
+                <td th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</td>
+                <td th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}">Total</td>
+                <td><a class="action-link" th:href="@{'/factura/' + ${factura.id}}">Ver detalle</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-  <table>
-    <thead>
-    <tr>
-      <th>Producto</th>
-      <th>Cantidad</th>
-      <th>Precio Unitario</th>
-      <th>Subtotal</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${factura.items}">
-      <td th:text="${item.name}">Producto</td>
-      <td th:text="${item.unidades}">Cantidad</td>
-      <td th:text="${#numbers.formatDecimal(item.price, 2, 'POINT', 0, 'COMMA')}">Precio</td>
-      <td th:text="${#numbers.formatDecimal(item.price * item.unidades, 2, 'POINT', 0, 'COMMA')}">Subtotal</td>
-    </tr>
-    </tbody>
-  </table>
+    <div class="detalle-factura" th:if="${factura != null}">
+        <h2>Factura Detalle</h2>
+        <p><strong>Mesa:</strong> <span th:text="${factura.mesaNum}">Mesa</span></p>
+        <p><strong>Mesero:</strong> <span th:text="${factura.meseroName}">Mesero</span></p>
+        <p><strong>Fecha:</strong> <span th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</span></p>
 
-  <p class="total">Total: <span th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}">Total</span></p>
+        <table>
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${factura.items}">
+                <td th:text="${item.name}">Producto</td>
+                <td th:text="${item.unidades}">Cantidad</td>
+                <td th:text="${#numbers.formatDecimal(item.price, 2, 'POINT', 0, 'COMMA')}">Precio</td>
+                <td th:text="${#numbers.formatDecimal(item.price * item.unidades, 2, 'POINT', 0, 'COMMA')}">Subtotal</td>
+            </tr>
+            </tbody>
+        </table>
 
-  <div style="margin-top: 20px; text-align: center;">
-    <button onclick="window.print()">Imprimir o Guardar como PDF</button>
-  </div>
-</div>
+        <p class="total">Total: <span th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}">Total</span></p>
+
+        <div style="margin-top: 20px;">
+            <button onclick="window.print()">🧾 Imprimir o Guardar como PDF</button>
+        </div>
+    </div>
+</main>
 
 </body>
 </html>

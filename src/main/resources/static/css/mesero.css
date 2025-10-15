@@ -1,0 +1,177 @@
+ <style>
+        body {
+          margin: 0;
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(120deg, #78bcff, #ffffff);
+          color: #1a1a1a;
+          overflow-x: hidden;
+        }
+
+        /* --- BARRA DE NAVEGACIÓN (IGUAL AL HOME) --- */
+        .menu-bar {
+          background-color: #ffffff;
+          padding: 20px 0;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+
+        .menu-bar ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+        }
+
+        .menu-bar ul li {
+          display: inline-block;
+        }
+
+        .menu-bar ul li a {
+          text-decoration: none;
+          font-weight: bold;
+          padding: 12px 24px;
+          border-radius: 12px;
+          transition: all 0.3s ease;
+          background-color: #1a1a1a;
+          color: white;
+          display: inline-block;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-bar ul li a:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
+
+        /* Botón de Cerrar Sesión separado a la derecha */
+        .logout-nav {
+          margin-left: 80px;
+        }
+
+        /* --- CONTENIDO --- */
+        .content {
+          text-align: center;
+          padding: 60px 20px;
+          animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+          font-size: 36px;
+          color: #1a1a1a;
+          margin-bottom: 30px;
+        }
+
+        h2 {
+          font-size: 24px;
+          color: #1a1a1a;
+          margin-top: 50px;
+        }
+
+        /* --- FORMULARIO --- */
+        .form-container {
+          background-color: white;
+          padding: 25px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          margin: 0 auto;
+          max-width: 450px;
+          text-align: left;
+          animation: fadeIn 1.2s ease-in-out;
+        }
+
+        label {
+          display: block;
+          margin: 10px 0 6px;
+          font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          margin-bottom: 15px;
+          font-size: 15px;
+        }
+
+        input:focus {
+          outline: none;
+          border-color: #87CEEB;
+        }
+
+        .btn-submit {
+          background-color: #1a1a1a;
+          color: white;
+          border: none;
+          padding: 12px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: all 0.3s ease;
+          width: 100%;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-submit:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
+
+        /* --- TABLA --- */
+        .table-container {
+          background-color: white;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          margin: 40px auto;
+          width: 90%;
+          overflow-x: auto;
+          animation: fadeIn 1.4s ease-in-out;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+
+        th, td {
+          padding: 12px;
+          border: 1px solid #ccc;
+          text-align: center;
+        }
+
+        th {
+          background-color: #87CEEB;
+          color: #1a1a1a;
+        }
+
+        tbody tr:nth-child(even) {
+          background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+          background-color: #e0f4ff;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+          .menu-bar ul {
+            flex-direction: column;
+            gap: 10px;
+          }
+          .logout-nav {
+            margin-left: 0;
+          }
+        }
+    </style>

@@ -1,0 +1,239 @@
+
+    <style>
+        body {
+          margin: 0;
+          font-family: 'Poppins', sans-serif;
+          background: linear-gradient(120deg, #78bcff, #ffffff);
+          color: #1a1a1a;
+          overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .menu-bar {
+          background-color: #ffffff;
+          padding: 15px 0;
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+          text-align: center;
+          position: sticky;
+          top: 0;
+          z-index: 100;
+        }
+
+        .menu-bar ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
+
+        .menu-bar ul li a {
+          text-decoration: none;
+          font-weight: 600;
+          padding: 10px 20px;
+          border-radius: 12px;
+          transition: all 0.3s ease;
+          background-color: #1a1a1a;
+          color: white;
+          display: inline-block;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-bar ul li a:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
+
+        .logout-nav {
+          margin-left: 50px;
+        }
+
+        .logout-nav button {
+          background: #d9534f;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-weight: 600;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+          transition: all 0.3s ease;
+        }
+
+        .logout-nav button:hover {
+          background-color: #ff6b6b;
+          color: black;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        main {
+          max-width: 1200px;
+          margin: 50px auto;
+          padding: 0 20px;
+          animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+          text-align: center;
+          font-size: 36px;
+          margin-bottom: 30px;
+          color: #1a1a1a;
+        }
+
+        /* --- FORMULARIO DE NUEVO PLATILLO --- */
+        .boton-toggle {
+          display: inline-block;
+          background-color: #1a1a1a;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .boton-toggle:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
+
+        #toggle-form {
+          display: none;
+        }
+
+        .formulario {
+          display: none;
+          background: white;
+          padding: 25px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          margin: 20px auto;
+          max-width: 500px;
+          animation: fadeIn 0.8s ease-in-out;
+        }
+
+        #toggle-form:checked ~ .formulario {
+          display: block;
+        }
+
+        .formulario input,
+        .formulario textarea {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 12px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          font-size: 15px;
+        }
+
+        .formulario button {
+          background-color: #1a1a1a;
+          color: white;
+          border: none;
+          padding: 12px;
+          border-radius: 12px;
+          cursor: pointer;
+          font-weight: bold;
+          width: 100%;
+          transition: all 0.3s ease;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .formulario button:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
+
+        /* --- TARJETAS DE PLATILLOS --- */
+        .platillo {
+          background-color: white;
+          border-radius: 12px;
+          box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+          padding: 20px;
+          margin: 20px auto;
+          width: 90%;
+          max-width: 800px;
+          animation: fadeIn 1s ease-in-out;
+          transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .platillo:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .platillo .nombre {
+          font-size: 22px;
+          font-weight: 600;
+          margin-bottom: 10px;
+          color: #1a1a1a;
+        }
+
+        .platillo div {
+          margin-bottom: 8px;
+          font-size: 15px;
+        }
+
+        .acciones {
+          margin-top: 10px;
+          display: flex;
+          gap: 10px;
+          justify-content: flex-end;
+        }
+
+        .btn-editar,
+        .btn-eliminar {
+          text-decoration: none;
+          color: white;
+          padding: 8px 14px;
+          border-radius: 8px;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          display: inline-block;
+        }
+
+        .btn-editar {
+          background-color: #1a1a1a;
+        }
+
+        .btn-editar:hover {
+          background-color: #87CEEB;
+          color: black;
+        }
+
+        .btn-eliminar {
+          background-color: #d9534f;
+          border: none;
+          cursor: pointer;
+        }
+
+        .btn-eliminar:hover {
+          background-color: #ff6b6b;
+          color: black;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .platillo {
+            width: 95%;
+          }
+          .acciones {
+            flex-direction: column;
+            align-items: stretch;
+          }
+        }
+    </style>
