@@ -1,239 +1,301 @@
+/* --- ESTILOS GENERALES --- */
+body {
+  margin: 0;
+  /* Asumo que ya tienes la fuente Poppins linkeada en tu HTML/CSS */
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #b3e5fc, #ffffff);
+  color: #1a1a1a;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
 
-    <style>
-        body {
-          margin: 0;
-          font-family: 'Poppins', sans-serif;
-          background: linear-gradient(120deg, #78bcff, #ffffff);
-          color: #1a1a1a;
-          overflow-x: hidden;
-        }
+/* --- NAVBAR (Mantengo tu diseño original) --- */
+.menu-bar {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 15px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
 
-        /* --- NAVBAR --- */
-        .menu-bar {
-          background-color: #ffffff;
-          padding: 15px 0;
-          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
-          text-align: center;
-          position: sticky;
-          top: 0;
-          z-index: 100;
-        }
+.menu-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
-        .menu-bar ul {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
-          flex-wrap: wrap;
-        }
+.menu-bar ul li a {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background-color: #1a1a1a;
+  color: white;
+  display: inline-block;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
 
-        .menu-bar ul li a {
-          text-decoration: none;
-          font-weight: 600;
-          padding: 10px 20px;
-          border-radius: 12px;
-          transition: all 0.3s ease;
-          background-color: #1a1a1a;
-          color: white;
-          display: inline-block;
-          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-        }
+.menu-bar ul li a:hover {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        .menu-bar ul li a:hover {
-          background-color: #87CEEB;
-          color: black;
-        }
+/* Botón de Cerrar Sesión */
+.logout-nav form {
+  display: inline-block;
+}
+.logout-nav button {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.logout-nav button:hover {
+  background: #ff6b6b;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        .logout-nav {
-          margin-left: 50px;
-        }
+/* --- TÍTULOS Y ERRORES --- */
+h1 {
+  text-align: center;
+  font-size: 42px;
+  margin-top: 50px;
+  color: #1a1a1a;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
 
-        .logout-nav button {
-          background: #d9534f;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 12px;
-          cursor: pointer;
-          font-weight: 600;
-          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-          transition: all 0.3s ease;
-        }
+.error {
+  /* Estilo similar a tu .mensaje-error */
+  text-align: center;
+  font-weight: 600;
+  margin-top: 20px;
+  color: red;
+  padding: 10px;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 8px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-        .logout-nav button:hover {
-          background-color: #ff6b6b;
-          color: black;
-        }
+/* --- CONTENEDOR PRINCIPAL --- */
+.contenedor {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
 
-        /* --- CONTENIDO PRINCIPAL --- */
-        main {
-          max-width: 1200px;
-          margin: 50px auto;
-          padding: 0 20px;
-          animation: fadeIn 1s ease-in-out;
-        }
+/* --- TOGGLE FORMULARIO (Crear nuevo platillo) --- */
 
-        h1 {
-          text-align: center;
-          font-size: 36px;
-          margin-bottom: 30px;
-          color: #1a1a1a;
-        }
+/* Ocultar el checkbox */
+#toggle-form {
+  display: none;
+}
 
-        /* --- FORMULARIO DE NUEVO PLATILLO --- */
-        .boton-toggle {
-          display: inline-block;
-          background-color: #1a1a1a;
-          color: white;
-          padding: 10px 20px;
-          border-radius: 10px;
-          cursor: pointer;
-          font-weight: 600;
-          transition: all 0.3s ease;
-          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        }
+/* Estilo para el botón de toggle (la label) */
+.boton-toggle {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 20px auto;
+  padding: 12px 25px;
+  background-color: #1a1a1a;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
 
-        .boton-toggle:hover {
-          background-color: #87CEEB;
-          color: black;
-        }
+.boton-toggle:hover {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        #toggle-form {
-          display: none;
-        }
+/* Estilo inicial del formulario: oculto */
+.formulario {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 20px; /* Padding ajustado para que no se vea al inicio */
+  transition: max-height 0.5s ease-out, opacity 0.5s ease-out, padding 0.5s ease-out;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 20px;
+  backdrop-filter: blur(5px);
+  width: 80%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-        .formulario {
-          display: none;
-          background: white;
-          padding: 25px;
-          border-radius: 12px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-          margin: 20px auto;
-          max-width: 500px;
-          animation: fadeIn 0.8s ease-in-out;
-        }
+/* Estilo del formulario al estar activo (checkbox marcado) */
+#toggle-form:checked ~ .formulario {
+  max-height: 500px; /* Suficientemente grande para el formulario */
+  opacity: 1;
+  padding: 25px;
+  transition: max-height 0.8s ease-in, opacity 0.8s ease-in, padding 0.8s ease-in;
+}
 
-        #toggle-form:checked ~ .formulario {
-          display: block;
-        }
+.formulario input,
+.formulario textarea {
+  display: block;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-sizing: content-box; /* Asegura que el padding no afecte el width: 100% */
+}
 
-        .formulario input,
-        .formulario textarea {
-          width: 100%;
-          padding: 10px;
-          margin-bottom: 12px;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          font-size: 15px;
-        }
+.formulario textarea {
+  resize: vertical;
+  min-height: 80px;
+}
 
-        .formulario button {
-          background-color: #1a1a1a;
-          color: white;
-          border: none;
-          padding: 12px;
-          border-radius: 12px;
-          cursor: pointer;
-          font-weight: bold;
-          width: 100%;
-          transition: all 0.3s ease;
-          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-        }
+.formulario button[type="submit"] {
+  width: 100%;
+  margin-top: 20px;
+  /* Reutiliza el estilo de botón general de tu diseño */
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.formulario button[type="submit"]:hover {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        .formulario button:hover {
-          background-color: #87CEEB;
-          color: black;
-        }
+/* --- LISTADO Y TARJETAS DE PLATILLOS --- */
 
-        /* --- TARJETAS DE PLATILLOS --- */
-        .platillo {
-          background-color: white;
-          border-radius: 12px;
-          box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
-          padding: 20px;
-          margin: 20px auto;
-          width: 90%;
-          max-width: 800px;
-          animation: fadeIn 1s ease-in-out;
-          transition: transform 0.2s ease, box-shadow 0.3s ease;
-        }
+/* Estilo para el contenedor de la lista de platillos */
+.contenedor > div:not(.formulario) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
 
-        .platillo:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-        }
+/* Estilo de la tarjeta de platillo */
+.platillo {
+  /* Estilo de tarjeta similar a .mesa-card */
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 25px;
+  animation: fadeIn 0.8s ease-in-out;
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-        .platillo .nombre {
-          font-size: 22px;
-          font-weight: 600;
-          margin-bottom: 10px;
-          color: #1a1a1a;
-        }
+.platillo .nombre {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #1a1a1a;
+  border-bottom: 2px solid #87CEEB;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
 
-        .platillo div {
-          margin-bottom: 8px;
-          font-size: 15px;
-        }
+.platillo strong {
+  font-weight: 600;
+}
 
-        .acciones {
-          margin-top: 10px;
-          display: flex;
-          gap: 10px;
-          justify-content: flex-end;
-        }
+/* Estilo para los botones de acciones (Editar/Eliminar) */
+.acciones {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+  gap: 10px;
+}
 
-        .btn-editar,
-        .btn-eliminar {
-          text-decoration: none;
-          color: white;
-          padding: 8px 14px;
-          border-radius: 8px;
-          font-weight: 600;
-          transition: all 0.3s ease;
-          display: inline-block;
-        }
+.btn-editar, .btn-eliminar {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+}
 
-        .btn-editar {
-          background-color: #1a1a1a;
-        }
+.btn-editar {
+  background-color: #1a1a1a;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
 
-        .btn-editar:hover {
-          background-color: #87CEEB;
-          color: black;
-        }
+.btn-editar:hover {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        .btn-eliminar {
-          background-color: #d9534f;
-          border: none;
-          cursor: pointer;
-        }
+.btn-eliminar {
+  background-color: #d9534f; /* Rojo de tu botón de logout */
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
 
-        .btn-eliminar:hover {
-          background-color: #ff6b6b;
-          color: black;
-        }
+.btn-eliminar:hover {
+  background-color: #ff6b6b;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+/* El formulario de eliminar necesita un display inline para funcionar bien con flexbox */
+.acciones form {
+    display: flex;
+    flex-grow: 1; /* Para que ocupe el espacio */
+}
 
-        @media (max-width: 768px) {
-          .platillo {
-            width: 95%;
-          }
-          .acciones {
-            flex-direction: column;
-            align-items: stretch;
-          }
-        }
-    </style>
+/* --- ANIMACIONES (Mantengo tu diseño original) --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- RESPONSIVE (Mantengo tu diseño original) --- */
+@media (max-width: 768px) {
+  .menu-bar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+}
