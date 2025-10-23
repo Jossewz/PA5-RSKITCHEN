@@ -30,11 +30,12 @@ public class Security {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/",
                                 "/login",
                                 "/css/**",
                                 "/js/**",
-                                "/img/**",     // 👈 carpeta de imágenes en static
-                                "/images/**"   // 👈 por si usas también esta ruta
+                                "/img/**",
+                                "/images/**"
                         ).permitAll()
                         .requestMatchers("/mesa/**", "/pedido/**", "/factura/**")
                         .hasAnyAuthority("ROLE_ADMIN", "ROLE_MESERO")
