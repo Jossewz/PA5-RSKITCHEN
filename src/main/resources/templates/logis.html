@@ -8,6 +8,7 @@
 
 </head>
 <body>
+<a th:href="@{/}" class="back-button">← Volver</a>
 
 <div class="bg-bubble"></div>
 <div class="bg-bubble"></div>
@@ -15,7 +16,7 @@
 
 <div class="login-container">
 
-    <img th:src="@{/img/logo.jpg}" alt="SR Kitchen" class="login-logo">
+    <img th:src="@{/img/logo.png}" alt="SR Kitchen" class="login-logo">
 
     <h2>Iniciar Sesión</h2>
 
@@ -37,7 +38,6 @@
     <div th:if="${param.error}" class="error-message">
         Usuario o contraseña incorrectos
     </div>
-
 
 </div>
 </body>
