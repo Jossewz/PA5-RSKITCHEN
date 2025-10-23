@@ -1,235 +1,223 @@
- <style>
-        /* --- ESTILOS GENERALES --- */
-        body {
-          margin: 0;
-          font-family: 'Poppins', sans-serif;
-          background: linear-gradient(135deg, #b3e5fc, #ffffff);
-          color: #1a1a1a;
-          overflow-x: hidden;
-        }
+/* --- ESTILOS GENERALES --- */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #b3e5fc, #ffffff);
+  color: #1a1a1a;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
 
-        /* --- NAVBAR --- */
-        .menu-bar {
-          background-color: #ffffff;
-          padding: 15px 0;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-          position: sticky;
-          top: 0;
-          z-index: 100;
-        }
+/* --- NAVBAR --- */
+.menu-bar {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 15px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(5px);
+}
 
-        .menu-bar ul {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
-          flex-wrap: wrap;
-        }
+.menu-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
-        .menu-bar ul li a {
-          text-decoration: none;
-          font-weight: 600;
-          padding: 10px 20px;
-          border-radius: 10px;
-          transition: all 0.3s ease;
-          background-color: #1a1a1a;
-          color: white;
-          display: inline-block;
-          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-        }
+.menu-bar ul li a {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  background-color: #1a1a1a;
+  color: white;
+  display: inline-block;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
 
-        .menu-bar ul li a:hover {
-          background-color: #87CEEB;
-          color: black;
-          transform: translateY(-2px);
-        }
+.menu-bar ul li a:hover {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        .logout-nav form {
-          display: inline-block;
-        }
+/* Botón de Cerrar Sesión */
+.logout-nav form {
+  display: inline-block;
+}
+.logout-nav button {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.logout-nav button:hover {
+  background: #ff6b6b;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        .logout-nav button {
-          background: #d9534f;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 10px;
-          cursor: pointer;
-          font-weight: 600;
-          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-          transition: all 0.3s ease;
-        }
+/* --- TÍTULOS Y BÚSQUEDA --- */
+h1 {
+  text-align: center;
+  font-size: 42px;
+  margin-top: 50px;
+  color: #1a1a1a;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
 
-        .logout-nav button:hover {
-          background: #ff6b6b;
-          color: black;
-          transform: translateY(-2px);
-        }
+#barraBusqueda {
+  display: block;
+  margin: 30px auto;
+  width: 70%;
+  max-width: 500px;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+#barraBusqueda:focus {
+  outline: none;
+  border-color: #87CEEB;
+  box-shadow: 0 0 10px rgba(135, 206, 235, 0.6);
+  background-color: white; /* Fondo sólido al enfocar */
+}
 
-        /* --- TITULOS Y BÚSQUEDA --- */
-        h1 {
-          text-align: center;
-          font-size: 42px;
-          margin-top: 50px;
-          color: #1a1a1a;
-          text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-        }
+/* --- TARJETAS DE MESAS --- */
+.mesa-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 25px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 600px;
+  animation: fadeIn 0.8s ease-in-out;
+  backdrop-filter: blur(5px);
+}
 
-        #barraBusqueda {
-          display: block;
-          margin: 30px auto;
-          width: 70%;
-          max-width: 500px;
-          padding: 12px 16px;
-          border: 1px solid #ccc;
-          border-radius: 10px;
-          font-size: 16px;
-          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease;
-        }
+.mesa-card h2, .mesa-card h3 {
+  margin-top: 0;
+  color: #1a1a1a;
+}
+.mesa-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-        #barraBusqueda:focus {
-          outline: none;
-          border-color: #87CEEB;
-          box-shadow: 0 0 10px rgba(135, 206, 235, 0.6);
-        }
+/* Inputs */
+input[type="number"], input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+input[type="number"]:focus, input[type="text"]:focus {
+  outline: none;
+  border-color: #87CEEB;
+  background-color: white;
+}
 
-        /* --- FORMULARIO CREAR MESA --- */
-        .mesa-card {
-          background-color: white;
-          border-radius: 12px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-          padding: 25px;
-          margin: 30px auto;
-          width: 90%;
-          max-width: 600px;
-          animation: fadeIn 0.8s ease-in-out;
-        }
+/* Botones */
+button {
+  background-color: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+button:hover {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+}
 
-        .mesa-card h2, .mesa-card h3 {
-          margin-top: 0;
-          color: #1a1a1a;
-        }
+/* --- MENSAJES --- */
+.mensaje-exito, .mensaje-error {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 20px;
+  animation: fadeIn 1s ease;
+}
+.mensaje-exito { color: green; }
+.mensaje-error { color: red; }
 
-        .mesa-card form {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
+/* --- LISTA DE MESAS --- */
+#listaMesas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 60px;
+  animation: fadeIn 1.2s ease-in-out;
+}
 
-        input[type="number"] {
-          width: 100%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          font-size: 15px;
-        }
+/* --- TARJETAS DE PEDIDOS --- */
+.pedido-card {
+  background-color: rgba(248, 249, 250, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.pedido-card p {
+  margin: 6px 0;
+  font-size: 14px;
+}
 
-        input[type="number"]:focus {
-          outline: none;
-          border-color: #87CEEB;
-        }
+/* --- PLATILLOS --- */
+.platillo-item {
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+.platillo-item p {
+  margin: 4px 0;
+  font-size: 14px;
+}
 
-        .mesa-card button {
-          background-color: #1a1a1a;
-          color: white;
-          border: none;
-          padding: 12px;
-          border-radius: 10px;
-          cursor: pointer;
-          font-weight: 600;
-          transition: all 0.3s ease;
-          width: 100%;
-        }
+/* --- ANIMACIONES --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-        .mesa-card button:hover {
-          background-color: #87CEEB;
-          color: black;
-          transform: translateY(-2px);
-        }
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .menu-bar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-        /* --- MENSAJES --- */
-        .mensaje-exito, .mensaje-error {
-          text-align: center;
-          font-weight: 600;
-          margin-top: 20px;
-          animation: fadeIn 1s ease;
-        }
+  h1 {
+    font-size: 32px;
+  }
 
-        .mensaje-exito { color: green; }
-        .mensaje-error { color: red; }
-
-        /* --- LISTA DE MESAS --- */
-        #listaMesas {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 20px;
-          padding: 20px;
-          margin-bottom: 60px;
-          animation: fadeIn 1.2s ease-in-out;
-        }
-
-        /* --- TARJETA DE MESA --- */
-        .mesa-card h3 {
-          text-align: center;
-          font-size: 22px;
-          margin-bottom: 10px;
-        }
-
-        .mesa-card p {
-          margin: 8px 0;
-          font-size: 15px;
-        }
-
-        /* --- TARJETAS DE PEDIDOS --- */
-        .pedido-card {
-          background-color: #f8f9fa;
-          padding: 15px;
-          border-radius: 10px;
-          margin-top: 10px;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .pedido-card p {
-          margin: 6px 0;
-          font-size: 14px;
-        }
-
-        .platillo-item {
-          background-color: #ffffff;
-          padding: 10px;
-          border-radius: 8px;
-          margin-top: 8px;
-          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .platillo-item p {
-          margin: 4px 0;
-          font-size: 14px;
-        }
-
-        /* --- ANIMACIÓN --- */
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(15px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-          .menu-bar ul {
-            flex-direction: column;
-            gap: 10px;
-          }
-
-          h1 {
-            font-size: 32px;
-          }
-
-          #barraBusqueda {
-            width: 85%;
-          }
-        }
-    </style>
+  #barraBusqueda {
+    width: 85%;
+  }
+}
