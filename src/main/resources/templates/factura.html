@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8" />
-    <title>Facturas | Kitchen</title>
+    <title>Facturas | SR Kitchen</title>
     <link rel="stylesheet" th:href="@{/css/factura.css}" />
-
 </head>
 <body>
 
@@ -28,6 +27,7 @@
 <main>
     <h1>Listado de Facturas</h1>
 
+    <!-- Tabla con listado de facturas -->
     <div class="table-container">
         <table>
             <thead>
@@ -36,53 +36,68 @@
                 <th>Mesero</th>
                 <th>Fecha</th>
                 <th>Total</th>
-                <th>Acción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="factura : ${facturas}">
-                <td th:text="${factura.mesaNum}">Número de mesa</td>
-                <td th:text="${factura.meseroName}">Nombre Mesero</td>
-                <td th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</td>
-                <td th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}">Total</td>
-                <td><a class="action-link" th:href="@{'/factura/' + ${factura.id}}">Ver detalle</a></td>
+            <tr th:each="f : ${facturas}">
+                <td th:text="${f.mesaNum}">Mesa</td>
+                <td th:text="${f.meseroName}">Mesero</td>
+                <td th:text="${#temporals.format(f.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</td>
+                <td th:text="${#numbers.formatDecimal(f.total, 2, 'POINT', 0, 'COMMA')}">Total</td>
+
+                <td>
+                    <span th:if="${f.estado.name() == 'PENDIENTE'}"
+                          style="color: #dc3545; font-weight: bold;">
+                          ⏳ <span th:text="${f.estado}">PENDIENTE</span>
+                        </span>
+
+                    <span th:if="${f.estado.name() == 'APROBADA'}"
+                          style="color: #28a745; font-weight: bold;">
+                          ✅ <span th:text="${f.estado}">APROBADA</span>
+                    </span>
+                </td>
+
+                <td>
+                    <button type="button"
+                            class="btn btn-info ver-detalle"
+                            th:data-id="${f.id}"
+                            th:data-url="@{/factura/detalle/}">Ver Detalle</button>
+                </td>
+
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="detalle-factura" th:if="${factura != null}">
-        <h2>Factura Detalle</h2>
-        <p><strong>Mesa:</strong> <span th:text="${factura.mesaNum}">Mesa</span></p>
-        <p><strong>Mesero:</strong> <span th:text="${factura.meseroName}">Mesero</span></p>
-        <p><strong>Fecha:</strong> <span th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</span></p>
+    <!-- Controles de paginación -->
+    <div class="pagination">
+        <a th:if="${currentPage > 0}"
+           th:href="@{'/factura?page=' + ${currentPage - 1}}"
+           class="page-btn">← Anterior</a>
 
-        <table>
-            <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio Unitario</th>
-                <th>Subtotal</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${factura.items}">
-                <td th:text="${item.name}">Producto</td>
-                <td th:text="${item.unidades}">Cantidad</td>
-                <td th:text="${#numbers.formatDecimal(item.price, 2, 'POINT', 0, 'COMMA')}">Precio</td>
-                <td th:text="${#numbers.formatDecimal(item.price * item.unidades, 2, 'POINT', 0, 'COMMA')}">Subtotal</td>
-            </tr>
-            </tbody>
-        </table>
+        <span>Página
+            <span th:text="${currentPage + 1}"></span>
+            de <span th:text="${totalPages}"></span>
+        </span>
 
-        <p class="total">Total: <span th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}">Total</span></p>
-
-        <div style="margin-top: 20px;">
-            <button onclick="window.print()">🧾 Imprimir o Guardar como PDF</button>
-        </div>
+        <a th:if="${currentPage + 1 < totalPages}"
+           th:href="@{'/factura?page=' + ${currentPage + 1}}"
+           class="page-btn">Siguiente →</a>
     </div>
 </main>
+
+<!-- MODAL para mostrar detalle de factura -->
+<div id="modal-detalle" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <div id="detalle-factura"></div>
+    </div>
+</div>
+
+<!-- Script del modal -->
+<script th:src="@{/js/factura-modal.js}"></script>
 
 </body>
 </html>
