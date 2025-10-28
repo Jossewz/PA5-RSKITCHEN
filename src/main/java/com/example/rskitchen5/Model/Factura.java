@@ -1,8 +1,8 @@
 package com.example.rskitchen5.Model;
 
+import com.example.rskitchen5.DTO.EstadoFacturaDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,27 +16,31 @@ public class Factura {
     private LocalDateTime fecha;
     private List<ItemPedido> items;
     private double total;
+    private boolean pagada;
+    private EstadoFacturaDTO estado;
 
     public Factura() {
+        this.estado = EstadoFacturaDTO.PENDIENTE;
     }
 
-    public Factura(LocalDateTime fecha, String id, List<ItemPedido> items, String mesaNum, String meseroName, String pedidoId, double total) {
+    public Factura(EstadoFacturaDTO estado, LocalDateTime fecha, String id, List<ItemPedido> items, String mesaNum, String meseroName, boolean pagada, String pedidoId, double total) {
+        this.estado = estado;
         this.fecha = fecha;
         this.id = id;
         this.items = items;
         this.mesaNum = mesaNum;
         this.meseroName = meseroName;
+        this.pagada = pagada;
         this.pedidoId = pedidoId;
         this.total = total;
-
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
+    public EstadoFacturaDTO getEstado() {
+        return estado;
     }
 
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
+    public void setEstado(EstadoFacturaDTO estado) {
+        this.estado = estado;
     }
 
     public String getId() {
@@ -45,6 +49,14 @@ public class Factura {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 
     public List<ItemPedido> getItems() {
@@ -69,6 +81,14 @@ public class Factura {
 
     public void setMeseroName(String meseroName) {
         this.meseroName = meseroName;
+    }
+
+    public boolean isPagada() {
+        return pagada;
+    }
+
+    public void setPagada(boolean pagada) {
+        this.pagada = pagada;
     }
 
     public String getPedidoId() {

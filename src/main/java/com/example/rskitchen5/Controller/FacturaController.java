@@ -4,14 +4,13 @@ import com.example.rskitchen5.Model.Factura;
 import com.example.rskitchen5.Repository.FacturaRep;
 import com.example.rskitchen5.Service.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-
 
 @Controller
 @RequestMapping("/factura")
@@ -23,23 +22,38 @@ public class FacturaController {
     private FacturaService facturaService;
 
     @GetMapping({ "", "/{id}" })
-    public String mostrarFacturasOFactura(@PathVariable(required = false) String id, Model model) {
-        List<Factura> facturas = facturaRep.findAll(Sort.by(Sort.Direction.DESC, "fecha"));
-        model.addAttribute("facturas", facturas);
+    public String mostrarFacturasOFactura(
+            @PathVariable(required = false) String id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "30") int size,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "fecha"));
+        Page<Factura> facturasPage = facturaRep.findAll(pageable);
+
+        model.addAttribute("facturas", facturasPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", facturasPage.getTotalPages());
 
         if (id != null) {
-            Optional<Factura> optionalFactura = facturaRep.findById(id);
-            optionalFactura.ifPresent(factura -> model.addAttribute("factura", factura));
+            facturaRep.findById(id).ifPresent(f -> model.addAttribute("factura", f));
         }
 
         return "factura";
     }
 
-    @GetMapping("/factura/imprimir/{id}")
+    @GetMapping("/imprimir/{id}")
     public String imprimirFactura(@PathVariable String id, Model model) {
         Factura factura = facturaService.getById(id);
         model.addAttribute("factura", factura);
         return "factura-imprimir";
+    }
+
+    @GetMapping("/detalle/{id}")
+    public String detalleFactura(@PathVariable String id, Model model) {
+        Factura factura = facturaService.getById(id);
+        model.addAttribute("factura", factura);
+        return "fragments/detalle-factura :: detalle";
     }
 
 }
