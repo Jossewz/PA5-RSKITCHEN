@@ -1,7 +1,5 @@
-/* --- ESTILOS GENERALES --- */
 body {
   margin: 0;
-  /* Asumo que ya tienes la fuente Poppins linkeada en tu HTML/CSS */
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #b3e5fc, #ffffff);
   color: #1a1a1a;
@@ -9,7 +7,6 @@ body {
   min-height: 100vh;
 }
 
-/* --- NAVBAR (Mantengo tu diseño original) --- */
 .menu-bar {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 15px 0;
@@ -49,7 +46,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* Botón de Cerrar Sesión */
 .logout-nav form {
   display: inline-block;
 }
@@ -70,7 +66,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* --- TÍTULOS Y ERRORES --- */
 h1 {
   text-align: center;
   font-size: 42px;
@@ -80,7 +75,6 @@ h1 {
 }
 
 .error {
-  /* Estilo similar a tu .mensaje-error */
   text-align: center;
   font-weight: 600;
   margin-top: 20px;
@@ -93,7 +87,6 @@ h1 {
   margin-right: auto;
 }
 
-/* --- CONTENEDOR PRINCIPAL --- */
 .contenedor {
   width: 90%;
   max-width: 1200px;
@@ -102,14 +95,10 @@ h1 {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* --- TOGGLE FORMULARIO (Crear nuevo platillo) --- */
-
-/* Ocultar el checkbox */
 #toggle-form {
   display: none;
 }
 
-/* Estilo para el botón de toggle (la label) */
 .boton-toggle {
   display: block;
   width: fit-content;
@@ -131,12 +120,11 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* Estilo inicial del formulario: oculto */
 .formulario {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  padding: 0 20px; /* Padding ajustado para que no se vea al inicio */
+  padding: 0 20px;
   transition: max-height 0.5s ease-out, opacity 0.5s ease-out, padding 0.5s ease-out;
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
@@ -149,9 +137,8 @@ h1 {
   margin-right: auto;
 }
 
-/* Estilo del formulario al estar activo (checkbox marcado) */
 #toggle-form:checked ~ .formulario {
-  max-height: 500px; /* Suficientemente grande para el formulario */
+  max-height: 500px;
   opacity: 1;
   padding: 25px;
   transition: max-height 0.8s ease-in, opacity 0.8s ease-in, padding 0.8s ease-in;
@@ -167,7 +154,7 @@ h1 {
   border-radius: 8px;
   font-size: 15px;
   background-color: rgba(255, 255, 255, 0.9);
-  box-sizing: content-box; /* Asegura que el padding no afecte el width: 100% */
+  box-sizing: content-box;
 }
 
 .formulario textarea {
@@ -178,7 +165,6 @@ h1 {
 .formulario button[type="submit"] {
   width: 100%;
   margin-top: 20px;
-  /* Reutiliza el estilo de botón general de tu diseño */
   background-color: #1a1a1a;
   color: white;
   border: none;
@@ -194,9 +180,6 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* --- LISTADO Y TARJETAS DE PLATILLOS --- */
-
-/* Estilo para el contenedor de la lista de platillos */
 .contenedor > div:not(.formulario) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -204,9 +187,7 @@ h1 {
   padding: 20px 0;
 }
 
-/* Estilo de la tarjeta de platillo */
 .platillo {
-  /* Estilo de tarjeta similar a .mesa-card */
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -231,7 +212,6 @@ h1 {
   font-weight: 600;
 }
 
-/* Estilo para los botones de acciones (Editar/Eliminar) */
 .acciones {
   display: flex;
   justify-content: space-around;
@@ -265,7 +245,7 @@ h1 {
 }
 
 .btn-eliminar {
-  background-color: #d9534f; /* Rojo de tu botón de logout */
+  background-color: #d9534f;
   color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
@@ -276,19 +256,16 @@ h1 {
   transform: translateY(-2px);
 }
 
-/* El formulario de eliminar necesita un display inline para funcionar bien con flexbox */
 .acciones form {
     display: flex;
-    flex-grow: 1; /* Para que ocupe el espacio */
+    flex-grow: 1;
 }
 
-/* --- ANIMACIONES (Mantengo tu diseño original) --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- RESPONSIVE (Mantengo tu diseño original) --- */
 @media (max-width: 768px) {
   .menu-bar ul {
     flex-direction: column;
