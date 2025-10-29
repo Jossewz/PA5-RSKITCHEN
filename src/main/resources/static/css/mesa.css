@@ -1,4 +1,4 @@
-/* --- ESTILOS GENERALES --- */
+/* estilo */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -8,7 +8,7 @@ body {
   min-height: 100vh;
 }
 
-/* --- NAVBAR --- */
+/*barra de navegacion*/
 .menu-bar {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 15px 0;
@@ -48,7 +48,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Botón de Cerrar Sesión */
+/* boton de cerrar seccion */
 .logout-nav form {
   display: inline-block;
 }
@@ -69,7 +69,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* --- TÍTULOS Y BÚSQUEDA --- */
+/* titulo y busqueda */
 h1 {
   text-align: center;
   font-size: 42px;
@@ -98,7 +98,7 @@ h1 {
   background-color: white; /* Fondo sólido al enfocar */
 }
 
-/* --- TARJETAS DE MESAS --- */
+/* tarjeta de mesa */
 .mesa-card {
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
@@ -121,7 +121,7 @@ h1 {
   gap: 12px;
 }
 
-/* Inputs */
+/* inputs */
 input[type="number"], input[type="text"] {
   width: 100%;
   padding: 10px;
@@ -136,7 +136,7 @@ input[type="number"]:focus, input[type="text"]:focus {
   background-color: white;
 }
 
-/* Botones */
+/* botones */
 button {
   background-color: #1a1a1a;
   color: white;
@@ -154,7 +154,7 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* --- MENSAJES --- */
+/* mensaje */
 .mensaje-exito, .mensaje-error {
   text-align: center;
   font-weight: 600;
@@ -164,7 +164,7 @@ button:hover {
 .mensaje-exito { color: green; }
 .mensaje-error { color: red; }
 
-/* --- LISTA DE MESAS --- */
+/* lista de mesas */
 #listaMesas {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -174,7 +174,7 @@ button:hover {
   animation: fadeIn 1.2s ease-in-out;
 }
 
-/* --- TARJETAS DE PEDIDOS --- */
+/* tarjetas de pedido*/
 .pedido-card {
   background-color: rgba(248, 249, 250, 0.8);
   padding: 15px;
@@ -187,7 +187,7 @@ button:hover {
   font-size: 14px;
 }
 
-/* --- PLATILLOS --- */
+/* platillos */
 .platillo-item {
   background-color: rgba(255, 255, 255, 0.7);
   padding: 10px;
@@ -200,13 +200,15 @@ button:hover {
   font-size: 14px;
 }
 
-/* --- ANIMACIONES --- */
+/* animaciones */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- RESPONSIVE --- */
+/* Partículas decorativas a no espera jose dijo que no :(*/
+
+/* responsividad */
 @media (max-width: 768px) {
   .menu-bar ul {
     flex-direction: column;

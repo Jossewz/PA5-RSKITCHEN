@@ -1,5 +1,7 @@
+/* estilo */
 body {
   margin: 0;
+  /* diseño*/
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #b3e5fc, #ffffff);
   color: #1a1a1a;
@@ -7,6 +9,7 @@ body {
   min-height: 100vh;
 }
 
+/* barra de navegacion */
 .menu-bar {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 15px 0;
@@ -46,6 +49,7 @@ body {
   transform: translateY(-2px);
 }
 
+/* boton de cerrar seccion */
 .logout-nav form {
   display: inline-block;
 }
@@ -66,6 +70,7 @@ body {
   transform: translateY(-2px);
 }
 
+/*titulos */
 h1 {
   text-align: center;
   font-size: 42px;
@@ -73,8 +78,9 @@ h1 {
   color: #1a1a1a;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 }
-
+/* errores */
 .error {
+
   text-align: center;
   font-weight: 600;
   margin-top: 20px;
@@ -87,6 +93,7 @@ h1 {
   margin-right: auto;
 }
 
+/* contenedor */
 .contenedor {
   width: 90%;
   max-width: 1200px;
@@ -95,10 +102,12 @@ h1 {
   animation: fadeIn 1s ease-in-out;
 }
 
+/* ocultar el checkbox */
 #toggle-form {
   display: none;
 }
 
+/* estilo para el botón de toggle (la label) */
 .boton-toggle {
   display: block;
   width: fit-content;
@@ -120,6 +129,7 @@ h1 {
   transform: translateY(-2px);
 }
 
+/* estilo inicial del formulario: oculto */
 .formulario {
   max-height: 0;
   overflow: hidden;
@@ -180,6 +190,7 @@ h1 {
   transform: translateY(-2px);
 }
 
+/* estilo para el contenedor de la lista de platillos */
 .contenedor > div:not(.formulario) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -212,6 +223,7 @@ h1 {
   font-weight: 600;
 }
 
+/* estilo para los botones de acciones (editar y eliminar) */
 .acciones {
   display: flex;
   justify-content: space-around;
@@ -256,16 +268,19 @@ h1 {
   transform: translateY(-2px);
 }
 
+/* el formulario de eliminar necesita un display inline para funcionar bien con flexbox */
 .acciones form {
     display: flex;
-    flex-grow: 1;
+    flex-grow: 1; /* Para que ocupe el espacio */
 }
 
+/* animaciones */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/*responsibilidad*/
 @media (max-width: 768px) {
   .menu-bar ul {
     flex-direction: column;
