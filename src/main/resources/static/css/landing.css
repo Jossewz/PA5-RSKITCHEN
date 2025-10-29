@@ -33,10 +33,8 @@ body {
   color: var(--text-primary);
   overflow-x: hidden;
   line-height: 1.6;
-  /* cursor: none;  <-- ELIMINADO: ahora el cursor normal se muestra */
 }
 
-/* 🎪 ANIMACIONES PRINCIPALES */
 @keyframes gradientShift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -79,10 +77,7 @@ body {
   }
 }
 
-
-/* (LA CLASE .cursor-follower SE ELIMINÓ PORQUE ERA LA QUE SEGUÍA AL MOUSE) */
-
-/* 📊 SCROLL PROGRESS BAR */
+*/
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -95,14 +90,12 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* 🎯 CONTENEDOR PRINCIPAL */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* 🌟 HERO SECTION CON LOGO DIFUMINADO */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -112,15 +105,12 @@ body {
   padding: 80px 20px;
   position: relative;
   background:
-    /* Overlay oscuro para mejor contraste */
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
-    /* Logo difuminado */
     url('../img/logo.png') center/cover;
   color: white;
   overflow: hidden;
 }
 
-/* Efecto de blur en el logo de fondo */
 .hero::before {
   content: '';
   position: absolute;
@@ -129,10 +119,10 @@ body {
   right: 0;
   bottom: 0;
   background: url('../img/logo.png') center/contain no-repeat;
-  background-size: 60%; /* Tamaño del logo */
-  filter: blur(8px) opacity(0.4); /* Difuminado y transparencia */
+  background-size: 60%;
+  filter: blur(8px) opacity(0.4);
   z-index: -1;
-  transform: scale(1.1); /* Ligero zoom para mejor efecto blur */
+  transform: scale(1.1);
 }
 
 .hero-content {
@@ -163,7 +153,6 @@ body {
   text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
 }
 
-/* 🎪 SECCIONES CON SCROLL ANIMATIONS */
 section {
   padding: var(--section-spacing) 0;
   position: relative;
@@ -175,7 +164,6 @@ section {
   transition: all 0.8s var(--transition);
 }
 
-/* 🔥 EFECTO SCROLL-TRIGGERED SCALE */
 .scroll-section {
   view-timeline: --section-timeline block;
   animation: scaleIn both;
@@ -183,13 +171,13 @@ section {
   animation-range: entry 0% cover 40%;
 }
 
-/* 📝 TIPOGRAFÍA DINÁMICA */
 .scroll-text {
   view-timeline: --text-timeline block;
   animation: textScale both;
   animation-timeline: --text-timeline;
   animation-range: entry 25% cover 35%;
 }
+
 
 h2 {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
@@ -634,4 +622,5 @@ section::before {
     transform: translateY(15px) translateX(-15px) scale(0.9);
     opacity: 0.5;
   }
+
 }
