@@ -33,7 +33,7 @@ body {
   color: var(--text-primary);
   overflow-x: hidden;
   line-height: 1.6;
-  cursor: none; /* Ocultar cursor por defecto */
+  /* cursor: none;  <-- ELIMINADO: ahora el cursor normal se muestra */
 }
 
 /* 🎪 ANIMACIONES PRINCIPALES */
@@ -79,30 +79,8 @@ body {
   }
 }
 
-/* 🎯 CURSOR PERSONALIZADO */
-.custom-cursor {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--accent-color);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-  transition: transform 0.2s ease;
-}
 
-.cursor-follower {
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--accent-color);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transition: transform 0.4s ease;
-  opacity: 0.3;
-}
+/* (LA CLASE .cursor-follower SE ELIMINÓ PORQUE ERA LA QUE SEGUÍA AL MOUSE) */
 
 /* 📊 SCROLL PROGRESS BAR */
 .scroll-progress {
@@ -543,9 +521,8 @@ p {
     cursor: auto;
   }
 
-  .custom-cursor, .cursor-follower {
-    display: none;
-  }
+  /* (Se eliminó la referencia a .custom-cursor y .cursor-follower aquí
+     porque la clase que seguía al mouse fue removida arriba) */
 }
 
 @media (max-width: 480px) {
@@ -575,10 +552,7 @@ p {
   }
 }
 
-/* 🎯 SCROLL SMOOTH */
-html {
-  scroll-behavior: smooth;
-}
+
 
 /* 🌈 EFECTOS VISUALES EXTRAS */
 section::before {
