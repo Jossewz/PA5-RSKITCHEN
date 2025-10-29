@@ -1,7 +1,7 @@
 /* 🎨 VARIABLES PRINCIPALES MEJORADAS */
 :root {
   --primary-color: #1a1a1a;
-  --accent-color: #1a1a1a; /* Cambiado a negro */
+  --accent-color: #1a1a1a;
   --accent-light: #333333;
   --accent-hover: #555555;
   --background-start: #b3e5fc;
@@ -23,7 +23,7 @@
   --glass-border: rgba(255, 255, 255, 0.2);
 }
 
-/* 🌤️ FONDO GENERAL MEJORADO */
+/* 🌤️ FONDO GENERAL */
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -35,7 +35,7 @@ body {
   position: relative;
 }
 
-/* 🌌 PARTÍCULAS MEJORADAS CON NEGRO */
+/* 🌌 PARTÍCULAS */
 .particles {
   position: fixed;
   top: 0;
@@ -74,7 +74,7 @@ body {
   animation-delay: -2s;
 }
 
-/* 🪶 ANIMACIONES OPTIMIZADAS */
+/* 🪶 ANIMACIONES */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) translateX(0) scale(1);
@@ -90,12 +90,14 @@ body {
   }
 }
 
-@keyframes shimmer {
+@keyframes fadeInUp {
   0% {
-    background-position: -200% center;
+    opacity: 0;
+    transform: translateY(40px);
   }
   100% {
-    background-position: 200% center;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -110,7 +112,7 @@ body {
   }
 }
 
-/* 🧭 NAVBAR GLASS MORPHISM OPTIMIZADA */
+/* 🧭 NAVBAR */
 .menu-bar {
   background: var(--glass-bg);
   backdrop-filter: blur(20px) saturate(180%);
@@ -133,7 +135,7 @@ body {
   box-shadow: 0 4px 30px var(--shadow-medium);
 }
 
-/* 🔗 BOTONES EN NEGRO ELEGANTE */
+/* 🔗 BOTONES NORMALES (sin brillo) */
 .menu-bar ul {
   list-style: none;
   margin: 0;
@@ -164,32 +166,7 @@ body {
   backface-visibility: hidden;
 }
 
-/* ✨ EFECTO SHIMMER MEJORADO PARA NEGRO */
-.menu-bar ul li a::after,
-.menu-bar ul li button:not(.logout-nav button)::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-  z-index: -1;
-}
-
-.menu-bar ul li a:hover::after,
-.menu-bar ul li button:not(.logout-nav button):hover::after {
-  transform: translateX(100%);
-}
-
-/* 🌊 HOVER EFFECTS MEJORADOS CON NEGRO */
+/* 🌊 HOVER EFFECTS NORMALES */
 .menu-bar ul li a:hover,
 .menu-bar ul li button:not(.logout-nav button):hover {
   background: linear-gradient(135deg, var(--accent-hover), var(--accent-color));
@@ -197,26 +174,14 @@ body {
   box-shadow: 0 8px 25px var(--shadow-medium), var(--shadow-glow);
 }
 
-/* 🔥 BOTÓN ACTIVO MEJORADO CON NEGRO */
+/* 🔥 BOTÓN ACTIVO SIN ANIMACIONES */
 .menu-bar ul li a.active {
   background: linear-gradient(135deg, var(--accent-light), var(--accent-color));
   color: white;
-  animation: pulse 2s infinite, shimmer 3s infinite linear;
-  background-size: 200% auto;
+  box-shadow: 0 4px 15px var(--shadow-medium);
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    box-shadow: 0 4px 15px var(--shadow-medium);
-  }
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px var(--shadow-light);
-  }
-}
-
-/* 🔴 BOTÓN CERRAR SESIÓN EN ROJO */
+/* 🔴 BOTÓN CERRAR SESIÓN */
 .logout-nav button {
   text-decoration: none;
   font-weight: 600;
@@ -235,37 +200,14 @@ body {
   backface-visibility: hidden;
 }
 
-/* ✨ EFECTO SHIMMER PARA ROJO */
-.logout-nav button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4),
-    transparent
-  );
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-  z-index: -1;
-}
-
-.logout-nav button:hover::after {
-  transform: translateX(100%);
-}
-
-/* 🌊 HOVER EFFECTS PARA ROJO */
+/* 🌊 HOVER PARA CERRAR SESIÓN */
 .logout-nav button:hover {
   background: linear-gradient(135deg, var(--danger-light), var(--danger-color));
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4), 0 0 20px rgba(231, 76, 60, 0.3);
 }
 
-/* 🌈 CONTENIDO CENTRAL MEJORADO */
+/* 🌈 CONTENIDO CENTRAL */
 .content {
   text-align: center;
   padding: 140px 20px 100px;
@@ -298,18 +240,7 @@ body {
   line-height: 1.6;
 }
 
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ✨ EFECTO DE FONDO DINÁMICO OPTIMIZADO */
+/* ✨ FONDO DINÁMICO */
 .content::before {
   content: '';
   position: absolute;
@@ -328,14 +259,10 @@ body {
   will-change: transform, opacity;
 }
 
-/* 🎯 MEJORAS DE ACCESIBILITY CRÍTICAS */
+/* 🎯 ACCESIBILIDAD */
 @media (prefers-reduced-motion: reduce) {
   .particle,
-  .menu-bar ul li a::after,
-  .menu-bar ul li button::after,
-  .logout-nav button::after,
   .content::before,
-  .menu-bar ul li a.active,
   .menu-bar ul li a:hover,
   .menu-bar ul li button:hover,
   .logout-nav button:hover {
@@ -350,7 +277,6 @@ body {
   }
 }
 
-/* 🎯 ESTADOS DE FOCO PARA ACCESIBILIDAD */
 .menu-bar ul li a:focus-visible,
 .menu-bar ul li button:focus-visible,
 .logout-nav button:focus-visible {
@@ -359,17 +285,11 @@ body {
   transform: translateY(-2px);
 }
 
-.menu-bar ul li a:focus-visible,
-.menu-bar ul li button:focus-visible {
-  background: linear-gradient(135deg, #333333, #1a1a1a);
-}
-
 .logout-nav button:focus-visible {
   outline-color: var(--danger-color);
-  background: linear-gradient(135deg, var(--danger-light), var(--danger-color));
 }
 
-/* 📱 RESPONSIVE MEJORADO Y OPTIMIZADO */
+/* 📱 RESPONSIVE */
 @media (max-width: 768px) {
   .menu-bar {
     height: auto;
@@ -412,7 +332,7 @@ body {
   }
 }
 
-/* 📱 MEJORAS PARA DISPOSITIVOS TÁCTILES */
+/* 📱 TOUCH DEVICES */
 @media (max-width: 768px) and (hover: none) {
   .menu-bar ul li a,
   .menu-bar ul li button,
@@ -430,7 +350,7 @@ body {
   }
 }
 
-/* 📱 OPTIMIZACIÓN PARA MÓVILES PEQUEÑOS */
+/* 📱 SMALL SCREENS */
 @media (max-width: 480px) {
   :root {
     --nav-height: 70px;
@@ -451,7 +371,7 @@ body {
   }
 }
 
-/* 🖥️ OPTIMIZACIÓN PARA PANTALLAS GRANDES */
+/* 🖥️ GRANDES PANTALLAS */
 @media (min-width: 1440px) {
   .content {
     padding: 160px 20px 120px;
@@ -462,7 +382,7 @@ body {
   }
 }
 
-/* 🌙 SOPORTE PARA MODO OSCURO */
+/* 🌙 DARK MODE */
 @media (prefers-color-scheme: dark) {
   :root {
     --background-start: #0a0a0a;
@@ -477,7 +397,6 @@ body {
     background: linear-gradient(135deg, #ffffff, #cccccc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
 
   .logout-nav button {
@@ -490,7 +409,7 @@ body {
   }
 }
 
-/* ⚡ ESTILOS PARA CONEXIONES LENTAS */
+/* ⚡ REDUCED DATA */
 @media (prefers-reduced-data: reduce) {
   .particles,
   .content::before {
@@ -503,7 +422,7 @@ body {
   }
 }
 
-/* 🎨 FALLBACKS PARA NAVEGADORES ANTIGUOS */
+/* 🎨 FALLBACKS */
 @supports not (backdrop-filter: blur(10px)) {
   .menu-bar {
     background: rgba(255, 255, 255, 0.95);
@@ -514,6 +433,5 @@ body {
   .content h1 {
     color: var(--accent-color);
     background: none;
-    -webkit-text-fill-color: initial;
   }
 }

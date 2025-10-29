@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Editar platillos</title>
+    <meta charset="UTF-8" />
+    <title>Editar Platillo | Kitchen</title>
+    <link rel="stylesheet" th:href="@{/css/platillos.css}">
 </head>
 <body>
+
+<nav class="menu-bar">
+    <ul>
+        <li><a href="/home">Inicio</a></li>
+        <li><a href="/platillos">Volver a Platillos</a></li>
+    </ul>
+</nav>
+
+<main>
+    <h1>Editar Platillo</h1>
+
+    <div class="contenedor">
+        <form th:action="@{/platillos/actualizar}" th:object="${platillo}" method="post" class="formulario">
+            <input type="hidden" th:field="*{id}" />
+
+            <label>Nombre del platillo</label>
+            <input type="text" th:field="*{name}" required />
+
+            <label>Cantidad</label>
+            <input type="text" th:field="*{cant}" required />
+
+            <label>Precio</label>
+            <input type="number" th:field="*{price}" step="0.01" min="0" required />
+
+            <label>Ingredientes (separados por comas)</label>
+            <textarea th:field="*{ingredients}" placeholder="Ej: arroz, pollo, cebolla"></textarea>
+
+            <div class="acciones">
+                <button type="submit" class="btn-guardar">Actualizar Platillo</button>
+                <a href="/platillos" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</main>
 
 </body>
 </html>
