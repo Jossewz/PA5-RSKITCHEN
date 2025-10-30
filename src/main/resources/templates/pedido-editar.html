@@ -3,108 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <title>Editar Pedido</title>
-    <style>
-        body {
-            font-family: 'Poppins', Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #ffffff; /* fondo blanco */
-            color: #003366; /* azul oscuro para texto */
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 30px;
-            background-color: #e6f0ff; /* azul muy claro */
-            border-radius: 10px;
-            box-shadow: 0 0 12px rgba(0, 102, 204, 0.3);
-        }
-        h2 {
-            text-align: center;
-            color: #004080; /* azul */
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 15px;
-            color: #004080; /* azul */
-        }
-        select, input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            background-color: #ffffff; /* fondo blanco */
-            border: 2px solid #004080; /* borde azul */
-            border-radius: 5px;
-            color: #003366; /* texto azul oscuro */
-            box-sizing: border-box;
-            font-size: 14px;
-            transition: border-color 0.3s ease;
-        }
-        select option {
-            background-color: #ffffff;
-            color: #003366;
-        }
-        select:focus, input[type="text"]:focus, input[type="number"]:focus {
-            border-color: #0066cc;
-            outline: none;
-        }
-        .item-existente {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #cce0ff; /* azul muy claro */
-            border-radius: 5px;
-            color: #003366;
-            font-weight: 600;
-        }
-        .flex-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .flex-row > * {
-            flex: 1;
-        }
-        button[type="submit"] {
-            margin-top: 25px;
-            background-color: #004080; /* azul */
-            color: white;
-            padding: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-        button[type="submit"]:hover {
-            background-color: #0066cc;
-        }
-        .volver {
-            display: inline-block;
-            margin-bottom: 15px;
-            color: #004080;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .volver:hover {
-            text-decoration: underline;
-        }
-        /* Fondo de la mesa actual */
-        .mesa-actual {
-            background-color: #b3c6ff; /* azul claro */
-            padding: 10px;
-            border-radius: 4px;
-            color: #003366;
-            font-weight: 600;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/pedidoedit.css}">
 </head>
+
 <body>
 <div class="container">
     <a class="volver" th:href="@{/home}">← Volver</a>
@@ -129,16 +30,31 @@
         </div>
 
         <label>Agregar nuevos platillos:</label>
-        <div class="flex-row" th:each="i : ${#numbers.sequence(0, 2)}">
-            <select name="nuevosPlatillos">
-                <option value="">Seleccione un platillo</option>
-                <option th:each="platillo : ${platillosDisponibles}" th:value="${platillo.id}" th:text="${platillo.name}"></option>
-            </select>
+        <div class="search-row" th:each="i : ${#numbers.sequence(0, 2)}">
+            <input type="text" class="platillo-busqueda" list="platillosList" placeholder="Buscar platillo..." />
+            <input type="hidden" name="nuevosPlatillos" />
             <input type="number" name="nuevasCantidades" min="1" value="1" />
         </div>
+
+        <datalist id="platillosList">
+            <option th:each="platillo : ${platillosDisponibles}" th:data-id="${platillo.id}" th:value="${platillo.name}"></option>
+        </datalist>
 
         <button type="submit">Guardar Cambios</button>
     </form>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const opciones = [...document.querySelectorAll("#platillosList option")];
+        document.querySelectorAll(".platillo-busqueda").forEach((inputBusqueda, index) => {
+            const hiddenInput = document.getElementsByName("nuevosPlatillos")[index];
+            inputBusqueda.addEventListener("change", () => {
+                const seleccionado = opciones.find(opt => opt.value === inputBusqueda.value);
+                hiddenInput.value = seleccionado ? seleccionado.dataset.id : "";
+            });
+        });
+    });
+</script>
 </body>
 </html>

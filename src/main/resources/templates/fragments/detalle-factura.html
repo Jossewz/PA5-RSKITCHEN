@@ -1,0 +1,97 @@
+<div th:fragment="detalle" xmlns:th="http://www.w3.org/1999/xhtml">
+    <!-- Vista normal (para el modal) -->
+    <div class="vista-normal">
+        <h2>Factura Detalle</h2>
+        <p><strong>Mesa:</strong> <span th:text="${factura.mesaNum}">Mesa</span></p>
+        <p><strong>Mesero:</strong> <span th:text="${factura.meseroName}">Mesero</span></p>
+        <p><strong>Fecha:</strong> <span th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</span></p>
+        <p><strong>Estado:</strong> <span th:text="${factura.estado}">Estado</span></p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${factura.items}">
+                <td th:text="${item.name}">Producto</td>
+                <td th:text="${item.unidades}">Cantidad</td>
+                <td th:text="${#numbers.formatDecimal(item.price, 2, 'POINT', 0, 'COMMA')}">Precio</td>
+                <td th:text="${#numbers.formatDecimal(item.price * item.unidades, 2, 'POINT', 0, 'COMMA')}">Subtotal</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="total">
+            Total: $<span th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}">Total</span>
+        </p>
+
+        <!-- SOLO mostrar Registrar Pago si está PENDIENTE -->
+        <div th:if="${factura.estado.name() == 'PENDIENTE'}" style="margin-top: 15px;">
+            <a th:href="@{/pagos/nuevo/{id}(id=${factura.id})}" class="btn btn-success">💳 Registrar Pago</a>
+        </div>
+
+        <!-- SOLO mostrar Imprimir si está APROBADA -->
+        <div th:if="${factura.estado.name() == 'APROBADA'}" style="margin-top: 20px;">
+            <button onclick="imprimirTicket()" class="btn btn-primary">🧾 Imprimir Factura</button>
+        </div>
+
+        <!-- Mensaje si ya está pagada -->
+        <div th:if="${factura.estado.name() == 'APROBADA'}" style="margin-top: 10px;">
+            <p style="color: #28a745; font-weight: bold;">✅ Esta factura ya ha sido pagada y aprobada</p>
+        </div>
+    </div>
+
+    <div id="ticket-impresion" class="ticket-impresion" style="display: none;">
+        <div class="ticket-header">
+            <h2>SR KITCHEN</h2>
+            <p>Restaurante & Bar</p>
+            <p>--------------------------------</p>
+        </div>
+
+        <div class="ticket-info">
+            <p><strong>FACTURA #</strong><span th:text="${factura.id}"></span></p>
+            <p><strong>MESA:</strong> <span th:text="${factura.mesaNum}"></span></p>
+            <p><strong>MESERO:</strong> <span th:text="${factura.meseroName}"></span></p>
+            <p><strong>FECHA:</strong> <span th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}"></span></p>
+            <p><strong>ESTADO:</strong> <span th:text="${factura.estado}"></span></p>
+            <p>--------------------------------</p>
+        </div>
+
+        <div class="ticket-items">
+            <table class="ticket-table">
+                <thead>
+                <tr>
+                    <th>PRODUCTO</th>
+                    <th>CANT</th>
+                    <th>PRECIO</th>
+                    <th>SUBTO</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${factura.items}">
+                    <td th:text="${item.name}">Producto</td>
+                    <td style="text-align: center;" th:text="${item.unidades}">Cant</td>
+                    <td style="text-align: right;" th:text="${#numbers.formatDecimal(item.price, 2, 'POINT', 0, 'COMMA')}">Precio</td>
+                    <td style="text-align: right;" th:text="${#numbers.formatDecimal(item.price * item.unidades, 2, 'POINT', 0, 'COMMA')}">Subto</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="ticket-total">
+            <p>--------------------------------</p>
+            <p><strong>TOTAL: $<span th:text="${#numbers.formatDecimal(factura.total, 2, 'POINT', 0, 'COMMA')}"></span></strong></p>
+        </div>
+
+        <div class="ticket-footer">
+            <p>¡Gracias por su visita!</p>
+            <p>Vuelva pronto</p>
+            <p>SR Kitchen</p>
+        </div>
+    </div>
+</div>

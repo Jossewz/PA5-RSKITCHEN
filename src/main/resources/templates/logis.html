@@ -2,140 +2,43 @@
 <html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión</title>
-    <style>
-        * {
-          box-sizing: border-box;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | RS Kitchen</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          height: 100vh;
-          background: linear-gradient(120deg, #87CEEB, #1a1a1a);
-          background-size: 200% 200%;
-          animation: fondoAnimado 10s ease infinite;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        @keyframes fondoAnimado {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        .register-button {
-          position: absolute;
-          top: 20px;
-          left: 20px;
-          background-color: #87CEEB;
-          color: black;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 12px;
-          text-decoration: none;
-          font-weight: bold;
-          transition: all 0.3s ease;
-          box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .register-button:hover {
-          background-color: #68b3d8;
-          transform: scale(1.05);
-        }
-
-        .login-container {
-          background: rgba(26, 26, 26, 0.95);
-          padding: 50px 40px;
-          border-radius: 25px;
-          box-shadow: 0 0 30px rgba(0,0,0,0.5);
-          width: 320px;
-          text-align: center;
-          color: white;
-          backdrop-filter: blur(5px);
-          animation: aparecer 0.8s ease forwards;
-          opacity: 0;
-        }
-
-        @keyframes aparecer {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .login-container h2 {
-          margin-bottom: 30px;
-          color: #87CEEB;
-          font-size: 26px;
-        }
-
-        .input {
-          width: 100%;
-          border: none;
-          outline: none;
-          border-radius: 12px;
-          padding: 14px;
-          margin-bottom: 20px;
-          background-color: #2e2e2e;
-          color: white;
-          font-size: 16px;
-          transition: all 0.3s ease;
-          box-shadow: inset 2px 2px 5px #141414, inset -2px -2px 5px #3a3a3a;
-        }
-
-        .input::placeholder {
-          color: #aaa;
-        }
-
-        .input:focus {
-          background-color: #3a3a3a;
-          transform: scale(1.02);
-          box-shadow: 0 0 10px #87CEEB;
-        }
-
-        .login-button {
-          background-color: #87CEEB;
-          color: black;
-          padding: 12px 20px;
-          border: none;
-          border-radius: 12px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          width: 100%;
-          font-size: 16px;
-          font-weight: bold;
-          box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .login-button:hover {
-          background-color: #68b3d8;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-        }
-    </style>
 </head>
 <body>
+<a th:href="@{/}" class="back-button">← Volver</a>
 
+<div class="bg-bubble"></div>
+<div class="bg-bubble"></div>
+<div class="bg-bubble"></div>
 
 <div class="login-container">
+
+    <img th:src="@{/img/logo.png}" alt="SR Kitchen" class="login-logo">
+
     <h2>Iniciar Sesión</h2>
+
     <form action="/login" method="POST">
-        <input type="text" name="username" class="input" placeholder="Email" required>
-        <input type="password" name="password" class="input" placeholder="Password" required>
+        <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="text" name="username" class="input" placeholder="tu@email.com" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Contraseña</label>
+            <input type="password" name="password" class="input" placeholder="••••••••" required>
+        </div>
+
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
         <button type="submit" class="login-button">Entrar</button>
     </form>
-    <div th:if="${param.error}" style="color: red; margin-top: 10px;">
+
+    <div th:if="${param.error}" class="error-message">
         Usuario o contraseña incorrectos
     </div>
+
 </div>
 </body>
 </html>

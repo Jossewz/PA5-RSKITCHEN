@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Factura</title>
-    <style>
+/* --- parte de factura  --- */
+<style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f6ff;
+            background: linear-gradient(120deg, #78bcff, #ffffff);
             color: #002244;
             padding: 30px;
             max-width: 800px;
@@ -102,41 +98,3 @@
             }
         }
     </style>
-</head>
-<body>
-
-<h1>Factura</h1>
-
-<div class="info">
-    <p><strong>Mesa:</strong> <span th:text="${factura.mesaNum}">Mesa</span></p>
-    <p><strong>Mesero:</strong> <span th:text="${factura.meseroName}">Mesero</span></p>
-    <p><strong>Fecha:</strong> <span th:text="${#temporals.format(factura.fecha, 'dd/MM/yyyy HH:mm')}">Fecha</span></p>
-</div>
-
-<table>
-    <thead>
-    <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio Unitario</th>
-        <th>Subtotal</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="item : ${factura.items}">
-        <td th:text="${item.name}">Producto</td>
-        <td th:text="${item.cant}">1</td>
-        <td th:text="${#numbers.formatDecimal(item.price, 1, 'COMMA', 2, 'POINT')}">0.00</td>
-        <td th:text="${#numbers.formatDecimal(item.priceDouble * item.cantInt, 1, 'COMMA', 2, 'POINT')}">0.00</td>
-    </tr>
-    </tbody>
-</table>
-
-<p class="total">Total: <span th:text="${#numbers.formatDecimal(factura.total, 1, 'COMMA', 2, 'POINT')}">0.00</span></p>
-
-<div class="acciones">
-    <button onclick="window.print()">Imprimir o Guardar como PDF</button>
-</div>
-
-</body>
-</html>
