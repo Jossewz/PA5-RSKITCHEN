@@ -47,7 +47,13 @@ body {
   color: black;
   transform: translateY(-2px);
 }
-
+/* boton activo al estar en la pagina */
+.menu-bar ul li a.active {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
 .logout-nav button {
   background: #d9534f;
   color: white;
