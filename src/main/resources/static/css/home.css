@@ -1,4 +1,6 @@
-/* 🎨 VARIABLES PRINCIPALES MEJORADAS */
+/* variables que usaremos fijas */
+/* este
+ */
 :root {
   --primary-color: #1a1a1a;
   --accent-color: #1a1a1a;
@@ -23,7 +25,7 @@
   --glass-border: rgba(255, 255, 255, 0.2);
 }
 
-/* 🌤️ FONDO GENERAL */
+/* fondo */
 body {
   margin: 0;
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -35,7 +37,7 @@ body {
   position: relative;
 }
 
-/* 🌌 PARTÍCULAS */
+/* mis lindas particulas */
 .particles {
   position: fixed;
   top: 0;
@@ -74,7 +76,7 @@ body {
   animation-delay: -2s;
 }
 
-/* 🪶 ANIMACIONES */
+/* animaciones */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) translateX(0) scale(1);
@@ -112,7 +114,7 @@ body {
   }
 }
 
-/* 🧭 NAVBAR */
+/* barra de navegacion */
 .menu-bar {
   background: var(--glass-bg);
   backdrop-filter: blur(20px) saturate(180%);
@@ -135,7 +137,7 @@ body {
   box-shadow: 0 4px 30px var(--shadow-medium);
 }
 
-/* 🔗 BOTONES NORMALES (sin brillo) */
+/* botones de la barra */
 .menu-bar ul {
   list-style: none;
   margin: 0;
@@ -166,22 +168,24 @@ body {
   backface-visibility: hidden;
 }
 
-/* 🌊 HOVER EFFECTS NORMALES */
+/* hover con efectos normales */
 .menu-bar ul li a:hover,
 .menu-bar ul li button:not(.logout-nav button):hover {
   background: linear-gradient(135deg, var(--accent-hover), var(--accent-color));
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px var(--shadow-medium), var(--shadow-glow);
+
 }
 
-/* 🔥 BOTÓN ACTIVO SIN ANIMACIONES */
+
+/* boton activo sin animaciones */
 .menu-bar ul li a.active {
   background: linear-gradient(135deg, var(--accent-light), var(--accent-color));
   color: white;
   box-shadow: 0 4px 15px var(--shadow-medium);
 }
 
-/* 🔴 BOTÓN CERRAR SESIÓN */
+/* diseño del boton de cerrar seccion */
 .logout-nav button {
   text-decoration: none;
   font-weight: 600;
@@ -200,14 +204,14 @@ body {
   backface-visibility: hidden;
 }
 
-/* 🌊 HOVER PARA CERRAR SESIÓN */
+/* hover del boton de cerrar secion */
 .logout-nav button:hover {
   background: linear-gradient(135deg, var(--danger-light), var(--danger-color));
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4), 0 0 20px rgba(231, 76, 60, 0.3);
 }
 
-/* 🌈 CONTENIDO CENTRAL */
+/* contenido central  */
 .content {
   text-align: center;
   padding: 140px 20px 100px;
@@ -240,7 +244,7 @@ body {
   line-height: 1.6;
 }
 
-/* ✨ FONDO DINÁMICO */
+/* fondo dinamico mamalon */
 .content::before {
   content: '';
   position: absolute;
@@ -259,7 +263,7 @@ body {
   will-change: transform, opacity;
 }
 
-/* 🎯 ACCESIBILIDAD */
+/* acesibilidad */
 @media (prefers-reduced-motion: reduce) {
   .particle,
   .content::before,
@@ -289,7 +293,7 @@ body {
   outline-color: var(--danger-color);
 }
 
-/* 📱 RESPONSIVE */
+/* responsibil mobi */
 @media (max-width: 768px) {
   .menu-bar {
     height: auto;
@@ -332,7 +336,7 @@ body {
   }
 }
 
-/* 📱 TOUCH DEVICES */
+/* sistema touch en mobil */
 @media (max-width: 768px) and (hover: none) {
   .menu-bar ul li a,
   .menu-bar ul li button,
@@ -350,7 +354,7 @@ body {
   }
 }
 
-/* 📱 SMALL SCREENS */
+/* adaptar en mobil */
 @media (max-width: 480px) {
   :root {
     --nav-height: 70px;
@@ -371,7 +375,7 @@ body {
   }
 }
 
-/* 🖥️ GRANDES PANTALLAS */
+/* adaptar pantalla grande */
 @media (min-width: 1440px) {
   .content {
     padding: 160px 20px 120px;
@@ -382,7 +386,7 @@ body {
   }
 }
 
-/* 🌙 DARK MODE */
+/* modo dark para cuando lo vayamos a implementar */
 @media (prefers-color-scheme: dark) {
   :root {
     --background-start: #0a0a0a;
@@ -409,7 +413,7 @@ body {
   }
 }
 
-/* ⚡ REDUCED DATA */
+/*  mejora de rendimiento por animaciones */
 @media (prefers-reduced-data: reduce) {
   .particles,
   .content::before {
@@ -422,7 +426,7 @@ body {
   }
 }
 
-/* 🎨 FALLBACKS */
+/*  fallbacks */
 @supports not (backdrop-filter: blur(10px)) {
   .menu-bar {
     background: rgba(255, 255, 255, 0.95);

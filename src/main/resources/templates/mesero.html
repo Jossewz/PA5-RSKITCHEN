@@ -14,7 +14,7 @@
         <li><a href="/mesa" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Mesa</a></li>
         <li><a href="/pedidos" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Pedidos</a></li>
         <li><a href="/factura" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Facturas</a></li>
-        <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
+        <li><a href="/mesero"class="active" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
         <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
         <li><a href="/datos" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">Datos</a></li>
         <li class="logout-nav">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Gestión de Platillos | Kitchen</title>
     <link rel="stylesheet" th:href="@{/css/platillos.css}">
-
+    <link rel="stylesheet" th:href="@{/css/platillo-confirmacion.css}">
 </head>
 <body>
 
@@ -15,7 +15,7 @@
         <li><a href="/pedidos" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Pedidos</a></li>
         <li><a href="/factura" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_MESERO')">Facturas</a></li>
         <li><a href="/mesero" sec:authorize="hasAuthority('ROLE_ADMIN')">Mesero</a></li>
-        <li><a href="/platillos" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
+        <li><a href="/platillos" class="active" sec:authorize="hasAuthority('ROLE_ADMIN')">Platillos</a></li>
         <li><a href="/datos" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">Datos</a></li>
         <li class="logout-nav">
             <form th:action="@{/logout}" method="post" style="display:inline;">
@@ -48,24 +48,23 @@
             <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
         </div>
 
-        <div th:each="platillo : ${platillos}" class="platillo">
-            <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
-            <div th:text="${platillo.cant}">Cantidad</div>
-            <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
-            <div>
-                <strong>Ingredientes:</strong>
-                <span th:each="ing,iter : ${platillo.ingredients}" th:text="${ing} + (${!iter.last} ? ', ' : '')"></span>
-            </div>
-            <div class="acciones">
-                <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
-                <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
-                    <button type="submit" class="btn-eliminar">Eliminar</button>
-                </form>
+        <!-- 🔹 Contenedor en grid para mostrar los platillos lado a lado -->
+        <div class="contenedor-lista" th:if="${platillos != null and !platillos.isEmpty()}">
+            <div th:each="platillo : ${platillos}" class="platillo">
+                <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
+                <div th:text="${platillo.cant}">Cantidad</div>
+                <div th:text="'$' + ${#numbers.formatDecimal(platillo.price, 1, 2)}">Precio</div>
+                <div class="acciones">
+                    <a th:href="@{/platillos/editar/{id}(id=${platillo.id})}" class="btn-editar">Editar</a>
+                    <form th:action="@{/platillos/eliminar/{id}(id=${platillo.id})}" method="post" style="display: inline;">
+                        <button type="submit" class="btn-eliminar">Eliminar</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </main>
+<script th:src="@{/js/platilloConfirmacion.js}"></script>
 
 </body>
 </html>
-

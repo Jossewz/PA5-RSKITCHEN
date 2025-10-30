@@ -1,7 +1,4 @@
-/* =========================
-   SR KITCHEN — LOGIN CSS (Versión completa mejorada con botón VOLVER)
-   ========================= */
-
+/* Variables fijas */
 :root {
   --accent: #5aa9e6;
   --accent-light: #87CEEB;
@@ -40,9 +37,7 @@ body {
   100% { background-position: 0% 50%; }
 }
 
-/* =========================
-   Partículas decorativas
-   ========================= */
+/* Partículas decorativas */
 .particles {
   position: fixed;
   inset: 0;
@@ -65,9 +60,7 @@ body {
   100% { transform: translateY(-120vh) scale(0.6); }
 }
 
-/* =========================
-   Login Container
-   ========================= */
+/* Login Container */
 .login-container {
   width: 380px;
   max-width: 94%;
@@ -92,9 +85,7 @@ body {
   opacity: 1;
 }
 
-/* =========================
-   Logo
-   ========================= */
+/* logo */
 .login-logo {
   width: 180px;
   margin-bottom: 18px;
@@ -105,9 +96,7 @@ body {
   transform: scale(1.04);
 }
 
-/* =========================
-   Título
-   ========================= */
+/* título */
 .login-container h2 {
   color: var(--accent-light);
   margin-bottom: 18px;
@@ -116,9 +105,7 @@ body {
   letter-spacing: 0.3px;
 }
 
-/* =========================
-   Formulario
-   ========================= */
+/* formulario */
 form {
   width: 100%;
   max-width: 320px;
@@ -141,9 +128,7 @@ form {
   font-weight: 500;
 }
 
-/* =========================
-   Inputs
-   ========================= */
+/*  Inputs*/
 .input {
   width: 100%;
   padding: 13px 14px;
@@ -168,9 +153,6 @@ form {
               inset -2px -2px 6px #3a3a3a;
 }
 
-/* =========================
-   Botón LOGIN — versión mejorada
-   ========================= */
 .login-button {
   width: 100%;
   padding: 14px 16px;

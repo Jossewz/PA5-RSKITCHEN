@@ -1,4 +1,4 @@
-/* --- ESTILOS BASE --- */
+/* estilo azul que escojimos */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -8,7 +8,7 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* --- NAVBAR (MISMA QUE FACTURA Y MESA) --- */
+/* barra de navegacion */
 .menu-bar {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 15px 0;
@@ -47,7 +47,13 @@ body {
   color: black;
   transform: translateY(-2px);
 }
-
+/* boton activo al estar en la pagina */
+.menu-bar ul li a.active {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
 .logout-nav button {
   background: #d9534f;
   color: white;
@@ -65,7 +71,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* --- CONTENEDOR PRINCIPAL --- */
+/* contenedor principal */
 .container {
   max-width: 900px;
   margin: 40px auto;
@@ -77,7 +83,7 @@ body {
   animation: fadeIn 1.2s ease-in-out;
 }
 
-/* --- TITULOS --- */
+/* titulos */
 h1, h2, h3, h4 {
   text-align: center;
   font-weight: 700;
@@ -90,7 +96,7 @@ h1 {
   margin-bottom: 35px;
 }
 
-/* --- FORMULARIO --- */
+/*formulario */
 form {
   display: flex;
   flex-direction: column;
@@ -120,13 +126,13 @@ select:focus, input:focus {
   transform: scale(1.02);
 }
 
-/* --- BUSCADOR DE PLATILLOS --- */
+/* buscar platillo */
 #busquedaPlatillo {
   margin-top: 15px;
   width: 100%;
 }
 
-/* --- LISTADO DE PLATILLOS --- */
+/* listado de platillo */
 .platillo-item {
   display: flex;
   justify-content: space-between;
@@ -153,7 +159,7 @@ select:focus, input:focus {
   text-align: center;
 }
 
-/* --- BOTÓN PRINCIPAL --- */
+/* boton  */
 .btn-submit {
   background-color: #1a1a1a;
   color: white;
@@ -174,7 +180,7 @@ select:focus, input:focus {
   transform: translateY(-2px);
 }
 
-/* --- MENSAJES DE ERROR / ÉXITO --- */
+/* mensaje de exito y error */
 .error {
   background-color: rgba(255, 0, 0, 0.15);
   color: #c62828;
@@ -193,7 +199,7 @@ select:focus, input:focus {
   font-weight: 600;
 }
 
-/* --- PEDIDOS RECIENTES --- */
+/* pedido reciente */
 .pedido-card {
   background-color: rgba(255,255,255,0.85);
   padding: 20px;
@@ -236,7 +242,7 @@ select:focus, input:focus {
   text-decoration: underline;
 }
 
-/* --- ANIMACIONES --- */
+/* animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -248,7 +254,7 @@ select:focus, input:focus {
   }
 }
 
-/* --- RESPONSIVE --- */
+/* responsibilidad */
 @media (max-width: 768px) {
   .menu-bar ul {
     flex-direction: column;

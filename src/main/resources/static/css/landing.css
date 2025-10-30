@@ -1,4 +1,4 @@
-/* 🎨 VARIABLES GLOBALES */
+/* variables fijas */
 :root {
   --primary-color: #1a1a1a;
   --accent-color: #87CEEB;
@@ -16,7 +16,7 @@
   --section-spacing: 100px;
 }
 
-/* 🌤️ RESET Y BASE */
+/* reset y base */
 * {
   margin: 0;
   padding: 0;
@@ -35,6 +35,7 @@ body {
   line-height: 1.6;
 }
 
+/* animaciones principales */
 @keyframes gradientShift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -77,7 +78,8 @@ body {
   }
 }
 
-*/
+
+/* la scrolss prgres bar */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -90,12 +92,14 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
+/* contenedor principal */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
+/* logo difuminado y puesto  */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -105,12 +109,15 @@ body {
   padding: 80px 20px;
   position: relative;
   background:
+    /* Overlay oscuro para mejor contraste */
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)),
+    /* Logo difuminado */
     url('../img/logo.png') center/cover;
   color: white;
   overflow: hidden;
 }
 
+/* Efecto de blur en el logo de fondo */
 .hero::before {
   content: '';
   position: absolute;
@@ -119,10 +126,10 @@ body {
   right: 0;
   bottom: 0;
   background: url('../img/logo.png') center/contain no-repeat;
-  background-size: 60%;
-  filter: blur(8px) opacity(0.4);
+  background-size: 60%; /* Tamaño del logo */
+  filter: blur(8px) opacity(0.4); /* difuminado y transparencia */
   z-index: -1;
-  transform: scale(1.1);
+  transform: scale(1.1); /* ligero zoom para mejor efecto blur */
 }
 
 .hero-content {
@@ -153,6 +160,7 @@ body {
   text-shadow: 1px 1px 8px rgba(0,0,0,0.6);
 }
 
+/* secciones con scrol animation */
 section {
   padding: var(--section-spacing) 0;
   position: relative;
@@ -164,6 +172,7 @@ section {
   transition: all 0.8s var(--transition);
 }
 
+/*  efecto "SCROLL-TRIGGERED SCALE" */
 .scroll-section {
   view-timeline: --section-timeline block;
   animation: scaleIn both;
@@ -171,13 +180,13 @@ section {
   animation-range: entry 0% cover 40%;
 }
 
+/* tipografia dinamica */
 .scroll-text {
   view-timeline: --text-timeline block;
   animation: textScale both;
   animation-timeline: --text-timeline;
   animation-range: entry 25% cover 35%;
 }
-
 
 h2 {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
@@ -205,7 +214,7 @@ p {
   margin-bottom: 1.5rem;
 }
 
-/* 🎨 BOTONES MEJORADOS */
+/* botones mejorados */
 .btn {
   display: inline-block;
   background: linear-gradient(135deg, var(--primary-color), #333);
@@ -251,7 +260,7 @@ p {
   padding: 20px 50px;
 }
 
-/* 📊 GRIDS Y LAYOUTS */
+/* grids y layoutgs */
 .features-grid, .mission-grid, .quality-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -279,7 +288,7 @@ p {
   margin-bottom: 1.5rem;
 }
 
-/* 🏆 HISTORIA */
+/* la parte de historia */
 .history-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -308,86 +317,8 @@ p {
   margin-bottom: 0.5rem;
 }
 
-/* 🍽️ SECCIÓN COMIDA PARALLAX */
-.food-showcase {
-  background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)),
-              url('../img/comida2.jpg') fixed center/cover;
-  padding: 100px 0;
-}
 
-.food-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.food-item {
-  height: 250px;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  position: relative;
-  transition: all var(--transition);
-  box-shadow: 0 8px 25px var(--shadow-light);
-}
-
-.food-item:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 15px 40px var(--shadow-medium);
-}
-
-.food-item:nth-child(1) {
-  background: url('../img/comida1.webp') center/cover;
-}
-
-.food-item:nth-child(2) {
-  background: url('../img/comida2.jpg') center/cover;
-}
-
-/* Agregar más items si tienes más imágenes */
-.food-item:nth-child(3) {
-  background: linear-gradient(45deg, var(--accent-color), var(--accent-hover));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.food-item:nth-child(4) {
-  background: linear-gradient(45deg, var(--primary-color), #333);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-/* 📱 EXPERIENCIA */
-.experience-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.experience-item {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 2.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: 0 8px 25px var(--shadow-light);
-  transition: all var(--transition);
-}
-
-.experience-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 35px var(--shadow-medium);
-}
-
-/* 🎯 CTA SECTION */
+/* secioon cta */
 .cta {
   text-align: center;
   background: linear-gradient(135deg, rgba(135, 206, 235, 0.1), rgba(255, 255, 255, 0.2));
@@ -407,7 +338,7 @@ p {
   margin-bottom: 2.5rem;
 }
 
-/* 🦶 FOOTER MEJORADO CON LOGO */
+/* foother con logo */
 .footer {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
@@ -468,7 +399,7 @@ p {
   color: var(--text-light);
 }
 
-/* 📱 RESPONSIVE DESIGN */
+/* rsponsib en mobil */
 @media (max-width: 768px) {
   :root {
     --section-spacing: 60px;
@@ -498,19 +429,17 @@ p {
     font-size: 1.1rem;
   }
 
-  /* Ajustes para el hero en móviles */
   .hero::before {
     background-size: 80%;
     filter: blur(6px) opacity(0.3);
   }
 
-  /* Mostrar cursor normal en móviles */
+
   body {
     cursor: auto;
   }
 
-  /* (Se eliminó la referencia a .custom-cursor y .cursor-follower aquí
-     porque la clase que seguía al mouse fue removida arriba) */
+
 }
 
 @media (max-width: 480px) {
@@ -542,7 +471,7 @@ p {
 
 
 
-/* 🌈 EFECTOS VISUALES EXTRAS */
+/* mas efectos visuales extra */
 section::before {
   content: '';
   position: absolute;
@@ -554,12 +483,12 @@ section::before {
   opacity: 0.3;
 }
 
-/* 🚀 OPTIMIZACIONES DE RENDIMIENTO */
+/* para mejorar el rendimiento */
 .scroll-section, .scroll-text {
   will-change: transform, opacity;
 }
 
-/* 🎪 FALLBACK PARA NAVEGADORES SIN SCROLL-DRIVEN ANIMATIONS */
+/* fall back para los navegadores sin scrol */
 @supports not (view-timeline: --section-timeline block) {
   .about, .history, .mission, .experience, .quality, .cta, .food-showcase {
     animation: fadeInUp 0.8s ease-out forwards;
@@ -570,7 +499,7 @@ section::before {
   }
 }
 
-/* 🌌 PARTÍCULAS (manteniendo el estilo existente) */
+/* particulas que me encantaron */
 .particles {
   position: fixed;
   top: 0;
@@ -622,5 +551,4 @@ section::before {
     transform: translateY(15px) translateX(-15px) scale(0.9);
     opacity: 0.5;
   }
-
 }

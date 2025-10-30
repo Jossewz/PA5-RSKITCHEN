@@ -1,4 +1,4 @@
-/* --- ESTILOS GENERALES --- */
+/* estilo azul que escogimos */
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -9,7 +9,7 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* --- NAVBAR (IGUAL A LA DE MESA) --- */
+/* barra de navegacion */
 .menu-bar {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 15px 0;
@@ -48,7 +48,13 @@ body {
   color: black;
   transform: translateY(-2px);
 }
-
+/* boton activo al estar en la pagina */
+.menu-bar ul li a.active {
+  background-color: #87CEEB;
+  color: black;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
 .logout-nav form {
   display: inline-block;
 }
@@ -69,7 +75,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* --- CONTENIDO PRINCIPAL --- */
+/* contenido principal */
 .content {
   padding: 40px 20px;
   text-align: center;
@@ -82,7 +88,7 @@ h1 {
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* --- FORMULARIO DE REGISTRO --- */
+/* formulario de registro */
 .form-container {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 30px;
@@ -143,7 +149,7 @@ input:focus {
   transform: translateY(-2px);
 }
 
-/* --- TABLA DE MESEROS --- */
+/* tabla de mesero*/
 .table-container {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 25px;
@@ -178,7 +184,7 @@ tr:hover {
   transition: background-color 0.3s ease;
 }
 
-/* --- ANIMACIONES --- */
+/* animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -190,7 +196,7 @@ tr:hover {
   }
 }
 
-/* --- RESPONSIVE --- */
+/* responsibilidad */
 @media (max-width: 768px) {
   .menu-bar ul {
     flex-direction: column;
