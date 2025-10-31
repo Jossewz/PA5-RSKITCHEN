@@ -26,21 +26,30 @@ public class Security {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/mesa/**")
+                        // Ignorar CSRF para tus endpoints del modelo y datos
+                        .ignoringRequestMatchers("/mesa/**", "/weka/**", "/datos/**")
                 )
                 .authorizeHttpRequests(auth -> auth
+                        // Rutas públicas
                         .requestMatchers(
                                 "/",
                                 "/login",
                                 "/css/**",
                                 "/js/**",
                                 "/img/**",
-                                "/images/**"
+                                "/images/**",
+                                "/datos/**",
+                                "/weka/**"
                         ).permitAll()
+
+                        // Rutas que requieren roles
                         .requestMatchers("/mesa/**", "/pedido/**", "/factura/**")
                         .hasAnyAuthority("ROLE_ADMIN", "ROLE_MESERO")
+
                         .requestMatchers("/admin/**")
                         .hasAuthority("ROLE_ADMIN")
+
+                        // Cualquier otra ruta requiere autenticación
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
