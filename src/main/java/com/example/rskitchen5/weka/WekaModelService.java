@@ -1,10 +1,9 @@
 package com.example.rskitchen5.weka;
 
+
 import org.springframework.stereotype.Service;
 import weka.classifiers.Classifier;
 import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.converters.ConverterUtils;
 
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -16,10 +15,13 @@ public class WekaModelService {
 
     public WekaModelService() {
         try {
-            InputStream is = getClass().getResourceAsStream("/models/j48.model");
+
+            InputStream is = getClass().getResourceAsStream("/weka/modeloPedidos.model");
+
             ObjectInputStream ois = new ObjectInputStream(is);
             model = (Classifier) ois.readObject();
             ois.close();
+
             System.out.println("Modelo J48 cargado correctamente");
         } catch (Exception e) {
             e.printStackTrace();

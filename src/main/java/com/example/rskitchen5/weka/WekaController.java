@@ -2,11 +2,12 @@ package com.example.rskitchen5.weka;
 
 import com.example.rskitchen5.weka.PedidoWekaService;
 import com.example.rskitchen5.weka.WekaModelService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import weka.core.Instances;
 
-@RestController
+@Controller
 public class WekaController {
 
     private final PedidoWekaService pedidoWekaService;
@@ -17,7 +18,13 @@ public class WekaController {
         this.wekaModelService = wekaModelService;
     }
 
-    @GetMapping("/weka/prediccion")
+    @GetMapping("/datos")
+    public String mostrarVista() {
+        return "datos"; // templates/datos.html
+    }
+
+    @GetMapping("/weka")
+    @ResponseBody
     public String probarModelo() {
         Instances data = pedidoWekaService.obtenerInstancias();
 
@@ -26,6 +33,12 @@ public class WekaController {
         }
 
         try {
+
+            if (data.classIndex() < 0) {
+                // Asumiendo que la última columna es la clase
+                data.setClassIndex(data.numAttributes() - 1);
+            }
+
             double prediccion = wekaModelService.predecir(data.instance(0));
             return "Predicción del primer pedido: " + prediccion;
         } catch (Exception e) {
