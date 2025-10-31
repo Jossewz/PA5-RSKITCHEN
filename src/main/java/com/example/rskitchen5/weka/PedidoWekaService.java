@@ -7,9 +7,7 @@ import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instances;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,25 +20,47 @@ public class PedidoWekaService {
     }
 
     public Instances obtenerInstancias() {
-        List<Pedido> pedidos = pedidoRepository.findAll();
+        try {
+            List<Pedido> pedidos = pedidoRepository.findAll();
 
-        ArrayList<Attribute> atributos = new ArrayList<>();
-        atributos.add(new Attribute("total"));
-        atributos.add(new Attribute("fecha"));
+            if (pedidos == null || pedidos.isEmpty()) {
+                System.out.println("No hay pedidos en la base de datos.");
+                return null;
+            }
 
-        Instances data = new Instances("Pedidos", atributos, pedidos.size());
+            ArrayList<Attribute> atributos = new ArrayList<>();
+            atributos.add(new Attribute("mesaNum"));
 
-        for (Pedido p : pedidos) {
-            double[] valores = new double[data.numAttributes()];
+            // ✅ pagado como predictor
+            ArrayList<String> valoresPagado = new ArrayList<>();
+            valoresPagado.add("NO_PAGADO");
+            valoresPagado.add("PAGADO");
+            atributos.add(new Attribute("pagado", valoresPagado));
 
-            valores[0] = p.getTotal();
-            valores[1] = (p.getFecha() != null)
-                    ? Date.from(p.getFecha().atZone(ZoneId.systemDefault()).toInstant()).getTime()
-                    : 0;
+            // ✅ total como CLASE (para regresión)
+            atributos.add(new Attribute("total"));
 
-            data.add(new DenseInstance(1.0, valores));
+            Instances data = new Instances("PedidosDataset", atributos, pedidos.size());
+            // ✅ Clase en índice 2 (total)
+            data.setClassIndex(2);
+
+            for (Pedido p : pedidos) {
+                double[] vals = new double[3];
+
+                vals[0] = p.getMesaNum();
+                vals[1] = p.isPagado() ? 1 : 0; // Predictor
+                vals[2] = p.getTotal();          // Clase (valor a predecir)
+
+                data.add(new DenseInstance(1.0, vals));
+            }
+
+            System.out.println("✅ Dataset para REGRESIÓN creado: " + data.numInstances() +
+                    " instancias | Clase: total");
+            return data;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-
-        return data;
     }
 }

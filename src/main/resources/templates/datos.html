@@ -2,68 +2,295 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Prueba Modelo Weka</title>
+    <title>Análisis de Ganancias - Modelo Weka</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
         }
 
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
         }
 
-        button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #007bff;
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #resultado {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #222;
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-            min-width: 300px;
+            padding: 30px;
             text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .controls {
+            padding: 30px;
+            text-align: center;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,123,255,0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-container {
+            padding: 30px;
+            min-height: 200px;
+        }
+
+        .result-content {
+            text-align: left;
+        }
+
+        .trend-box {
+            border: 3px solid;
+            padding: 25px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .trend-positive { border-color: #28a745; background: #d4edda; }
+        .trend-negative { border-color: #dc3545; background: #f8d7da; }
+        .trend-neutral { border-color: #007bff; background: #d1ecf1; }
+
+        .trend-percentage {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .financial-table th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .financial-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .financial-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .financial-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        .interpretation-box {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #ffc107;
+            margin: 20px 0;
+        }
+
+        .example-box {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+            margin: 20px 0;
+        }
+
+        .recommendations {
+            background: #d1edff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .recommendations ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .recommendations li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+
+        .status-paid { background: #d4edda; color: #155724; }
+        .status-unpaid { background: #f8d7da; color: #721c24; }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .error-box {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-<h1>🔍 Prueba del Modelo Weka</h1>
+<div class="container">
+    <div class="header">
+        <h1>📊 Dashboard de Análisis de Ganancias</h1>
+        <p>Predicciones inteligentes basadas en Machine Learning</p>
+    </div>
 
-<button id="btnPrediccion">Probar Modelo</button>
+    <div class="controls">
+        <button class="btn-primary" id="btnPrediccion">
+            🚀 Ejecutar Análisis Predictivo
+        </button>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analizando datos y generando predicciones...</p>
+        </div>
+    </div>
 
-<div id="resultado">Esperando resultado...</div>
+    <div class="result-container">
+        <div id="resultado">
+            <div style="text-align: center; padding: 50px; color: #6c757d;">
+                <h3>👆 Presiona el botón para iniciar el análisis</h3>
+                <p>El sistema analizará los patrones de pago y predecirá el impacto en las ganancias</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Sistema de Predicción Weka ML | Powered by Spring Boot & AI</p>
+    </div>
+</div>
 
 <script>
     document.getElementById("btnPrediccion").addEventListener("click", async () => {
+        const btn = document.getElementById("btnPrediccion");
+        const loading = document.getElementById("loading");
+        const resultado = document.getElementById("resultado");
+
+        // Mostrar loading
+        btn.disabled = true;
+        btn.innerHTML = "⏳ Procesando...";
+        loading.style.display = 'block';
+        resultado.innerHTML = '';
+
         try {
-            const res = await fetch("/weka");
-            if (!res.ok) throw new Error("Error en la petición: " + res.status);
-            const texto = await res.text();
-            document.getElementById("resultado").innerText = texto;
-        } catch (err) {
-            document.getElementById("resultado").innerText = "❌ " + err.message;
+            const response = await fetch("/weka");
+
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+
+            const html = await response.text();
+            resultado.innerHTML = html;
+
+        } catch (error) {
+            resultado.innerHTML = `
+                    <div class="error-box">
+                        <h3>❌ Error en la conexión</h3>
+                        <p>No se pudo conectar con el servidor. Error: ${error.message}</p>
+                        <p>Verifica que el servidor esté ejecutándose correctamente.</p>
+                    </div>
+                `;
+        } finally {
+            // Restaurar botón
+            btn.disabled = false;
+            btn.innerHTML = "🔄 Ejecutar Nuevo Análisis";
+            loading.style.display = 'none';
+
+            // Scroll suave al resultado
+            resultado.scrollIntoView({ behavior: 'smooth' });
         }
+    });
+
+    // Efectos visuales adicionales
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('btnPrediccion');
+
+        btn.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
+        });
+
+        btn.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
     });
 </script>
 </body>
