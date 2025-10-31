@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>Gestión de Pedidos | Kitchen</title>
     <link rel="stylesheet" th:href="@{/css/pedido.css}">
-
+    <link rel="stylesheet" th:href="@{/css/platillo-confirmacion.css}">
 
 </head>
 
@@ -90,8 +90,8 @@
 
             <div style="margin-top:10px;">
                 <a th:href="@{'/pedidos/editar/' + ${pedido.id}}">Editar</a> |
-                <a th:href="@{'/pedidos/eliminar/' + ${pedido.id}}"
-                   onclick="return confirm('¿Seguro que desea eliminar este pedido?');">Eliminar</a>
+                <a th:href="@{'/pedidos/eliminar/' + ${pedido.id}}" class="btn-eliminar">Eliminar</a>
+
             </div>
         </div>
     </div>
@@ -102,21 +102,9 @@
     </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const inputBusqueda = document.getElementById('busquedaPlatillo');
-      const itemsPlatillos = document.querySelectorAll('.platillo-item');
+<script th:src="@{/js/pedidojs.js}"></script>
 
-      inputBusqueda.addEventListener('input', () => {
-        const filtro = inputBusqueda.value.toLowerCase();
-        itemsPlatillos.forEach(item => {
-          const nombre = item.querySelector('label strong')?.textContent.toLowerCase() || '';
-          item.style.display = nombre.includes(filtro) ? 'block' : 'none';
-        });
-      });
-    });
-</script>
-
+<script th:src="@{/js/confirmacionpedido.js}"></script>
 </body>
 </html>
 
