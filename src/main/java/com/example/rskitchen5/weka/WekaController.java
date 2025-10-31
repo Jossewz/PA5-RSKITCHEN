@@ -20,7 +20,7 @@ public class WekaController {
 
     @GetMapping("/datos")
     public String mostrarVista() {
-        return "datos"; // templates/datos.html
+        return "datos";
     }
 
     @GetMapping("/weka")
@@ -33,9 +33,7 @@ public class WekaController {
         }
 
         try {
-
             if (data.classIndex() < 0) {
-                // Asumiendo que la última columna es la clase
                 data.setClassIndex(data.numAttributes() - 1);
             }
 

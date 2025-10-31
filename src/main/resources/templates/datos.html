@@ -14,7 +14,10 @@
             height: 100vh;
         }
 
-        h1 { color: #333; }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
 
         button {
             padding: 10px 20px;
@@ -24,9 +27,12 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s;
         }
 
-        button:hover { background-color: #0056b3; }
+        button:hover {
+            background-color: #0056b3;
+        }
 
         #resultado {
             margin-top: 20px;
@@ -50,11 +56,15 @@
 
 <script>
     document.getElementById("btnPrediccion").addEventListener("click", async () => {
-        const res = await fetch("/weka/prediccion");
-        const texto = await res.text();
-        document.getElementById("resultado").innerText = texto;
+        try {
+            const res = await fetch("/weka");
+            if (!res.ok) throw new Error("Error en la petición: " + res.status);
+            const texto = await res.text();
+            document.getElementById("resultado").innerText = texto;
+        } catch (err) {
+            document.getElementById("resultado").innerText = "❌ " + err.message;
+        }
     });
 </script>
 </body>
 </html>
-
