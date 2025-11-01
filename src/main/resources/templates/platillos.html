@@ -26,7 +26,6 @@
     </ul>
 </nav>
 
-<!-- CONTENIDO -->
 <main>
     <h1>Gestión de Platillos</h1>
 
@@ -48,7 +47,6 @@
             <p style="text-align: center; color: #777;">No hay platillos disponibles.</p>
         </div>
 
-        <!-- 🔹 Contenedor en grid para mostrar los platillos lado a lado -->
         <div class="contenedor-lista" th:if="${platillos != null and !platillos.isEmpty()}">
             <div th:each="platillo : ${platillos}" class="platillo">
                 <div class="nombre" th:text="${platillo.name}">Nombre del platillo</div>
