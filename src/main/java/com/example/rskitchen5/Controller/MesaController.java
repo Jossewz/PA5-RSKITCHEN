@@ -124,7 +124,6 @@ public class MesaController {
             platilloRep.findById(item.getProductId())
                     .ifPresent(platillo -> {
                         itemDTO.setNombrePlatillo(platillo.getName());
-                        itemDTO.setDescripcionPlatillo(platillo.getDescription());
                     });
 
             itemsDTO.add(itemDTO);

@@ -68,7 +68,8 @@ public class Security {
                                 "/images/**",
                                 "/datos/**",
                                 "/weka/**",
-                                "/api/auth/**"    // allow api auth endpoints
+                                "/api/auth/**",
+                                "/api/**"
                         ).permitAll()
                         // protected routes
                         .requestMatchers("/mesa/**", "/pedido/**", "/factura/**")
