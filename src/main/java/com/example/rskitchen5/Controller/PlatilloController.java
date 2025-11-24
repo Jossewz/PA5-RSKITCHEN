@@ -46,7 +46,6 @@ public class PlatilloController {
             existingPlatillo.setName(platillo.getName());
             existingPlatillo.setCant(platillo.getCant());
             existingPlatillo.setPrice(platillo.getPrice());
-            existingPlatillo.setIngredients(platillo.getIngredients());
             platilloRep.save(existingPlatillo);
             return "redirect:/platillos";
         } catch (Exception e) {

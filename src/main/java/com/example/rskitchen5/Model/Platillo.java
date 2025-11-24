@@ -13,18 +13,14 @@ public class Platillo {
 
     private String name;
     private double price;
-    private List<String> ingredients;
     private String cant;
-    private String description;
 
     public Platillo() {
     }
 
     public Platillo(String cant, String description, String id, List<String> ingredients, String name, double price) {
         this.cant = cant;
-        this.description = description;
         this.id = id;
-        this.ingredients = ingredients;
         this.name = name;
         this.price = price;
     }
@@ -35,22 +31,6 @@ public class Platillo {
 
     public void setCant(String cant) {
         this.cant = cant;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<String> ingredients) {
-        this.ingredients = ingredients;
     }
 
     public String getId() {
